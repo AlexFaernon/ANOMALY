@@ -8,6 +8,7 @@ public class HeroUnit : MonoBehaviour
     [SerializeField] private TMP_Text HP;
     [SerializeField] private GameObject abilityList;
     private readonly ICharacter character = new Hero();
+    private IAbility currentAbility;
 
     private void Awake()
     {
@@ -17,10 +18,10 @@ public class HeroUnit : MonoBehaviour
 
         foreach (Transform child in abilityList.transform)
         {
-            child.gameObject.GetComponent<Button>().onClick.AddListener(() => EventAggregator.ChooseTargets.Publish(1));
+            child.gameObject.GetComponent<Button>().onClick.AddListener(() => StartAbility(character.Ability));
         }
 
-        EventAggregator.GetTargets.Subscribe(Attack);
+        EventAggregator.GetTargets.Subscribe(CastAbility);
         EventAggregator.UpdateHP.Subscribe(UpdateHP);
     }
 
@@ -32,19 +33,33 @@ public class HeroUnit : MonoBehaviour
         }
     }
 
-    private void ToggleAbilities()
+    private void StartAbility(IAbility ability)
     {
-        abilityList.SetActive(!abilityList.activeSelf);
+        currentAbility = ability;
+        EventAggregator.ChooseTargets.Publish(1);
     }
 
-    void Attack(List<IUnit> units)
+    private void ToggleAbilities()
     {
-        character.Attack(units);
+        if (!TargetPicker.isPicking)
+        {
+            abilityList.SetActive(!abilityList.activeSelf);
+            EventAggregator.ToggleDarken.Publish();
+        }
+        else
+        {
+            EventAggregator.PickTarget.Publish(character);
+        }
+    }
+
+    void CastAbility(List<IUnit> units)
+    {
+        currentAbility.CastAbility(units);
     }
 
     private void OnDestroy()
     {
-        EventAggregator.GetTargets.Unsubscribe(Attack);
+        EventAggregator.GetTargets.Unsubscribe(CastAbility);
         EventAggregator.UpdateHP.Unsubscribe(UpdateHP);
     }
 }

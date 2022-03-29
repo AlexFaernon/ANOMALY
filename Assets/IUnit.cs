@@ -11,8 +11,14 @@ public interface IUnit
 public interface ICharacter : IUnit
 {
     public int MP { get; }
+    public IAbility Ability { get; }
+}
 
-    public void Attack(List<IUnit> unit);
+public interface IAbility
+{
+    public int Cost { get; }
+    public int Cooldown { get; }
+    public abstract void CastAbility(List<IUnit> units);
 }
 
 public class Enemy : IUnit

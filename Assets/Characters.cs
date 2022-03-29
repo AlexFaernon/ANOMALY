@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Hero : ICharacter
 {
@@ -23,21 +21,26 @@ public class Hero : ICharacter
         private set
         {
             _mp = value;
-            throw new NotImplementedException();
         }
     }
-    
+
+    public IAbility Ability { get; } = new AttackClass();
+
     public void TakeDamage(int damage)
     {
         HP -= damage;
-        Debug.Log(HP);
     }
-    
-    public void Attack(List<IUnit> units)
+
+    private class AttackClass : IAbility
     {
-        foreach (var unit in units)
+        public int Cost { get; }
+        public int Cooldown { get; }
+        public void CastAbility(List<IUnit> units)
         {
-            unit.TakeDamage(2);
+            foreach (var unit in units)
+            {
+                unit.TakeDamage(2);
+            }
         }
     }
 }

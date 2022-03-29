@@ -7,7 +7,7 @@ public static class EventAggregator
     public static readonly Event<IUnit> PickTarget = new Event<IUnit>();
     public static readonly Event<List<IUnit>> GetTargets = new Event<List<IUnit>>();
     public static readonly Event<IUnit> UpdateHP = new Event<IUnit>();
-    public static readonly Event ToggleAbility = new Event();
+    public static readonly Event ToggleDarken = new Event();
 }
 
 public class Event<T>
