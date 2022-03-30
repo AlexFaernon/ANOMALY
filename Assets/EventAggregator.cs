@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class EventAggregator
 {
@@ -8,6 +9,7 @@ public static class EventAggregator
     public static readonly Event<List<IUnit>> GetTargets = new Event<List<IUnit>>();
     public static readonly Event<IUnit> UpdateHP = new Event<IUnit>();
     public static readonly Event ToggleDarken = new Event();
+    public static readonly Event<GameObject> ToggleTargetSquare = new Event<GameObject>();
 }
 
 public class Event<T>

@@ -4,8 +4,11 @@ using UnityEngine.EventSystems;
 
 public class TargetPicker : MonoBehaviour, IPointerDownHandler
 {
+    [SerializeField] private Transform squaresParent;
+    [SerializeField] private GameObject targetSquare;
     private readonly List<IUnit> targets = new List<IUnit>();
-    private int targetCount = 1;
+    private readonly List<GameObject> targetsSquares = new List<GameObject>();
+    private int targetCount;
     public static bool isPicking { get; private set; }
 
     private void Awake()
@@ -26,6 +29,10 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         targetCount = count;
         isPicking = true;
         Debug.Log("StartPicking");
+        for (var i = 0; i < targetCount; i++)
+        {
+            targetsSquares.Add(Instantiate(targetSquare, squaresParent));
+        }
     }
     
     void ChooseTarget(IUnit unit)
@@ -34,17 +41,25 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
 
         if (!targets.Contains(unit))
         {
+            EventAggregator.ToggleTargetSquare.Publish(targetsSquares[targets.Count]);
             targets.Add(unit);
             Debug.Log("UnitAdded");
         }
         else
         {
+            EventAggregator.ToggleTargetSquare.Publish(targetsSquares[targets.Count - 1]);
             targets.Remove(unit);
             Debug.Log("UnitRemoved");
         }
         
         if (targets.Count == targetCount)
         {
+            foreach (var targetsSquare in targetsSquares)
+            {
+                Destroy(targetsSquare);
+            }
+            targetsSquares.Clear();
+            
             isPicking = false;
             EventAggregator.GetTargets.Publish(targets);
             targets.Clear();

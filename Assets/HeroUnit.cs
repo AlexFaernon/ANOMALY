@@ -36,7 +36,7 @@ public class HeroUnit : MonoBehaviour
     private void StartAbility(IAbility ability)
     {
         currentAbility = ability;
-        EventAggregator.ChooseTargets.Publish(1);
+        EventAggregator.ChooseTargets.Publish(currentAbility.TargetCount);
     }
 
     private void ToggleAbilities()

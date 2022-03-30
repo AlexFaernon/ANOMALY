@@ -18,6 +18,7 @@ public interface IAbility
 {
     public int Cost { get; }
     public int Cooldown { get; }
+    public int TargetCount { get; }
     public abstract void CastAbility(List<IUnit> units);
 }
 

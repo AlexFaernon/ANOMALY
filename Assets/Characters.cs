@@ -35,6 +35,8 @@ public class Hero : ICharacter
     {
         public int Cost { get; }
         public int Cooldown { get; }
+        public int TargetCount { get; } = 2;
+
         public void CastAbility(List<IUnit> units)
         {
             foreach (var unit in units)
