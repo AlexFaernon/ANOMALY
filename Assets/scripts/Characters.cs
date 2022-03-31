@@ -33,8 +33,8 @@ public class Hero : ICharacter
 
     private class AttackClass : IAbility
     {
-        public int Cost { get; }
-        public int Cooldown { get; }
+        public int Cost { get; } = 1;
+        public int Cooldown { get; } = 1;
         public int TargetCount { get; } = 2;
 
         public void CastAbility(List<IUnit> units)

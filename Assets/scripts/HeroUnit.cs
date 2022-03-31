@@ -18,8 +18,10 @@ public class HeroUnit : MonoBehaviour
 
         foreach (Transform child in abilityList.transform)
         {
+            EventAggregator.BindAbilityButton.Publish(child.gameObject, character.Ability);
             child.gameObject.GetComponent<Button>().onClick.AddListener(() => StartAbility(character.Ability));
         }
+        abilityList.SetActive(false);
 
         EventAggregator.GetTargets.Subscribe(CastAbility);
         EventAggregator.UpdateHP.Subscribe(UpdateHP);

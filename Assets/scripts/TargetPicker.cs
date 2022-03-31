@@ -19,6 +19,8 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
     
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!isPicking) return;
+        
         targets.Clear();
         isPicking = false;
         Debug.Log("StopPicking");

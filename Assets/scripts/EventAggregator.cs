@@ -10,6 +10,8 @@ public static class EventAggregator
     public static readonly Event<IUnit> UpdateHP = new Event<IUnit>();
     public static readonly Event ToggleDarken = new Event();
     public static readonly Event<GameObject> ToggleTargetSquare = new Event<GameObject>();
+    public static readonly Event<IAbility> ShowAbilityInfo = new Event<IAbility>();
+    public static readonly Event<GameObject, IAbility> BindAbilityButton = new Event<GameObject, IAbility>();
 }
 
 public class Event<T>
@@ -53,6 +55,29 @@ public class Event
     }
 
     public void Unsubscribe(Action action)
+    {
+        callbacks.Remove(action);
+    }
+}
+
+public class Event<T1, T2>
+{
+    private List<Action<T1 ,T2>> callbacks = new List<Action<T1 ,T2>>();
+
+    public void Subscribe(Action<T1 ,T2> action)
+    {
+        callbacks.Add(action);
+    }
+
+    public void Publish(T1 t1, T2 t2)
+    {
+        foreach (var action in callbacks)
+        {
+            action(t1, t2);
+        }
+    }
+
+    public void Unsubscribe(Action<T1 ,T2> action)
     {
         callbacks.Remove(action);
     }
