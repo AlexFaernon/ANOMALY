@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class EventAggregator
 {
-    public static readonly Event<int> ChooseTargets = new Event<int>();
+    public static readonly Event<int> StartChooseTargets = new Event<int>();
     public static readonly Event<IUnit> PickTarget = new Event<IUnit>();
     public static readonly Event<List<IUnit>> GetTargets = new Event<List<IUnit>>();
     public static readonly Event<IUnit> UpdateHP = new Event<IUnit>();
@@ -12,6 +12,9 @@ public static class EventAggregator
     public static readonly Event<GameObject> ToggleTargetSquare = new Event<GameObject>();
     public static readonly Event<IAbility> ShowAbilityInfo = new Event<IAbility>();
     public static readonly Event<GameObject, IAbility> BindAbilityButton = new Event<GameObject, IAbility>();
+    public static readonly Event NewTurn = new Event();
+    public static readonly Event<IEnemy> NewEnemy = new Event<IEnemy>();
+    public static readonly Event<IEnemy> EnemyTurn = new Event<IEnemy>();
 }
 
 public class Event<T>

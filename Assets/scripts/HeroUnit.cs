@@ -10,6 +10,17 @@ public class HeroUnit : MonoBehaviour
     private readonly ICharacter character = new Hero();
     private IAbility currentAbility;
 
+    private bool _hasMoved;
+    private bool HasMoved
+    {
+        get => _hasMoved;
+        set
+        {
+            GetComponent<Button>().interactable = !value;
+            _hasMoved = value;
+        }
+    }
+
     private void Awake()
     {
         UpdateHP(character);
@@ -25,6 +36,7 @@ public class HeroUnit : MonoBehaviour
 
         EventAggregator.GetTargets.Subscribe(CastAbility);
         EventAggregator.UpdateHP.Subscribe(UpdateHP);
+        EventAggregator.NewTurn.Subscribe(NewTurn);
     }
 
     private void UpdateHP(IUnit unit)
@@ -38,7 +50,7 @@ public class HeroUnit : MonoBehaviour
     private void StartAbility(IAbility ability)
     {
         currentAbility = ability;
-        EventAggregator.ChooseTargets.Publish(currentAbility.TargetCount);
+        EventAggregator.StartChooseTargets.Publish(currentAbility.TargetCount);
     }
 
     private void ToggleAbilities()
@@ -57,11 +69,19 @@ public class HeroUnit : MonoBehaviour
     void CastAbility(List<IUnit> units)
     {
         currentAbility.CastAbility(units);
+        HasMoved = true;
+    }
+
+    private void NewTurn()
+    {
+        HasMoved = false;
     }
 
     private void OnDestroy()
     {
         EventAggregator.GetTargets.Unsubscribe(CastAbility);
         EventAggregator.UpdateHP.Unsubscribe(UpdateHP);
+        EventAggregator.NewTurn.Unsubscribe(NewTurn);
+
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public interface IUnit
 {
@@ -22,22 +21,7 @@ public interface IAbility
     public abstract void CastAbility(List<IUnit> units);
 }
 
-public class Enemy : IUnit
+public interface IEnemy : IUnit
 {
-    private int _hp = 5;
-
-    public int HP
-    {
-        get => _hp;
-        private set
-        {
-            _hp = value;
-            EventAggregator.UpdateHP.Publish(this);
-        }
-    }
-    public void TakeDamage(int damage)
-    {
-        HP -= damage;
-        Debug.Log(HP);
-    }
+    
 }

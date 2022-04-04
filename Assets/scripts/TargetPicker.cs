@@ -13,7 +13,7 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
 
     private void Awake()
     {
-        EventAggregator.ChooseTargets.Subscribe(StartPicking);
+        EventAggregator.StartChooseTargets.Subscribe(StartPicking);
         EventAggregator.PickTarget.Subscribe(ChooseTarget);
     }
     
@@ -71,7 +71,7 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
 
     private void OnDestroy()
     {
-        EventAggregator.ChooseTargets.Unsubscribe(StartPicking);
+        EventAggregator.StartChooseTargets.Unsubscribe(StartPicking);
         EventAggregator.PickTarget.Unsubscribe(ChooseTarget);
     }
 }
