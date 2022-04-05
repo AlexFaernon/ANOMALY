@@ -13,6 +13,9 @@ public class Enemy : IEnemy
             EventAggregator.UpdateHP.Publish(this);
         }
     }
+
+    public ModifyDamage ModifyDamage { get; set; }
+
     public void TakeDamage(int damage)
     {
         HP -= damage;

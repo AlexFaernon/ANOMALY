@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class EventAggregator
@@ -28,7 +29,7 @@ public class Event<T>
     
     public void Publish(T obj)
     {
-        foreach (var action in callbacks)
+        foreach (var action in callbacks.ToList())
         {
             action(obj);
         }
@@ -51,7 +52,7 @@ public class Event
 
     public void Publish()
     {
-        foreach (var action in callbacks)
+        foreach (var action in callbacks.ToList())
         {
             action();
         }
@@ -74,7 +75,7 @@ public class Event<T1, T2>
 
     public void Publish(T1 t1, T2 t2)
     {
-        foreach (var action in callbacks)
+        foreach (var action in callbacks.ToList())
         {
             action(t1, t2);
         }

@@ -27,10 +27,12 @@ public class HeroUnit : MonoBehaviour
         
         GetComponent<Button>().onClick.AddListener(ToggleAbilities);
 
-        foreach (Transform child in abilityList.transform)
+        for (var i = 0; i < 2; i++)
         {
-            EventAggregator.BindAbilityButton.Publish(child.gameObject, character.Ability);
-            child.gameObject.GetComponent<Button>().onClick.AddListener(() => StartAbility(character.Ability));
+            var child = abilityList.transform.GetChild(i);
+            var ability = character.Abilities[i];
+            EventAggregator.BindAbilityButton.Publish(child.gameObject, ability);
+            child.gameObject.GetComponent<Button>().onClick.AddListener(() => StartAbility(ability));
         }
         abilityList.SetActive(false);
 
