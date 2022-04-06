@@ -10,6 +10,7 @@ public abstract class Status
 {
     public abstract int Duration { get; set; }
     public abstract IUnit Target { get; set; }
+    public abstract void Dispel();
 }
 
 public sealed class Invulnerability : Status
@@ -17,23 +18,23 @@ public sealed class Invulnerability : Status
     public override int Duration { get; set; } = 5;
     public override IUnit Target { get; set; }
 
-    private delegate void InvulnerableDelegate(IUnit target);
-
-    private InvulnerableDelegate Delegate;
-
-    public void MakeInvulnerable(IUnit target)
+    public void MakeInvulnerable()
     {
-        if (target.HP - target.ModifyDamage.Damage < 1)
+        if (Target.HP - Target.ModifyDamage.Damage < 1)
         {
-            target.ModifyDamage.Damage = target.HP - 1;
+            Target.ModifyDamage.Damage = Target.HP - 1;
         }
+    }
+    
+    public override void Dispel()
+    {
+        OnEnd();
     }
     
     public Invulnerability(IUnit target)
     {
-        Delegate = MakeInvulnerable;
         Target = target;
-        Target.ModifyDamage.Event.AddListener(Delegate(Target));
+        Target.ModifyDamage.Event.AddListener(MakeInvulnerable);
         Debug.Log("Invul added");
 
         EventAggregator.NewTurn.Subscribe(OnTurn);
@@ -44,12 +45,12 @@ public sealed class Invulnerability : Status
         Duration -= 1;
         Debug.Log("Invul " + Duration);
         
-        if (Duration == 0) {OnEnd();}
+        if (Duration == 0) {Dispel();}
     }
 
     private void OnEnd()
     {
-        Target.ModifyDamage.Event.RemoveListener(() => MakeInvulnerable(Target));
+        Target.ModifyDamage.Event.RemoveListener(MakeInvulnerable);
         Debug.Log("Invul removed");
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
         BuffsClass.Buffs.Remove(this);

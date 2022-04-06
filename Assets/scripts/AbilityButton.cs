@@ -18,7 +18,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
    private void ToggleOffAbilities()
    {
-      EventAggregator.ToggleDarken.Publish();
+      EventAggregator.ToggleDarkenOff.Publish();
       transform.parent.gameObject.SetActive(false);
    }
    

@@ -5,6 +5,7 @@ public interface IUnit
     public int HP { get; }
     public ModifyDamage ModifyDamage { get; set; }
     public void TakeDamage(int damage);
+    public void Heal(int heal);
 }
 
 public interface ICharacter : IUnit

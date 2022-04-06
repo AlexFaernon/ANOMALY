@@ -7,7 +7,7 @@ public class AbilityInfo : MonoBehaviour
     private void Awake()
     {
         EventAggregator.ShowAbilityInfo.Subscribe(Method);
-        EventAggregator.ToggleDarken.Subscribe(ToggleSelf);
+        EventAggregator.ToggleDarkenOff.Subscribe(ToggleSelf);
         gameObject.SetActive(false);
     }
 

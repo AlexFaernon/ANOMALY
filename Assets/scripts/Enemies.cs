@@ -21,4 +21,9 @@ public class Enemy : IEnemy
         HP -= damage;
         Debug.Log(HP);
     }
+
+    public void Heal(int heal)
+    {
+        HP += heal;
+    }
 }

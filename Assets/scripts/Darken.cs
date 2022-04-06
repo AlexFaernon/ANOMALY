@@ -4,22 +4,27 @@ using UnityEngine.UI;
 public class Darken : MonoBehaviour
 {
     private Image image;
-    private bool isOn;
-    
+
     private void Awake()
     {
-        EventAggregator.ToggleDarken.Subscribe(ToggleDarken);
+        EventAggregator.ToggleDarkenOn.Subscribe(ToggleDarkenOn);
+        EventAggregator.ToggleDarkenOff.Subscribe(ToggleDarkenOff);
         image = GetComponent<Image>();
     }
 
-    private void ToggleDarken()
+    private void ToggleDarkenOn()
     {
-        image.color = isOn ? Color.clear : new Color(0.31f, 0.31f, 0.31f, 0.9f);
-        isOn = !isOn;
+        image.color =  new Color(0.31f, 0.31f, 0.31f, 0.9f);
+    }
+    
+    private void ToggleDarkenOff()
+    {
+        image.color = Color.clear;
     }
 
     private void OnDestroy()
     {
-        EventAggregator.ToggleDarken.Unsubscribe(ToggleDarken);
+        EventAggregator.ToggleDarkenOn.Unsubscribe(ToggleDarkenOn);
+        EventAggregator.ToggleDarkenOff.Unsubscribe(ToggleDarkenOff);
     }
 }
