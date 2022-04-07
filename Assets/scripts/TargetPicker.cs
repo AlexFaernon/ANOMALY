@@ -8,7 +8,7 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
     [SerializeField] private GameObject targetSquare;
     private readonly List<IUnit> targets = new List<IUnit>();
     private readonly List<GameObject> targetsSquares = new List<GameObject>();
-    private int targetCount;
+    private int maxTargetCount;
     public static bool isPicking { get; private set; }
 
     private void Awake()
@@ -32,10 +32,16 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
 
     void StartPicking(int count)
     {
-        targetCount = count;
+        maxTargetCount = count;
+
+        if (maxTargetCount == 0)
+        {
+            EventAggregator.GetTargets.Publish(null);
+        }
+        
         isPicking = true;
         Debug.Log("StartPicking");
-        for (var i = 0; i < targetCount; i++)
+        for (var i = 0; i < maxTargetCount; i++)
         {
             targetsSquares.Add(Instantiate(targetSquare, squaresParent));
         }
@@ -58,7 +64,7 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
             Debug.Log("UnitRemoved");
         }
         
-        if (targets.Count == targetCount)
+        if (targets.Count == maxTargetCount)
         {
             EventAggregator.GetTargets.Publish(targets);
             ClearTargets();

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Events;
 
 public class Hero : ICharacter
@@ -27,12 +28,13 @@ public class Hero : ICharacter
     {
         get
         {
-            return new[] { Ability, Ultimate };
+            return new[] { BasicAbility, FirstAbility, Ultimate };
         }
     }
 
-    public IAbility Ability { get; } = new AttackClass();
-    public IAbility Ultimate { get; } = new MakeInvulnerability();
+    public IAbility BasicAbility { get; } = new AttackClass();
+    public IAbility FirstAbility { get; } = new AttackClass();
+    public IAbility Ultimate { get; } = new AttackClass();
 
     public void TakeDamage(int damage)
     {
@@ -57,20 +59,6 @@ public class Hero : ICharacter
             foreach (var unit in units)
             {
                 unit.TakeDamage(4);
-            }
-        }
-    }
-    
-    private class MakeInvulnerability : IAbility
-    {
-        public int Cost { get; }
-        public int Cooldown { get; }
-        public int TargetCount { get; } = 1;
-        public void CastAbility(List<IUnit> units)
-        {
-            foreach (var unit in units)
-            {
-                BuffsClass.Buffs.Add(new Invulnerability(unit));
             }
         }
     }
@@ -102,11 +90,12 @@ public class Medic : ICharacter
     {
         get
         {
-            return new[] { Ability, Ultimate };
+            return new[] { BasicAbility, FirstAbility, Ultimate };
         }
     }
 
-    public IAbility Ability { get; } = new CastHeal();
+    public IAbility BasicAbility { get; } = new CastHeal();
+    public IAbility FirstAbility { get; } = new Dispel();
     public IAbility Ultimate { get; } = new MakeInvulnerability();
 
     public void TakeDamage(int damage)
@@ -136,6 +125,20 @@ public class Medic : ICharacter
         }
     }
     
+    private class Dispel : IAbility
+    {
+        public int Cost { get; }
+        public int Cooldown { get; }
+        public int TargetCount { get; } = 1;
+        public void CastAbility(List<IUnit> units)
+        {
+            foreach (var status in units.SelectMany(unit => BuffsClass.Buffs.ToList().Where(x => x.Target == unit)))
+            {
+                status.Dispel();
+            }
+        }
+    }
+    
     private class MakeInvulnerability : IAbility
     {
         public int Cost { get; }
@@ -149,6 +152,52 @@ public class Medic : ICharacter
             }
         }
     }
+}
+
+public class Tank : ICharacter
+{
+    private static int _hp = 10;
+    private static int _mp = 10;
+
+    public int HP
+    {
+        get => _hp;
+        private set
+        {
+            _hp = value;
+            EventAggregator.UpdateHP.Publish(this);
+        }
+    }
+    
+    public ModifyDamage ModifyDamage { get; set; }
+    public void TakeDamage(int damage)
+    {
+        ModifyDamage.Damage = damage;
+        ModifyDamage.Event.Invoke();
+        HP -= damage;
+    }
+
+    public void Heal(int heal)
+    {
+        HP += heal;
+    }
+
+    public int MP
+    {
+        get => _mp;
+        private set => _mp = value;
+    }
+    
+    public IAbility[] Abilities
+    {
+        get
+        {
+            return new[] { BasicAbility, FirstAbility, Ultimate };
+        }
+    }
+    public IAbility BasicAbility { get; }
+    public IAbility FirstAbility { get; }
+    public IAbility Ultimate { get; }
 }
 
 public class ModifyDamage

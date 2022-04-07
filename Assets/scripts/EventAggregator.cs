@@ -18,6 +18,8 @@ public static class EventAggregator
     public static readonly Event<IEnemy> NewEnemy = new Event<IEnemy>();
     public static readonly Event<IEnemy> EnemyTurn = new Event<IEnemy>();
     public static readonly Event ToggleOffAbilityLists = new Event();
+    public static readonly Event<GameObject, IEnumerable<IAbility>, Action<IAbility>> CreateAbilityButtons =
+        new Event<GameObject, IEnumerable<IAbility>, Action<IAbility>>();
 }
 
 public class Event<T>
@@ -84,6 +86,29 @@ public class Event<T1, T2>
     }
 
     public void Unsubscribe(Action<T1 ,T2> action)
+    {
+        callbacks.Remove(action);
+    }
+}
+
+public class Event<T1, T2, T3>
+{
+    private List<Action<T1 ,T2, T3>> callbacks = new List<Action<T1 ,T2, T3>>();
+
+    public void Subscribe(Action<T1 ,T2, T3> action)
+    {
+        callbacks.Add(action);
+    }
+
+    public void Publish(T1 t1, T2 t2, T3 t3)
+    {
+        foreach (var action in callbacks.ToList())
+        {
+            action(t1, t2, t3);
+        }
+    }
+
+    public void Unsubscribe(Action<T1 ,T2, T3> action)
     {
         callbacks.Remove(action);
     }

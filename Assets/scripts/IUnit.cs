@@ -12,7 +12,8 @@ public interface ICharacter : IUnit
 {
     public int MP { get; }
     public IAbility[] Abilities { get; }
-    public IAbility Ability { get; }
+    public IAbility BasicAbility { get; }
+    public IAbility FirstAbility { get; }
     public IAbility Ultimate { get; }
 }
 

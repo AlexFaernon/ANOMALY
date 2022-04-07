@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class HeroUnit : MonoBehaviour
 {
     [SerializeField] private CharacterClass characterClass;
-    [SerializeField] private TMP_Text HP;
     [SerializeField] private GameObject abilityList;
+    [SerializeField] private TMP_Text HP;
     private ICharacter character;
     private IAbility currentAbility;
 
@@ -41,17 +41,13 @@ public class HeroUnit : MonoBehaviour
         
         GetComponent<Button>().onClick.AddListener(ToggleAbilities);
 
-        for (var i = 0; i < 2; i++)
-        {
-            var child = abilityList.transform.GetChild(i);
-            var ability = character.Abilities[i];
-            EventAggregator.BindAbilityButton.Publish(child.gameObject, ability);
-            child.gameObject.GetComponent<Button>().onClick.AddListener(() => StartAbility(ability));
-        }
-        abilityList.SetActive(false);
-        
         EventAggregator.UpdateHP.Subscribe(UpdateHP);
         EventAggregator.NewTurn.Subscribe(NewTurn);
+    }
+
+    private void Start()
+    {
+        EventAggregator.CreateAbilityButtons.Publish(abilityList, character.Abilities, StartAbility);
     }
 
     private void UpdateHP(IUnit unit)
