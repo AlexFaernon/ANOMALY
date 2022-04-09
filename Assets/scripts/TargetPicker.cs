@@ -40,7 +40,6 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         }
         
         isPicking = true;
-        Debug.Log("StartPicking");
         for (var i = 0; i < maxTargetCount; i++)
         {
             targetsSquares.Add(Instantiate(targetSquare, squaresParent));
@@ -55,13 +54,11 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         {
             EventAggregator.ToggleTargetSquare.Publish(targetsSquares[targets.Count]);
             targets.Add(unit);
-            Debug.Log("UnitAdded");
         }
         else
         {
             EventAggregator.ToggleTargetSquare.Publish(targetsSquares[targets.Count - 1]);
             targets.Remove(unit);
-            Debug.Log("UnitRemoved");
         }
         
         if (targets.Count == maxTargetCount)
@@ -81,7 +78,6 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         
         targets.Clear();
         isPicking = false;
-        Debug.Log("StopPicking");
     }
 
     private void OnDestroy()

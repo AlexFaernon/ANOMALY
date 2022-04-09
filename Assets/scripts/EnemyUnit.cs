@@ -35,7 +35,8 @@ public class EnemyUnit : MonoBehaviour
     {
         if (enemy != other) return;
         
-        Debug.Log("Turn");
+        if (enemy.CanMove)
+            Debug.Log("Turn");
     }
 
     private void PickTarget()

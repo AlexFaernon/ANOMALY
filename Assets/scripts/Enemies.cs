@@ -14,6 +14,8 @@ public class Enemy : IEnemy
         }
     }
 
+    public bool CanMove { get; set; }
+
     public ModifyDamage ModifyDamage { get; set; }
 
     public void TakeDamage(int damage)

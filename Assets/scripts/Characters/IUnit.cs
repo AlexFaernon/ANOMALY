@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public interface IUnit
 {
     public int HP { get; }
+    public bool CanMove { get; set; }
     public ModifyDamage ModifyDamage { get; set; }
     public void TakeDamage(int damage);
     public void Heal(int heal);
@@ -22,7 +23,7 @@ public interface IAbility
     public int Cost { get; }
     public int Cooldown { get; }
     public int TargetCount { get; }
-    public abstract void CastAbility(List<IUnit> units);
+    public abstract void CastAbility(List<IUnit> units, IUnit source);
 }
 
 public interface IEnemy : IUnit

@@ -24,7 +24,7 @@ public static class EventAggregator
 
 public class Event<T>
 {
-    private List<Action<T>> callbacks = new List<Action<T>>();
+    private readonly List<Action<T>> callbacks = new List<Action<T>>();
 
     public void Subscribe(Action<T> action)
     {
@@ -47,7 +47,7 @@ public class Event<T>
 
 public class Event
 {
-    private List<Action> callbacks = new List<Action>();
+    private readonly List<Action> callbacks = new List<Action>();
 
     public void Subscribe(Action action)
     {
@@ -70,7 +70,7 @@ public class Event
 
 public class Event<T1, T2>
 {
-    private List<Action<T1 ,T2>> callbacks = new List<Action<T1 ,T2>>();
+    private readonly List<Action<T1 ,T2>> callbacks = new List<Action<T1 ,T2>>();
 
     public void Subscribe(Action<T1 ,T2> action)
     {
@@ -93,7 +93,7 @@ public class Event<T1, T2>
 
 public class Event<T1, T2, T3>
 {
-    private List<Action<T1 ,T2, T3>> callbacks = new List<Action<T1 ,T2, T3>>();
+    private readonly List<Action<T1 ,T2, T3>> callbacks = new List<Action<T1 ,T2, T3>>();
 
     public void Subscribe(Action<T1 ,T2, T3> action)
     {

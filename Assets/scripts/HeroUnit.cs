@@ -12,31 +12,40 @@ public class HeroUnit : MonoBehaviour
     private ICharacter character;
     private IAbility currentAbility;
 
-    private bool _hasMoved;
-    private bool HasMoved
+    private bool CanMove
     {
-        get => _hasMoved;
+        get => character.CanMove;
         set
         {
-            GetComponent<Button>().interactable = !value;
-            _hasMoved = value;
+            if (value)
+            {
+                if (!gameObject.TryGetComponent(out Outline _))
+                {
+                    var outline = gameObject.AddComponent<Outline>();
+                    outline.effectColor = Color.red;
+                }
+            }
+            else
+            {
+                gameObject.TryGetComponent(out Outline outline);
+                Destroy(outline);
+            }
+            character.CanMove = value;
         }
     }
 
     private void Awake()
     {
-        switch (characterClass)
+        character = characterClass switch
         {
-            case CharacterClass.Hero:
-                character = new Hero();
-                break;
-            case CharacterClass.Medic:
-                character = new Medic();
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-        
+            CharacterClass.Hero => new Hero(),
+            CharacterClass.Medic => new Medic(),
+            CharacterClass.Tank => new Tank(),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        CanMove = true;
+
         UpdateHP(character);
         
         GetComponent<Button>().onClick.AddListener(ToggleAbilities);
@@ -67,7 +76,7 @@ public class HeroUnit : MonoBehaviour
 
     private void ToggleAbilities()
     {
-        if (!TargetPicker.isPicking)
+        if (!TargetPicker.isPicking && CanMove)
         {
             EventAggregator.ToggleOffAbilityLists.Publish();
             abilityList.SetActive(!abilityList.activeSelf);
@@ -81,14 +90,14 @@ public class HeroUnit : MonoBehaviour
 
     void CastAbility(List<IUnit> units)
     {
-        currentAbility.CastAbility(units);
-        HasMoved = true;
+        currentAbility.CastAbility(units, character);
+        CanMove = false;
         EventAggregator.GetTargets.Unsubscribe(CastAbility);
     }
 
     private void NewTurn()
     {
-        HasMoved = false;
+        CanMove = true;
     }
 
     private void OnDestroy()
@@ -98,9 +107,10 @@ public class HeroUnit : MonoBehaviour
 
     }
 
-    enum CharacterClass
+    private enum CharacterClass
     {
         Hero,
-        Medic
+        Medic,
+        Tank
     }
 }
