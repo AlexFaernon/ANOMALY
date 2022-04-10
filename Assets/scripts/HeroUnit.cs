@@ -43,6 +43,8 @@ public class HeroUnit : MonoBehaviour
             CharacterClass.Tank => new Tank(),
             _ => throw new ArgumentOutOfRangeException()
         };
+        
+        UnitsManager.Characters.Add(character);
 
         CanMove = true;
 

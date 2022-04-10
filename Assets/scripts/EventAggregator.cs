@@ -15,7 +15,6 @@ public static class EventAggregator
     public static readonly Event<IAbility> ShowAbilityInfo = new Event<IAbility>();
     public static readonly Event<GameObject, IAbility> BindAbilityButton = new Event<GameObject, IAbility>();
     public static readonly Event NewTurn = new Event();
-    public static readonly Event<IEnemy> NewEnemy = new Event<IEnemy>();
     public static readonly Event<IEnemy> EnemyTurn = new Event<IEnemy>();
     public static readonly Event ToggleOffAbilityLists = new Event();
     public static readonly Event<GameObject, IEnumerable<IAbility>, Action<IAbility>> CreateAbilityButtons =

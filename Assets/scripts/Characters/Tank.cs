@@ -18,12 +18,13 @@ public class Tank : ICharacter
 
     public bool CanMove { get; set; }
 
-    public ModifyDamage ModifyDamage { get; set; } = new ModifyDamage();
-    public void TakeDamage(int damage)
+    public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();
+    public void TakeDamage(int damage, IUnit source)
     {
-        ModifyDamage.Damage = damage;
-        ModifyDamage.Event.Invoke();
-        HP -= ModifyDamage.Damage;
+        ModifyReceivedDamage.Source = source;
+        ModifyReceivedDamage.Damage = damage;
+        ModifyReceivedDamage.Event.Invoke();
+        HP -= ModifyReceivedDamage.Damage;
     }
 
     public void Heal(int heal)
@@ -47,7 +48,7 @@ public class Tank : ICharacter
 
     public IAbility BasicAbility { get; } = new CastProtect();
     public IAbility FirstAbility { get; } = new CastStun();
-    public IAbility Ultimate { get; }
+    public IAbility Ultimate { get; } = new CastDeflect();
     
     private class CastProtect : IAbility
     {
@@ -75,6 +76,20 @@ public class Tank : ICharacter
             foreach (var unit in units)
             {
                 StatusEffects.Effects.Add(new Stun(unit));
+            }
+        }
+    }
+
+    private class CastDeflect : IAbility
+    {
+        public int Cost { get; }
+        public int Cooldown { get; }
+        public int TargetCount { get; } = 1;
+        public void CastAbility(List<IUnit> units, IUnit source)
+        {
+            foreach (var unit in units)
+            {
+                StatusEffects.Effects.Add(new Deflect(unit));
             }
         }
     }

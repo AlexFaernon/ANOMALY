@@ -23,7 +23,7 @@ public class Hero : ICharacter
         private set => _mp = value;
     }
 
-    public ModifyDamage ModifyDamage { get; set; } = new ModifyDamage();
+    public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();
 
     public IAbility[] Abilities
     {
@@ -37,11 +37,12 @@ public class Hero : ICharacter
     public IAbility FirstAbility { get; } = new AttackClass();
     public IAbility Ultimate { get; } = new AttackClass();
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, IUnit source)
     {
-        ModifyDamage.Damage = damage;
-        ModifyDamage.Event.Invoke();
-        HP -= ModifyDamage.Damage;
+        ModifyReceivedDamage.Source = source;
+        ModifyReceivedDamage.Damage = damage;
+        ModifyReceivedDamage.Event.Invoke();
+        HP -= ModifyReceivedDamage.Damage;
     }
 
     public void Heal(int heal)
@@ -59,7 +60,7 @@ public class Hero : ICharacter
         {
             foreach (var unit in units)
             {
-                unit.TakeDamage(4);
+                unit.TakeDamage(4, source);
             }
         }
     }

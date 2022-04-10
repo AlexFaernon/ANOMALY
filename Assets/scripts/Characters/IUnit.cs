@@ -4,8 +4,8 @@ public interface IUnit
 {
     public int HP { get; }
     public bool CanMove { get; set; }
-    public ModifyDamage ModifyDamage { get; set; }
-    public void TakeDamage(int damage);
+    public ModifyReceivedDamage ModifyReceivedDamage { get; set; }
+    public void TakeDamage(int damage, IUnit source);
     public void Heal(int heal);
 }
 

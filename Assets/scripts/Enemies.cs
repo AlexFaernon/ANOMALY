@@ -16,11 +16,14 @@ public class Enemy : IEnemy
 
     public bool CanMove { get; set; }
 
-    public ModifyDamage ModifyDamage { get; set; }
+    public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, IUnit source)
     {
-        HP -= damage;
+        ModifyReceivedDamage.Source = source;
+        ModifyReceivedDamage.Damage = damage;
+        ModifyReceivedDamage.Event.Invoke();
+        HP -= ModifyReceivedDamage.Damage;
         Debug.Log(HP);
     }
 

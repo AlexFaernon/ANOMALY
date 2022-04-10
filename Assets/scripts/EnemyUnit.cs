@@ -15,12 +15,13 @@ public class EnemyUnit : MonoBehaviour
         UpdateHP(enemy);
         image = GetComponent<Image>();
         GetComponent<Button>().onClick.AddListener(PickTarget);
+        UnitsManager.Enemies.Add(enemy);
+
+        enemy.CanMove = true;
         
         EventAggregator.UpdateHP.Subscribe(UpdateHP);
-        EventAggregator.GetTargets.Subscribe(UnPick);
         EventAggregator.EnemyTurn.Subscribe(MakeMove);
-        
-        EventAggregator.NewEnemy.Publish(enemy);
+        EventAggregator.NewTurn.Subscribe(NewTurn);
     }
     
     private void UpdateHP(IUnit unit)
@@ -39,25 +40,22 @@ public class EnemyUnit : MonoBehaviour
             Debug.Log("Turn");
     }
 
+    private void NewTurn()
+    {
+        enemy.CanMove = true;
+    }
+
     private void PickTarget()
     {
         if (!TargetPicker.isPicking) return;
-
-        IsPicked = !IsPicked;
-        image.color = IsPicked ? Color.red : Color.white;
+        
         EventAggregator.PickTarget.Publish(enemy);
-    }
-
-    private void UnPick(List<IUnit> units)
-    {
-        IsPicked = false;
-        image.color = Color.white;
     }
 
     private void OnDestroy()
     {
         EventAggregator.UpdateHP.Unsubscribe(UpdateHP);
-        EventAggregator.GetTargets.Unsubscribe(UnPick);
         EventAggregator.EnemyTurn.Unsubscribe(MakeMove);
+        EventAggregator.NewTurn.Unsubscribe(NewTurn);
     }
 }
