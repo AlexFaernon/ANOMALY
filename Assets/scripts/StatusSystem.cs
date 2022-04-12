@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public static class StatusEffects
+public static class StatusSystem
 {
-    public static readonly List<Status> Effects = new List<Status>();
+    public static readonly List<Status> StatusList = new List<Status>();
 }
 
 public abstract class Status
@@ -29,7 +29,10 @@ public sealed class Invulnerability : Status
     
     public override void Dispel()
     {
-        OnEnd();
+        Target.ModifyReceivedDamage.Event.RemoveListener(MakeInvulnerable);
+        Debug.Log("Invul removed");
+        EventAggregator.NewTurn.Unsubscribe(OnTurn);
+        StatusSystem.StatusList.Remove(this);
     }
     
     public Invulnerability(IUnit target)
@@ -53,14 +56,6 @@ public sealed class Invulnerability : Status
         
         Debug.Log("Invul " + Duration);
     }
-
-    private void OnEnd()
-    {
-        Target.ModifyReceivedDamage.Event.RemoveListener(MakeInvulnerable);
-        Debug.Log("Invul removed");
-        EventAggregator.NewTurn.Unsubscribe(OnTurn);
-        StatusEffects.Effects.Remove(this);
-    }
 }
 
 public sealed class Protect : Status
@@ -70,7 +65,10 @@ public sealed class Protect : Status
     public override IUnit Target { get; set; }
     public override void Dispel()
     {
-        OnEnd();
+        Target.ModifyReceivedDamage.Event.RemoveListener(RedirectDamage);
+        Debug.Log("Protect removed");
+        EventAggregator.NewTurn.Unsubscribe(OnTurn);
+        StatusSystem.StatusList.Remove(this);
     }
 
     public Protect(IUnit target, IUnit protector)
@@ -102,14 +100,6 @@ public sealed class Protect : Status
         Protector.TakeDamage(damage, Target.ModifyReceivedDamage.Source);
         Debug.Log("redirected");
     }
-
-    private void OnEnd()
-    {
-        Target.ModifyReceivedDamage.Event.RemoveListener(RedirectDamage);
-        Debug.Log("Protect removed");
-        EventAggregator.NewTurn.Unsubscribe(OnTurn);
-        StatusEffects.Effects.Remove(this);
-    }
 }
 
 public sealed class Stun : Status
@@ -119,7 +109,7 @@ public sealed class Stun : Status
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(KeepStun);
-        StatusEffects.Effects.Remove(this);
+        StatusSystem.StatusList.Remove(this);
         Debug.Log("Stun end");
     }
 
@@ -153,7 +143,7 @@ public sealed class Deflect : Status
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
-        StatusEffects.Effects.Remove(this);
+        StatusSystem.StatusList.Remove(this);
         Debug.Log("Deflect stop");
     }
 
@@ -181,5 +171,42 @@ public sealed class Deflect : Status
     private void TakeDamageFromDeflect()
     {
         Target.ModifyReceivedDamage.Source?.TakeDamage(2, null);
+    }
+}
+
+public sealed class Berserk : Status
+{
+    public override int Duration { get; set; } = 2;
+    public override IUnit Target { get; set; }
+    private readonly ICharacter targetCharacter;
+    private readonly IAbility oldAbility;
+    public override void Dispel()
+    {
+        targetCharacter.Ultimate = oldAbility;
+        EventAggregator.NewTurn.Unsubscribe(OnTurn);
+        StatusSystem.StatusList.Remove(this);
+        Debug.Log("Berserk returned");
+    }
+
+    public Berserk(ICharacter target, IAbility ability)
+    {
+        Target = target;
+        targetCharacter = target;
+        oldAbility = targetCharacter.Ultimate;
+        targetCharacter.Ultimate = ability;
+        EventAggregator.NewTurn.Subscribe(OnTurn);
+        Debug.Log("Berserk Replaced");
+    }
+
+    private void OnTurn()
+    {
+        Duration -= 1;
+        if (Duration == 0)
+        {
+            Dispel();
+            return;
+        }
+        
+        Debug.Log("Berserk " + Duration);
     }
 }

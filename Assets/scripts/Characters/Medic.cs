@@ -1,55 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class Medic : ICharacter
+public class Medic : Character
 {
-    private static int _hp = 10;
-    private static int _mp = 10;
-
-    public int HP
-    {
-        get => _hp;
-        private set
-        {
-            _hp = value;
-            EventAggregator.UpdateHP.Publish(this);
-        }
-    }
-
-    public bool CanMove { get; set; }
-
-    public int MP
-    {
-        get => _mp;
-        private set => _mp = value;
-    }
-
-    public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();
-
-    public IAbility[] Abilities
-    {
-        get
-        {
-            return new[] { BasicAbility, FirstAbility, Ultimate };
-        }
-    }
-
-    public IAbility BasicAbility { get; } = new CastHeal();
-    public IAbility FirstAbility { get; } = new Dispel();
-    public IAbility Ultimate { get; } = new MakeInvulnerability();
-
-    public void TakeDamage(int damage, IUnit source)
-    {
-        ModifyReceivedDamage.Source = source;
-        ModifyReceivedDamage.Damage = damage;
-        ModifyReceivedDamage.Event.Invoke();
-        HP -= ModifyReceivedDamage.Damage;
-    }
-
-    public void Heal(int heal)
-    {
-        HP += heal;
-    }
+    public override IAbility BasicAbility { get; set; } = new CastHeal();
+    public override IAbility FirstAbility { get; set; } = new Dispel();
+    public override IAbility SecondAbility { get; set; }
+    public override IAbility Ultimate { get; set; } = new MakeInvulnerability();
 
     private class CastHeal : IAbility
     {
@@ -73,7 +30,7 @@ public class Medic : ICharacter
         public int TargetCount { get; } = 1;
         public void CastAbility(List<IUnit> units, IUnit source)
         {
-            foreach (var status in units.SelectMany(unit => StatusEffects.Effects.ToList().Where(x => x.Target == unit)))
+            foreach (var status in units.SelectMany(unit => StatusSystem.StatusList.ToList().Where(x => x.Target == unit)))
             {
                 status.Dispel();
             }
@@ -89,7 +46,7 @@ public class Medic : ICharacter
         {
             foreach (var unit in units)
             {
-                StatusEffects.Effects.Add(new Invulnerability(unit));
+                StatusSystem.StatusList.Add(new Invulnerability(unit));
             }
         }
     }

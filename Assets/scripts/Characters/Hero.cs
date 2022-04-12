@@ -1,55 +1,12 @@
 using System.Collections.Generic;
 
-public class Hero : ICharacter
+public class Hero : Character
 {
-    private static int _hp = 10;
-    private static int _mp = 10;
-
-    public int HP
-    {
-        get => _hp;
-        private set
-        {
-            _hp = value;
-            EventAggregator.UpdateHP.Publish(this);
-        }
-    }
-
-    public bool CanMove { get; set; }
-
-    public int MP
-    {
-        get => _mp;
-        private set => _mp = value;
-    }
-
-    public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();
-
-    public IAbility[] Abilities
-    {
-        get
-        {
-            return new[] { BasicAbility, FirstAbility, Ultimate };
-        }
-    }
-
-    public IAbility BasicAbility { get; } = new AttackClass();
-    public IAbility FirstAbility { get; } = new AttackClass();
-    public IAbility Ultimate { get; } = new AttackClass();
-
-    public void TakeDamage(int damage, IUnit source)
-    {
-        ModifyReceivedDamage.Source = source;
-        ModifyReceivedDamage.Damage = damage;
-        ModifyReceivedDamage.Event.Invoke();
-        HP -= ModifyReceivedDamage.Damage;
-    }
-
-    public void Heal(int heal)
-    {
-        HP += heal;
-    }
-
+    public override IAbility BasicAbility { get; set; } = new AttackClass();
+    public override IAbility FirstAbility { get; set; } = new AttackClass();
+    public override IAbility SecondAbility { get; set; } = new AttackClass();
+    public override IAbility Ultimate { get; set; } = new AttackClass();
+    
     private class AttackClass : IAbility
     {
         public int Cost { get; } = 1;
