@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
-   private IAbility ability;
+   private AbilityType abilityType;
    private Button button;
    private float holdTime = 1f;
    private PointerEventData eventData;
@@ -13,27 +13,29 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
    {
       EventAggregator.BindAbilityButton.Subscribe(BindAbilityButton);
       button = GetComponent<Button>();
-      button.onClick.AddListener(ToggleOffAbilities);
+      button.onClick.AddListener(OnShortPress);
    }
 
-   private void ToggleOffAbilities()
+   private void OnShortPress()
    {
+      var parent = transform.parent.gameObject;
+      EventAggregator.CastAbilityType.Publish(parent, abilityType);
       EventAggregator.ToggleDarkenOff.Publish();
-      transform.parent.gameObject.SetActive(false);
+      parent.SetActive(false);
    }
-   
+
    void OnLongPress()
    {
+      EventAggregator.AbilityTypeInfo.Publish(transform.parent.gameObject, abilityType);
       eventData.eligibleForClick = false;
-      EventAggregator.ShowAbilityInfo.Publish(ability);
       Debug.Log("long");
    }
 
-   void BindAbilityButton(GameObject obj, IAbility ability)
+   void BindAbilityButton(GameObject obj, AbilityType ability)
    {
       if (obj != gameObject) return;
       
-      this.ability = ability;
+      abilityType = ability;
    }
    
    public void OnPointerDown(PointerEventData eventData)

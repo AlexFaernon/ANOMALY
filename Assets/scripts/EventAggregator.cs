@@ -13,12 +13,12 @@ public static class EventAggregator
     public static readonly Event ToggleDarkenOff = new Event();
     public static readonly Event<GameObject> ToggleTargetSquare = new Event<GameObject>();
     public static readonly Event<IAbility> ShowAbilityInfo = new Event<IAbility>();
-    public static readonly Event<GameObject, IAbility> BindAbilityButton = new Event<GameObject, IAbility>();
+    public static readonly Event<GameObject, AbilityType> BindAbilityButton = new Event<GameObject, AbilityType>();
     public static readonly Event NewTurn = new Event();
     public static readonly Event<IEnemy> EnemyTurn = new Event<IEnemy>();
     public static readonly Event ToggleOffAbilityLists = new Event();
-    public static readonly Event<GameObject, IEnumerable<IAbility>, Action<IAbility>> CreateAbilityButtons =
-        new Event<GameObject, IEnumerable<IAbility>, Action<IAbility>>();
+    public static readonly Event<GameObject, AbilityType> CastAbilityType = new Event<GameObject, AbilityType>();
+    public static readonly Event<GameObject, AbilityType> AbilityTypeInfo = new Event<GameObject, AbilityType>();
 }
 
 public class Event<T>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -143,6 +144,7 @@ public sealed class Deflect : Status
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
+        Target.ModifyReceivedDamage.Event.RemoveListener(TakeDamageFromDeflect);
         StatusSystem.StatusList.Remove(this);
         Debug.Log("Deflect stop");
     }
@@ -208,5 +210,43 @@ public sealed class Berserk : Status
         }
         
         Debug.Log("Berserk " + Duration);
+    }
+}
+
+public sealed class AmplifyDamage : Status
+{
+    public override int Duration { get; set; } = 2;
+    public override IUnit Target { get; set; }
+    public override void Dispel()
+    {
+        EventAggregator.NewTurn.Unsubscribe(OnTurn);
+        Target.ModifyReceivedDamage.Event.RemoveListener(DamageUp);
+        StatusSystem.StatusList.Remove(this);
+        Debug.Log("DamageUp stop");
+    }
+
+    public AmplifyDamage(IUnit target)
+    {
+        Target = target;
+        Target.ModifyReceivedDamage.Event.AddListener(DamageUp);
+        EventAggregator.NewTurn.Subscribe(OnTurn);
+        Debug.Log("DamageUp start");
+    }
+
+    private void DamageUp()
+    {
+        Target.ModifyReceivedDamage.Damage = (int)(Target.ModifyReceivedDamage.Damage * 1.5);
+    }
+
+    private void OnTurn()
+    {
+        Duration -= 1;
+        if (Duration == 0)
+        {
+            Dispel();
+            return;
+        }
+        
+        Debug.Log("DamageUp " + Duration);
     }
 }

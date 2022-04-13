@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine.Events;
 public class ModifyReceivedDamage
 {
@@ -41,14 +42,14 @@ public abstract class Character : ICharacter
     {
         HP += heal;
     }
-    
-    public IAbility[] Abilities
+
+    public Dictionary<AbilityType, IAbility> Abilities => new Dictionary<AbilityType, IAbility>
     {
-        get
-        {
-            return new[] { BasicAbility, FirstAbility, SecondAbility, Ultimate };
-        }
-    }
+        { AbilityType.Basic, BasicAbility },
+        { AbilityType.First, FirstAbility },
+        { AbilityType.Second, SecondAbility },
+        { AbilityType.Ultimate, Ultimate }
+    };
     public virtual IAbility BasicAbility { get; set; }
     public virtual IAbility FirstAbility { get; set; }
     public virtual IAbility SecondAbility { get; set; }

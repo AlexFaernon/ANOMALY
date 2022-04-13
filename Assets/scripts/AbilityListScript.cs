@@ -8,20 +8,17 @@ public class AbilityListScript : MonoBehaviour
     [SerializeField] private GameObject abilityButtonPrefab;
     private void Awake()
     {
-        EventAggregator.CreateAbilityButtons.Subscribe(CreateAbilityButtons);
+        CreateAbilityButtons();
         EventAggregator.ToggleOffAbilityLists.Subscribe(TurnSelfOff);
         gameObject.SetActive(false);
     }
 
-    private void CreateAbilityButtons(GameObject other, IEnumerable<IAbility> abilities, Action<IAbility> startAbilityMethod)
+    private void CreateAbilityButtons()
     {
-        if (gameObject != other) return;
-        
-        foreach (var ability in abilities)
+        foreach (AbilityType abilityInfo in Enum.GetValues(typeof(AbilityType)))
         {
             var button = Instantiate(abilityButtonPrefab, transform);
-            EventAggregator.BindAbilityButton.Publish(button, ability);
-            button.GetComponent<Button>().onClick.AddListener(() => startAbilityMethod(ability));
+            EventAggregator.BindAbilityButton.Publish(button, abilityInfo);
         }
     }
 
@@ -32,7 +29,6 @@ public class AbilityListScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventAggregator.CreateAbilityButtons.Unsubscribe(CreateAbilityButtons);
         EventAggregator.ToggleOffAbilityLists.Unsubscribe(TurnSelfOff);
     }
 }

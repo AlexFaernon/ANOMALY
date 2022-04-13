@@ -12,7 +12,7 @@ public interface IUnit
 public interface ICharacter : IUnit
 {
     public int MP { get; }
-    public IAbility[] Abilities { get; }
+    public Dictionary<AbilityType, IAbility> Abilities { get; }
     public IAbility BasicAbility { get; set; }
     public IAbility FirstAbility { get; set; }
     public IAbility SecondAbility { get; set; }

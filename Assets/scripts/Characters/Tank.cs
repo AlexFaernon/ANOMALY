@@ -42,7 +42,7 @@ public class Tank : Character
     {
         public int Cost { get; }
         public int Cooldown { get; }
-        public int TargetCount { get; } = 1;
+        public int TargetCount { get; } = 0;
         public void CastAbility(List<IUnit> units, IUnit source)
         {
             foreach (var unit in units)
@@ -56,7 +56,7 @@ public class Tank : Character
     {
         public int Cost { get; }
         public int Cooldown { get; }
-        public int TargetCount { get; } = 1;
+        public int TargetCount { get; } = 0;
         public void CastAbility(List<IUnit> units, IUnit source)
         {
             foreach (var unit in units)

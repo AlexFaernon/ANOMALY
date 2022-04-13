@@ -38,7 +38,7 @@ public class HeroUnit : MonoBehaviour
     {
         character = characterClass switch
         {
-            CharacterClass.Hero => new Hero(),
+            CharacterClass.Hero => new Damager(),
             CharacterClass.Medic => new Medic(),
             CharacterClass.Tank => new Tank(),
             _ => throw new ArgumentOutOfRangeException()
@@ -52,13 +52,10 @@ public class HeroUnit : MonoBehaviour
         
         GetComponent<Button>().onClick.AddListener(ToggleAbilities);
 
+        EventAggregator.CastAbilityType.Subscribe(StartAbility);
+        EventAggregator.AbilityTypeInfo.Subscribe(ShowAbilityInfoByType);
         EventAggregator.UpdateHP.Subscribe(UpdateHP);
         EventAggregator.NewTurn.Subscribe(NewTurn);
-    }
-
-    private void Start()
-    {
-        EventAggregator.CreateAbilityButtons.Publish(abilityList, character.Abilities, StartAbility);
     }
 
     private void UpdateHP(IUnit unit)
@@ -69,11 +66,27 @@ public class HeroUnit : MonoBehaviour
         }
     }
 
-    private void StartAbility(IAbility ability)
+    private void StartAbility(GameObject obj, AbilityType abilityType)
     {
-        currentAbility = ability;
+        if (abilityList != obj) return;
+
+        currentAbility = character.Abilities[abilityType];
+
+        if (currentAbility.TargetCount == 0)
+        {
+            CastAbility(new List<IUnit> { character });
+            return;
+        }
+        
         EventAggregator.GetTargets.Subscribe(CastAbility);
         EventAggregator.StartChooseTargets.Publish(currentAbility.TargetCount);
+    }
+
+    private void ShowAbilityInfoByType(GameObject obj, AbilityType abilityType)
+    {
+        if (abilityList != obj) return;
+        
+        EventAggregator.ShowAbilityInfo.Publish(character.Abilities[abilityType]);
     }
 
     private void ToggleAbilities()
@@ -115,4 +128,12 @@ public class HeroUnit : MonoBehaviour
         Medic,
         Tank
     }
+}
+
+public enum AbilityType
+{
+    Basic,
+    First,
+    Second,
+    Ultimate
 }
