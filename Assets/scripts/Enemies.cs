@@ -22,7 +22,10 @@ public class Enemy : IEnemy
     {
         ModifyReceivedDamage.Source = source;
         ModifyReceivedDamage.Damage = damage;
+        
         ModifyReceivedDamage.Event.Invoke();
+        
+        EventAggregator.DamageDealtByUnit.Publish(ModifyReceivedDamage.Damage, source);
         HP -= ModifyReceivedDamage.Damage;
         Debug.Log(HP);
     }

@@ -21,7 +21,9 @@ public abstract class Character : ICharacter
             EventAggregator.UpdateHP.Publish(this);
         }
     }
-    
+
+    public int HPSegmentLength { get; } = 3;
+
     public virtual int MP
     {
         get => _mp;
@@ -34,7 +36,10 @@ public abstract class Character : ICharacter
     {
         ModifyReceivedDamage.Source = source;
         ModifyReceivedDamage.Damage = damage;
+        
         ModifyReceivedDamage.Event.Invoke();
+        
+        EventAggregator.DamageDealtByUnit.Publish(ModifyReceivedDamage.Damage, source);
         HP -= ModifyReceivedDamage.Damage;
     }
 

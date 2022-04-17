@@ -11,6 +11,7 @@ public interface IUnit
 
 public interface ICharacter : IUnit
 {
+    public int HPSegmentLength { get; }
     public int MP { get; }
     public Dictionary<AbilityType, IAbility> Abilities { get; }
     public IAbility BasicAbility { get; set; }

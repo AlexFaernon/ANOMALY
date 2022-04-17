@@ -8,7 +8,7 @@ public class HeroUnit : MonoBehaviour
 {
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private GameObject abilityList;
-    [SerializeField] private TMP_Text HP;
+    [SerializeField] private GameObject HPBar;
     private ICharacter character;
     private IAbility currentAbility;
 
@@ -48,22 +48,17 @@ public class HeroUnit : MonoBehaviour
 
         CanMove = true;
 
-        UpdateHP(character);
-        
         GetComponent<Button>().onClick.AddListener(ToggleAbilities);
 
         EventAggregator.CastAbilityType.Subscribe(StartAbility);
         EventAggregator.AbilityTypeInfo.Subscribe(ShowAbilityInfoByType);
-        EventAggregator.UpdateHP.Subscribe(UpdateHP);
         EventAggregator.NewTurn.Subscribe(NewTurn);
     }
 
-    private void UpdateHP(IUnit unit)
+    private void Start()
     {
-        if (unit == character)
-        {
-            HP.text = character.HP.ToString();
-        }
+        EventAggregator.BindHPBarToCharacter.Publish(HPBar, character);
+        EventAggregator.UpdateHP.Publish(character);
     }
 
     private void StartAbility(GameObject obj, AbilityType abilityType)
@@ -117,9 +112,7 @@ public class HeroUnit : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventAggregator.UpdateHP.Unsubscribe(UpdateHP);
         EventAggregator.NewTurn.Unsubscribe(NewTurn);
-
     }
 
     private enum CharacterClass

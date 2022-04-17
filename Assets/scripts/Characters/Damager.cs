@@ -4,7 +4,7 @@ public class Damager : Character
 {
     public override IAbility BasicAbility { get; set; } = new AttackClass();
     public override IAbility FirstAbility { get; set; } = new CastDamageUp();
-    public override IAbility SecondAbility { get; set; } = new AttackClass();
+    public override IAbility SecondAbility { get; set; } = new LifeStealing();
     public override IAbility Ultimate { get; set; } = new LotOfDamage();
     
     private class AttackClass : IAbility
@@ -32,6 +32,20 @@ public class Damager : Character
             foreach (var unit in units)
             {
                 StatusSystem.StatusList.Add(new AmplifyDamage(unit));
+            }
+        }
+    }
+    
+    private class LifeStealing : IAbility
+    {
+        public int Cost { get; }
+        public int Cooldown { get; }
+        public int TargetCount { get; } = 0;
+        public void CastAbility(List<IUnit> units, IUnit source)
+        {
+            foreach (var unit in units)
+            {
+                StatusSystem.StatusList.Add(new LifeSteal(unit));
             }
         }
     }

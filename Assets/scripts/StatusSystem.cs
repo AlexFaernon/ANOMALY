@@ -250,3 +250,70 @@ public sealed class AmplifyDamage : Status
         Debug.Log("DamageUp " + Duration);
     }
 }
+
+public sealed class DelayedHealing : Status
+{
+    public override int Duration { get; set; } = 3;
+    public override IUnit Target { get; set; }
+    public override void Dispel()
+    {
+        EventAggregator.NewTurn.Unsubscribe(OnTurn);
+        StatusSystem.StatusList.Remove(this);
+    }
+
+    public DelayedHealing(IUnit target)
+    {
+        Target = target;
+        Target.TakeDamage(1, null);
+        EventAggregator.NewTurn.Subscribe(OnTurn);
+    }
+
+    private void OnTurn()
+    {
+        Target.Heal(1);
+        Duration -= 1;
+        if (Duration == 0)
+        {
+            Dispel();
+        }
+    }
+}
+
+public sealed class LifeSteal : Status
+{
+    public override int Duration { get; set; } = 2;
+    public override IUnit Target { get; set; }
+    public override void Dispel()
+    {
+        StatusSystem.StatusList.Remove(this);
+        EventAggregator.DamageDealtByUnit.Unsubscribe(HealByDamage);
+        EventAggregator.NewTurn.Unsubscribe(OnTurn);
+        Debug.Log("LifeSteal stop");
+    }
+
+    public LifeSteal(IUnit target)
+    {
+        Target = target;
+        EventAggregator.DamageDealtByUnit.Subscribe(HealByDamage);
+        EventAggregator.NewTurn.Subscribe(OnTurn);
+        Debug.Log("LifeSteal start");
+    }
+    
+    private void OnTurn()
+    {
+        Duration -= 1;
+        Debug.Log("LifeSteal " + Duration);
+        if (Duration == 0)
+        {
+            Dispel();
+        }
+    }
+
+    private void HealByDamage(int damage, IUnit source)
+    {
+        if (source == Target)
+        {
+            Target.Heal(damage / 2);
+        }
+    }
+}
