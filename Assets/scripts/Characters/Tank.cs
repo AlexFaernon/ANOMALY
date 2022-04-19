@@ -10,8 +10,8 @@ public class Tank : Character
     
     private class CastProtect : IAbility
     {
-        public int Cost { get; }
-        public int Cooldown { get; }
+        public int Cost { get; } = 0;
+        public int Cooldown { get; } = 0;
         public int TargetCount { get; } = 1;
         
         public void CastAbility(List<IUnit> units, IUnit source)
@@ -26,8 +26,8 @@ public class Tank : Character
     
     private class CastStun : IAbility
     {
-        public int Cost { get; }
-        public int Cooldown { get; }
+        public int Cost { get; } = 2;
+        public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 1;
         public void CastAbility(List<IUnit> units, IUnit source)
         {
@@ -40,8 +40,8 @@ public class Tank : Character
 
     private class CastDeflect : IAbility
     {
-        public int Cost { get; }
-        public int Cooldown { get; }
+        public int Cost { get; } = 2;
+        public int Cooldown { get; } = 3;
         public int TargetCount { get; } = 0;
         public void CastAbility(List<IUnit> units, IUnit source)
         {
@@ -54,8 +54,8 @@ public class Tank : Character
     
     private class CastBerserk : IAbility
     {
-        public int Cost { get; }
-        public int Cooldown { get; }
+        public int Cost { get; } = 4;
+        public int Cooldown { get; } = 5;
         public int TargetCount { get; } = 0;
         public void CastAbility(List<IUnit> units, IUnit source)
         {
@@ -67,14 +67,14 @@ public class Tank : Character
 
         private class BerserkAbility : IAbility
         {
-            public int Cost { get; }
-            public int Cooldown { get; }
+            public int Cost { get; } = 0;
+            public int Cooldown { get; } = 0;
             public int TargetCount { get; } = 3;
             public void CastAbility(List<IUnit> units, IUnit source)
             {
                 foreach (var unit in units)
                 {
-                    unit.TakeDamage(5, source);
+                    unit.TakeDamage(2, source);
                 }
             }
         }

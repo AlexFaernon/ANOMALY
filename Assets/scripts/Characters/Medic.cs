@@ -25,8 +25,8 @@ public class Medic : Character
 
     private class CastDelayedHealing : IAbility
     {
-        public int Cost { get; }
-        public int Cooldown { get; }
+        public int Cost { get; } = 2;
+        public int Cooldown { get; } = 3;
         public int TargetCount { get; } = 1;
         public void CastAbility(List<IUnit> units, IUnit source)
         {
@@ -39,8 +39,8 @@ public class Medic : Character
     
     private class Dispel : IAbility
     {
-        public int Cost { get; }
-        public int Cooldown { get; }
+        public int Cost { get; } = 2;
+        public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 1;
         public void CastAbility(List<IUnit> units, IUnit source)
         {
@@ -53,8 +53,8 @@ public class Medic : Character
     
     private class MakeInvulnerability : IAbility
     {
-        public int Cost { get; }
-        public int Cooldown { get; }
+        public int Cost { get; } = 4;
+        public int Cooldown { get; } = 5;
         public int TargetCount { get; } = 1;
         public void CastAbility(List<IUnit> units, IUnit source)
         {

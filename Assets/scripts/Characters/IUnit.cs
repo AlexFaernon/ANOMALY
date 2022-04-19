@@ -12,7 +12,7 @@ public interface IUnit
 public interface ICharacter : IUnit
 {
     public int HPSegmentLength { get; }
-    public int MP { get; }
+    public int MP { get; set; }
     public Dictionary<AbilityType, IAbility> Abilities { get; }
     public IAbility BasicAbility { get; set; }
     public IAbility FirstAbility { get; set; }

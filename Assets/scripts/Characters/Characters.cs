@@ -27,7 +27,7 @@ public abstract class Character : ICharacter
     public virtual int MP
     {
         get => _mp;
-        private set => _mp = value;
+        set => _mp = value;
     }
     
     public bool CanMove { get; set; }

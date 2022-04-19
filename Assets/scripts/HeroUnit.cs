@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,6 +65,11 @@ public class HeroUnit : MonoBehaviour
         if (abilityList != obj) return;
 
         currentAbility = character.Abilities[abilityType];
+        if (character.MP < currentAbility.Cost)
+        {
+            Debug.Log("No mana");
+            return;
+        }
 
         if (currentAbility.TargetCount == 0)
         {
@@ -101,6 +105,7 @@ public class HeroUnit : MonoBehaviour
     void CastAbility(List<IUnit> units)
     {
         currentAbility.CastAbility(units, character);
+        character.MP -= currentAbility.Cost;
         CanMove = false;
         EventAggregator.GetTargets.Unsubscribe(CastAbility);
     }
@@ -108,6 +113,7 @@ public class HeroUnit : MonoBehaviour
     private void NewTurn()
     {
         CanMove = true;
+        character.MP += 1;
     }
 
     private void OnDestroy()
