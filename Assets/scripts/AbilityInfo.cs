@@ -6,8 +6,8 @@ public class AbilityInfo : MonoBehaviour
     [SerializeField] private TMP_Text text;
     private void Awake()
     {
-        EventAggregator.ShowAbilityInfo.Subscribe(Method);
-        EventAggregator.ToggleDarkenOff.Subscribe(ToggleSelf);
+        EventAggregator.ShowAbilityInfo.Subscribe(ShowInfo);
+        EventAggregator.HideAbilityInfo.Subscribe(ToggleSelf);
         gameObject.SetActive(false);
     }
 
@@ -15,8 +15,8 @@ public class AbilityInfo : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    
-    void Method(IAbility ability)
+
+    private void ShowInfo(IAbility ability)
     {
         gameObject.SetActive(true);
         text.text = ability.Cost.ToString();
@@ -24,6 +24,7 @@ public class AbilityInfo : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventAggregator.ShowAbilityInfo.Unsubscribe(Method);
+        EventAggregator.ShowAbilityInfo.Unsubscribe(ShowInfo);
+        EventAggregator.HideAbilityInfo.Unsubscribe(ToggleSelf);
     }
 }

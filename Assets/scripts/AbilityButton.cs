@@ -1,41 +1,85 @@
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
-   private AbilityType abilityType;
+   [SerializeField] private TMP_Text cooldownText;
    private Button button;
-   private float holdTime = 1f;
+   private Image image;
+   private const float holdTime = 1f;
    private PointerEventData eventData;
-
+   private AbilityType abilityType;
+   private Dictionary<IAbility, int> abilitiesCooldown = new Dictionary<IAbility, int>();
    private void Awake()
    {
-      EventAggregator.BindAbilityButton.Subscribe(BindAbilityButton);
+      EventAggregator.BindAbilityButton.Subscribe(BindAbilityType);
+      EventAggregator.SwitchAbilities.Subscribe(SwitchAbilities);
+      EventAggregator.NewTurn.Subscribe(ReduceCooldownOnTurn);
       button = GetComponent<Button>();
+      image = GetComponent<Image>();
       button.onClick.AddListener(OnShortPress);
    }
 
    private void OnShortPress()
    {
-      var parent = transform.parent.gameObject;
-      EventAggregator.CastAbilityType.Publish(parent, abilityType);
-      EventAggregator.ToggleDarkenOff.Publish();
-      parent.SetActive(false);
+      EventAggregator.CastAbilityType.Publish(abilityType);
+      transform.parent.gameObject.SetActive(false);
    }
 
    void OnLongPress()
    {
-      EventAggregator.AbilityTypeInfo.Publish(transform.parent.gameObject, abilityType);
+      EventAggregator.AbilityTypeInfo.Publish(abilityType);
       eventData.eligibleForClick = false;
       Debug.Log("long");
    }
 
-   void BindAbilityButton(GameObject obj, AbilityType ability)
+   void BindAbilityType(GameObject obj, AbilityType ability)
    {
       if (obj != gameObject) return;
       
       abilityType = ability;
+   }
+
+   private void SwitchAbilities(ICharacter character)
+   {
+      var ability = character.Abilities[abilityType];
+      
+      if (abilitiesCooldown.TryGetValue(ability, out var cooldown))
+      {
+         if (cooldown == 0)
+         {
+            button.interactable = true;
+            cooldownText.text = "";
+         }
+         else
+         {
+            button.interactable = false;
+            cooldownText.text = cooldown.ToString();
+         }
+      }
+      else
+      {
+         abilitiesCooldown[ability] = 0;
+         button.interactable = true;
+         cooldownText.text = "";
+      }
+   }
+
+   private void ReduceCooldownOnTurn()
+   {
+      foreach (var ability in abilitiesCooldown.Keys.Where(ability => abilitiesCooldown[ability] > 0))
+      {
+         abilitiesCooldown[ability]--;
+      }
+   }
+
+   private void UpdateCooldown()
+   {
+      
    }
    
    public void OnPointerDown(PointerEventData eventData)
@@ -47,7 +91,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
    public void OnPointerUp(PointerEventData eventData)
    {
       CancelInvoke(nameof(OnLongPress));
-        
+      EventAggregator.HideAbilityInfo.Publish();
    }
  
    public void OnPointerExit(PointerEventData eventData)
@@ -57,6 +101,8 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
    private void OnDestroy()
    {
-      EventAggregator.BindAbilityButton.Unsubscribe(BindAbilityButton);
+      EventAggregator.BindAbilityButton.Unsubscribe(BindAbilityType);
+      EventAggregator.SwitchAbilities.Unsubscribe(SwitchAbilities);
+      EventAggregator.NewTurn.Unsubscribe(ReduceCooldownOnTurn);
    }
 }

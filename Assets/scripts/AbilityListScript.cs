@@ -9,7 +9,7 @@ public class AbilityListScript : MonoBehaviour
     private void Awake()
     {
         CreateAbilityButtons();
-        EventAggregator.ToggleOffAbilityLists.Subscribe(TurnSelfOff);
+        EventAggregator.ToggleAbilityList.Subscribe(ToggleSelf);
         gameObject.SetActive(false);
     }
 
@@ -21,14 +21,14 @@ public class AbilityListScript : MonoBehaviour
             EventAggregator.BindAbilityButton.Publish(button, abilityInfo);
         }
     }
-
-    private void TurnSelfOff()
+    
+    private void ToggleSelf(bool isActive)
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive(isActive);
     }
 
     private void OnDestroy()
     {
-        EventAggregator.ToggleOffAbilityLists.Unsubscribe(TurnSelfOff);
+        EventAggregator.ToggleAbilityList.Subscribe(ToggleSelf);
     }
 }

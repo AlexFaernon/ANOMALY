@@ -7,8 +7,6 @@ public class Darken : MonoBehaviour
 
     private void Awake()
     {
-        EventAggregator.ToggleDarkenOn.Subscribe(ToggleDarkenOn);
-        EventAggregator.ToggleDarkenOff.Subscribe(ToggleDarkenOff);
         image = GetComponent<Image>();
     }
 
@@ -24,7 +22,5 @@ public class Darken : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventAggregator.ToggleDarkenOn.Unsubscribe(ToggleDarkenOn);
-        EventAggregator.ToggleDarkenOff.Unsubscribe(ToggleDarkenOff);
     }
 }

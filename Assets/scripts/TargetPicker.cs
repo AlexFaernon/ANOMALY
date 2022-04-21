@@ -19,15 +19,10 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
     
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (isPicking)
-        {
-            ClearTargets();
-        }
-        else
-        {
-            EventAggregator.ToggleDarkenOff.Publish();
-            EventAggregator.ToggleOffAbilityLists.Publish();
-        }
+        if (!isPicking) return;
+        
+        ClearTargets();
+        EventAggregator.DeselectCharacters.Publish();
     }
 
     void StartPicking(int count)
@@ -78,6 +73,7 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         
         targets.Clear();
         isPicking = false;
+        EventAggregator.DeselectTargets.Publish();
     }
 
     private void OnDestroy()

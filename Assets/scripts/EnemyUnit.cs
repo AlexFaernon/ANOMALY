@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,14 +7,13 @@ using UnityEngine.UI;
 public class EnemyUnit : MonoBehaviour
 {
     [SerializeField] private TMP_Text HP;
+    [SerializeField] private GameObject hpBar;
     private readonly IEnemy enemy = new Enemy();
     private bool IsPicked;
-    private Image image;
-    
+
     private void Awake()
     {
         UpdateHP(enemy);
-        image = GetComponent<Image>();
         GetComponent<Button>().onClick.AddListener(PickTarget);
         UnitsManager.Enemies.Add(enemy);
 
@@ -23,7 +23,12 @@ public class EnemyUnit : MonoBehaviour
         EventAggregator.EnemyTurn.Subscribe(MakeMove);
         EventAggregator.NewTurn.Subscribe(NewTurn);
     }
-    
+
+    private void Start()
+    {
+        EventAggregator.BindHPBarToEnemy.Publish(hpBar, enemy);
+    }
+
     private void UpdateHP(IUnit unit)
     {
         if (unit == enemy)

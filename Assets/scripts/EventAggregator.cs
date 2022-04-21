@@ -9,20 +9,23 @@ public static class EventAggregator
     public static readonly Event<IUnit> PickTarget = new Event<IUnit>();
     public static readonly Event<List<IUnit>> GetTargets = new Event<List<IUnit>>();
     public static readonly Event<IUnit> UpdateHP = new Event<IUnit>();
-    public static readonly Event ToggleDarkenOn = new Event();
-    public static readonly Event ToggleDarkenOff = new Event();
     public static readonly Event<GameObject> ToggleTargetSquare = new Event<GameObject>();
     public static readonly Event<IAbility> ShowAbilityInfo = new Event<IAbility>();
+    public static readonly Event HideAbilityInfo = new Event();
     public static readonly Event<GameObject, AbilityType> BindAbilityButton = new Event<GameObject, AbilityType>();
     public static readonly Event NewTurn = new Event();
+    public static readonly Event<bool> ToggleAbilityList = new Event<bool>();
     public static readonly Event<IEnemy> EnemyTurn = new Event<IEnemy>();
-    public static readonly Event ToggleOffAbilityLists = new Event();
-    public static readonly Event<GameObject, AbilityType> CastAbilityType = new Event<GameObject, AbilityType>();
-    public static readonly Event<GameObject, AbilityType> AbilityTypeInfo = new Event<GameObject, AbilityType>();
+    public static readonly Event<AbilityType> CastAbilityType = new Event<AbilityType>();
+    public static readonly Event<AbilityType> AbilityTypeInfo = new Event<AbilityType>();
     public static readonly Event<int, IUnit> DamageDealtByUnit = new Event<int, IUnit>();
     public static readonly Event<GameObject, int> SetMaxHPSegment = new Event<GameObject, int>();
     public static readonly Event<GameObject, int> UpdateHPSegment = new Event<GameObject, int>();
     public static readonly Event<GameObject, ICharacter> BindHPBarToCharacter = new Event<GameObject, ICharacter>();
+    public static readonly Event DeselectCharacters = new Event();
+    public static readonly Event DeselectTargets = new Event();
+    public static readonly Event<GameObject, IEnemy> BindHPBarToEnemy = new Event<GameObject, IEnemy>();
+    public static readonly Event<ICharacter> SwitchAbilities = new Event<ICharacter>();
 }
 
 public class Event<T>
