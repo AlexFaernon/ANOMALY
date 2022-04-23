@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class AbilityInfo : MonoBehaviour
 {
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private TMP_Text Title;
+    [SerializeField] private TMP_Text Description;
+    [SerializeField] private TMP_Text Cooldown;
+    [SerializeField] private TMP_Text Cost;
+
     private void Awake()
     {
         EventAggregator.ShowAbilityInfo.Subscribe(ShowInfo);
@@ -19,7 +23,10 @@ public class AbilityInfo : MonoBehaviour
     private void ShowInfo(IAbility ability)
     {
         gameObject.SetActive(true);
-        text.text = ability.Cost.ToString();
+        Title.text = "заглушка";
+        Description.text = ability.Description;
+        Cooldown.text = ability.Cooldown.ToString();
+        Cost.text = ability.Cost.ToString();
     }
 
     private void OnDestroy()

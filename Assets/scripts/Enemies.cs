@@ -4,6 +4,8 @@ public class Enemy : IEnemy
 {
     private int _hp = 5;
 
+    public int MaxHP { get; }
+
     public int HP
     {
         get => _hp;

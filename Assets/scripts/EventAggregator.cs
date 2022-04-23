@@ -9,6 +9,7 @@ public static class EventAggregator
     public static readonly Event<IUnit> PickTarget = new Event<IUnit>();
     public static readonly Event<List<IUnit>> GetTargets = new Event<List<IUnit>>();
     public static readonly Event<IUnit> UpdateHP = new Event<IUnit>();
+    public static readonly Event<ICharacter> UpdateMP = new Event<ICharacter>();
     public static readonly Event<GameObject> ToggleTargetSquare = new Event<GameObject>();
     public static readonly Event<IAbility> ShowAbilityInfo = new Event<IAbility>();
     public static readonly Event HideAbilityInfo = new Event();
@@ -22,10 +23,12 @@ public static class EventAggregator
     public static readonly Event<GameObject, int> SetMaxHPSegment = new Event<GameObject, int>();
     public static readonly Event<GameObject, int> UpdateHPSegment = new Event<GameObject, int>();
     public static readonly Event<GameObject, ICharacter> BindHPBarToCharacter = new Event<GameObject, ICharacter>();
+    public static readonly Event<GameObject, ICharacter> BindMPBarToCharacter = new Event<GameObject, ICharacter>();
     public static readonly Event DeselectCharacters = new Event();
     public static readonly Event DeselectTargets = new Event();
     public static readonly Event<GameObject, IEnemy> BindHPBarToEnemy = new Event<GameObject, IEnemy>();
     public static readonly Event<ICharacter> SwitchAbilities = new Event<ICharacter>();
+    public static readonly Event<IAbility> AbilityCasted = new Event<IAbility>();
 }
 
 public class Event<T>

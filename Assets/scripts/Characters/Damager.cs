@@ -9,9 +9,10 @@ public class Damager : Character
     
     private class AttackClass : IAbility
     {
+        public string Description { get; }
         public int Cost { get; } = 0;
         public int Cooldown { get; } = 0;
-        public int TargetCount { get; } = 2;
+        public int TargetCount { get; } = 1;
 
         public void CastAbility(List<IUnit> units, IUnit source)
         {
@@ -24,6 +25,7 @@ public class Damager : Character
     
     private class CastDamageUp : IAbility
     {
+        public string Description { get; }
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 1;
@@ -38,6 +40,7 @@ public class Damager : Character
     
     private class LifeStealing : IAbility
     {
+        public string Description { get; }
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 0;
@@ -52,6 +55,7 @@ public class Damager : Character
 
     private class LotOfDamage : IAbility
     {
+        public string Description { get; }
         public int Cost { get; } = 4;
         public int Cooldown { get; } = 5;
         public int TargetCount { get; } = 1;

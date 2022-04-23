@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
 public class ModifyReceivedDamage
@@ -9,25 +10,32 @@ public class ModifyReceivedDamage
 
 public abstract class Character : ICharacter
 {
-    private int _hp = 10;
-    private int _mp = 10;
 
+    private int _hp = 6;
+    private int _mp = 6;
+
+    public int MaxHP { get; } = 6;
+    public int MaxMP { get; set; } = 6;
+    public int HPSegmentLength { get; } = 3;
+    
     public virtual int HP
     {
         get => _hp;
         private set
         {
-            _hp = value;
+            _hp = Math.Min(value, MaxHP);
             EventAggregator.UpdateHP.Publish(this);
         }
     }
-
-    public int HPSegmentLength { get; } = 3;
-
+    
     public virtual int MP
     {
         get => _mp;
-        set => _mp = value;
+        set
+        {
+            _mp = Math.Min(value, MaxMP);
+            EventAggregator.UpdateMP.Publish(this);
+        }
     }
     
     public bool CanMove { get; set; }

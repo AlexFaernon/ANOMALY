@@ -10,6 +10,7 @@ public class Tank : Character
     
     private class CastProtect : IAbility
     {
+        public string Description { get; }
         public int Cost { get; } = 0;
         public int Cooldown { get; } = 0;
         public int TargetCount { get; } = 1;
@@ -26,6 +27,7 @@ public class Tank : Character
     
     private class CastStun : IAbility
     {
+        public string Description { get; }
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 1;
@@ -40,6 +42,7 @@ public class Tank : Character
 
     private class CastDeflect : IAbility
     {
+        public string Description { get; }
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 3;
         public int TargetCount { get; } = 0;
@@ -54,6 +57,7 @@ public class Tank : Character
     
     private class CastBerserk : IAbility
     {
+        public string Description { get; }
         public int Cost { get; } = 4;
         public int Cooldown { get; } = 5;
         public int TargetCount { get; } = 0;
@@ -67,6 +71,7 @@ public class Tank : Character
 
         private class BerserkAbility : IAbility
         {
+            public string Description { get; }
             public int Cost { get; } = 0;
             public int Cooldown { get; } = 0;
             public int TargetCount { get; } = 3;

@@ -25,7 +25,7 @@ public class HPBarScript : MonoBehaviour
 
     private void CreateHPSegments()
     {
-        var hp = character.HP;
+        var hp = character.MaxHP;
         var segmentLength = character.HPSegmentLength;
         var hpSegmentsCount = hp / segmentLength + (hp % segmentLength != 0 ? 1 : 0);
         

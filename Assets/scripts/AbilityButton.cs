@@ -13,12 +13,15 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
    private const float holdTime = 1f;
    private PointerEventData eventData;
    private AbilityType abilityType;
-   private Dictionary<IAbility, int> abilitiesCooldown = new Dictionary<IAbility, int>();
+   private readonly Dictionary<IAbility, int> abilitiesCooldown = new Dictionary<IAbility, int>();
+   private IAbility currentAbility;
+
    private void Awake()
    {
       EventAggregator.BindAbilityButton.Subscribe(BindAbilityType);
       EventAggregator.SwitchAbilities.Subscribe(SwitchAbilities);
       EventAggregator.NewTurn.Subscribe(ReduceCooldownOnTurn);
+      EventAggregator.AbilityCasted.Subscribe(SetCooldownOnCast);
       button = GetComponent<Button>();
       image = GetComponent<Image>();
       button.onClick.AddListener(OnShortPress);
@@ -46,42 +49,53 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
    private void SwitchAbilities(ICharacter character)
    {
-      var ability = character.Abilities[abilityType];
-      
-      if (abilitiesCooldown.TryGetValue(ability, out var cooldown))
+      currentAbility = character.Abilities[abilityType];
+
+      if (abilitiesCooldown.TryGetValue(currentAbility, out var cooldown))
       {
-         if (cooldown == 0)
-         {
-            button.interactable = true;
-            cooldownText.text = "";
-         }
-         else
-         {
-            button.interactable = false;
-            cooldownText.text = cooldown.ToString();
-         }
+         SetButtonInteractable(cooldown == 0);
       }
       else
       {
-         abilitiesCooldown[ability] = 0;
-         button.interactable = true;
-         cooldownText.text = "";
+         abilitiesCooldown[currentAbility] = 0;
+         SetButtonInteractable(true);
       }
    }
 
    private void ReduceCooldownOnTurn()
    {
-      foreach (var ability in abilitiesCooldown.Keys.Where(ability => abilitiesCooldown[ability] > 0))
+      foreach (var ability in abilitiesCooldown.Keys.Where(ability => abilitiesCooldown[ability] > 0).ToList())
       {
          abilitiesCooldown[ability]--;
       }
+
+      SetButtonInteractable(abilitiesCooldown[currentAbility] <= 0);
    }
 
-   private void UpdateCooldown()
+   private void SetCooldownOnCast(IAbility ability)
    {
-      
+      if (abilitiesCooldown.ContainsKey(ability))
+      {
+         abilitiesCooldown[ability] = ability.Cooldown;
+      }
    }
-   
+
+   private void SetButtonInteractable(bool isInteractable)
+   {
+      if (isInteractable)
+      {
+         cooldownText.text = "";
+         image.color = Color.white;
+         button.interactable = true;
+      }
+      else
+      {
+         cooldownText.text = abilitiesCooldown[currentAbility].ToString();
+         image.color = Color.gray;
+         button.interactable = false;
+      }
+   }
+
    public void OnPointerDown(PointerEventData eventData)
    {
       this.eventData = eventData;
@@ -104,5 +118,6 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       EventAggregator.BindAbilityButton.Unsubscribe(BindAbilityType);
       EventAggregator.SwitchAbilities.Unsubscribe(SwitchAbilities);
       EventAggregator.NewTurn.Unsubscribe(ReduceCooldownOnTurn);
+      EventAggregator.AbilityCasted.Unsubscribe(SetCooldownOnCast);
    }
 }

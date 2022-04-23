@@ -1,11 +1,14 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HPSegmentScript : MonoBehaviour
 {
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private GameObject hpSquarePrefab;
     private int maxHP;
+    private readonly List<GameObject> hpSquares = new List<GameObject>();
 
     private void Awake()
     {
@@ -18,13 +21,33 @@ public class HPSegmentScript : MonoBehaviour
         if (gameObject != obj) return;
 
         this.maxHP = maxHP;
+        CreateHPBar();
+    }
+
+    private void CreateHPBar()
+    {
+        for (var i = 0; i < maxHP; i++)
+        {
+            hpSquares.Add(Instantiate(hpSquarePrefab, transform));
+        }
     }
 
     private void UpdateHPSegment(GameObject other, int hp)
     {
         if (gameObject != other) return;
-
-        text.text = $"{hp}/{maxHP}";
+        
+        foreach (var hpSquare in hpSquares)
+        {
+            if (hp > 0)
+            {
+                hp--;
+                hpSquare.GetComponent<Image>().color = Color.white;
+            }
+            else
+            {
+                hpSquare.GetComponent<Image>().color = Color.gray;
+            }
+        }
     }
 
     private void OnDestroy()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 public interface IUnit
 {
+    public int MaxHP { get; }
     public int HP { get; }
     public bool CanMove { get; set; }
     public ModifyReceivedDamage ModifyReceivedDamage { get; set; }
@@ -12,6 +13,7 @@ public interface IUnit
 public interface ICharacter : IUnit
 {
     public int HPSegmentLength { get; }
+    public int MaxMP { get; set; }
     public int MP { get; set; }
     public Dictionary<AbilityType, IAbility> Abilities { get; }
     public IAbility BasicAbility { get; set; }
@@ -22,6 +24,7 @@ public interface ICharacter : IUnit
 
 public interface IAbility
 {
+    public string Description { get; }
     public int Cost { get; }
     public int Cooldown { get; }
     public int TargetCount { get; }

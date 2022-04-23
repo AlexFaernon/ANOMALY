@@ -7,6 +7,7 @@ public class HeroUnit : MonoBehaviour
 {
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private GameObject HPBar;
+    [SerializeField] private GameObject MPBar;
     private ICharacter character;
     private IAbility currentAbility;
 
@@ -67,6 +68,7 @@ public class HeroUnit : MonoBehaviour
     private void Start()
     {
         EventAggregator.BindHPBarToCharacter.Publish(HPBar, character);
+        EventAggregator.BindMPBarToCharacter.Publish(MPBar, character);
         EventAggregator.UpdateHP.Publish(character);
     }
 
@@ -125,6 +127,7 @@ public class HeroUnit : MonoBehaviour
         CanMove = false;
         EventAggregator.GetTargets.Unsubscribe(CastAbility);
         EventAggregator.ToggleAbilityList.Publish(false);
+        EventAggregator.AbilityCasted.Publish(currentAbility);
     }
 
     private void NewTurn()
