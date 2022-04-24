@@ -29,6 +29,8 @@ public static class EventAggregator
     public static readonly Event<GameObject, IEnemy> BindHPBarToEnemy = new Event<GameObject, IEnemy>();
     public static readonly Event<ICharacter> SwitchAbilities = new Event<ICharacter>();
     public static readonly Event<IAbility> AbilityCasted = new Event<IAbility>();
+    public static readonly Event<ICharacter> CharacterDied = new Event<ICharacter>();
+    public static readonly Event<IEnemy> EnemyDied = new Event<IEnemy>();
 }
 
 public class Event<T>

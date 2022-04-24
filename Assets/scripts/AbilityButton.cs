@@ -50,6 +50,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
    private void SwitchAbilities(ICharacter character)
    {
       currentAbility = character.Abilities[abilityType];
+      image.sprite = currentAbility.Icon;
 
       if (abilitiesCooldown.TryGetValue(currentAbility, out var cooldown))
       {
@@ -69,7 +70,8 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
          abilitiesCooldown[ability]--;
       }
 
-      SetButtonInteractable(abilitiesCooldown[currentAbility] <= 0);
+      if (currentAbility != null)
+         SetButtonInteractable(abilitiesCooldown[currentAbility] <= 0);
    }
 
    private void SetCooldownOnCast(IAbility ability)

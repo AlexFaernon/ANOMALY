@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public interface IUnit
 {
@@ -28,6 +29,7 @@ public interface IAbility
     public int Cost { get; }
     public int Cooldown { get; }
     public int TargetCount { get; }
+    public Sprite Icon { get; }
     public abstract void CastAbility(List<IUnit> units, IUnit source);
 }
 

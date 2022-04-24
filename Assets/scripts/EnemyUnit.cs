@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,10 +14,11 @@ public class EnemyUnit : MonoBehaviour
     private void Awake()
     {
         GetComponent<Button>().onClick.AddListener(PickTarget);
-        UnitsManager.Enemies.Add(enemy);
+        Units.Enemies.Add(enemy);
 
         enemy.CanMove = true;
         
+        EventAggregator.UpdateHP.Subscribe(CheckDeath);
         EventAggregator.EnemyTurn.Subscribe(MakeMove);
         EventAggregator.NewTurn.Subscribe(NewTurn);
     }
@@ -26,12 +28,25 @@ public class EnemyUnit : MonoBehaviour
         EventAggregator.BindHPBarToEnemy.Publish(hpBar, enemy);
     }
 
+    private void CheckDeath(IUnit unit)
+    {
+        if (unit != enemy) return;
+
+        if (enemy.HP > 0) return;
+        EventAggregator.EnemyDied.Publish(enemy);
+        gameObject.SetActive(false);
+    }
+
     private void MakeMove(IEnemy other)
     {
         if (enemy != other) return;
-        
+
         if (enemy.CanMove)
-            Debug.Log("Turn");
+        {
+            var character = Units.Characters.OrderByDescending(character => character.HP).First();
+            character.TakeDamage(1, enemy);
+            Debug.Log(character);
+        }
     }
 
     private void NewTurn()
@@ -48,6 +63,7 @@ public class EnemyUnit : MonoBehaviour
 
     private void OnDestroy()
     {
+        EventAggregator.UpdateHP.Unsubscribe(CheckDeath);
         EventAggregator.EnemyTurn.Unsubscribe(MakeMove);
         EventAggregator.NewTurn.Unsubscribe(NewTurn);
     }

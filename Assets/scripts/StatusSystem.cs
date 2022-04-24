@@ -193,9 +193,11 @@ public sealed class Berserk : Status
     public Berserk(ICharacter target, IAbility ability)
     {
         Target = target;
+        
         targetCharacter = target;
         oldAbility = targetCharacter.Ultimate;
         targetCharacter.Ultimate = ability;
+        targetCharacter.CanMove = true;
         EventAggregator.NewTurn.Subscribe(OnTurn);
         Debug.Log("Berserk Replaced");
     }

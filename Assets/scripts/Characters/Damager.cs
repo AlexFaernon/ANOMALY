@@ -1,18 +1,34 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Damager : Character
+public sealed class Damager : Character
 {
-    public override IAbility BasicAbility { get; set; } = new AttackClass();
-    public override IAbility FirstAbility { get; set; } = new CastDamageUp();
-    public override IAbility SecondAbility { get; set; } = new LifeStealing();
-    public override IAbility Ultimate { get; set; } = new LotOfDamage();
+    public override IAbility BasicAbility { get; set; }
+    public override IAbility FirstAbility { get; set; }
+    public override IAbility SecondAbility { get; set; }
+    public override IAbility Ultimate { get; set; }
+
+    public Damager()
+    {
+        var icons = Resources.LoadAll<Sprite>("icons/Dammager");
+        BasicAbility = new AttackClass(icons[0]);
+        FirstAbility = new CastDamageUp(icons[1]);
+        SecondAbility = new LifeStealing(icons[2]);
+        Ultimate = new LotOfDamage(icons[3]);
+    }
     
     private class AttackClass : IAbility
     {
-        public string Description { get; }
+        public string Description { get; } = "������� ���� ��������� ����";
         public int Cost { get; } = 0;
         public int Cooldown { get; } = 0;
         public int TargetCount { get; } = 1;
+        public Sprite Icon { get; }
+        
+        public AttackClass(Sprite icon)
+        {
+            Icon = icon;
+        }
 
         public void CastAbility(List<IUnit> units, IUnit source)
         {
@@ -25,10 +41,17 @@ public class Damager : Character
     
     private class CastDamageUp : IAbility
     {
-        public string Description { get; }
+        public string Description { get; } = "����������� ��������������� ���� � �����. ���������� �� ���� ����� ��������";
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 1;
+        public Sprite Icon { get; }
+
+        public CastDamageUp(Sprite icon)
+        {
+            Icon = icon;
+        }
+
         public void CastAbility(List<IUnit> units, IUnit source)
         {
             foreach (var unit in units)
@@ -40,10 +63,17 @@ public class Damager : Character
     
     private class LifeStealing : IAbility
     {
-        public string Description { get; }
+        public string Description { get; } = "�� ����� �������� ��� ��������� ���������� �����, ��������������� ��� �������� � ����������� �� ����������� �����";
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 0;
+        public Sprite Icon { get; }
+        
+        public LifeStealing(Sprite icon)
+        {
+            Icon = icon;
+        }
+
         public void CastAbility(List<IUnit> units, IUnit source)
         {
             foreach (var unit in units)
@@ -55,10 +85,17 @@ public class Damager : Character
 
     private class LotOfDamage : IAbility
     {
-        public string Description { get; }
+        public string Description { get; } = "������� ������� ���������� �����";
         public int Cost { get; } = 4;
         public int Cooldown { get; } = 5;
         public int TargetCount { get; } = 1;
+        public Sprite Icon { get; }
+        
+        public LotOfDamage(Sprite icon)
+        {
+            Icon = icon;
+        }
+
         public void CastAbility(List<IUnit> units, IUnit source)
         {
             foreach (var unit in units)

@@ -10,13 +10,14 @@ public class HeroUnit : MonoBehaviour
     [SerializeField] private GameObject MPBar;
     private ICharacter character;
     private IAbility currentAbility;
+    private Image image;
 
     private bool CanMove
     {
         get => character.CanMove;
         set
         {
-            GetComponent<Button>().interactable = value;
+            image.color = value ? Color.white : new Color(1,1,1,0.5f);
             character.CanMove = value;
         }
     }
@@ -28,7 +29,6 @@ public class HeroUnit : MonoBehaviour
         get => _isSelected;
         set
         {
-            var image = GetComponent<Image>();
             if (value)
             {
                 EventAggregator.DeselectCharacters.Publish();
@@ -53,12 +53,15 @@ public class HeroUnit : MonoBehaviour
             _ => throw new ArgumentOutOfRangeException()
         };
         
-        UnitsManager.Characters.Add(character);
+        image = GetComponent<Image>();
+        
+        Units.Characters.Add(character);
 
         CanMove = true;
 
         GetComponent<Button>().onClick.AddListener(SelectCharacter);
 
+        EventAggregator.UpdateHP.Subscribe(CheckDeath);
         EventAggregator.DeselectCharacters.Subscribe(Deselect);
         EventAggregator.CastAbilityType.Subscribe(StartAbility);
         EventAggregator.AbilityTypeInfo.Subscribe(ShowAbilityInfoByType);
@@ -72,6 +75,15 @@ public class HeroUnit : MonoBehaviour
         EventAggregator.UpdateHP.Publish(character);
     }
 
+    private void CheckDeath(IUnit unit)
+    {
+        if (unit != character) return;
+
+        if (character.HP > 0) return;
+        EventAggregator.CharacterDied.Publish(character);
+        gameObject.SetActive(false);
+    }
+    
     private void StartAbility(AbilityType abilityType)
     {
         if (!IsSelected) return;
@@ -116,15 +128,18 @@ public class HeroUnit : MonoBehaviour
 
     private void Deselect()
     {
-        IsSelected = false;
+        if (IsSelected)
+        {
+            IsSelected = false;
+        }
     }
 
     void CastAbility(List<IUnit> units)
     {
-        currentAbility.CastAbility(units, character);
-        character.MP -= currentAbility.Cost;
         IsSelected = false;
         CanMove = false;
+        currentAbility.CastAbility(units, character);
+        character.MP -= currentAbility.Cost;
         EventAggregator.GetTargets.Unsubscribe(CastAbility);
         EventAggregator.ToggleAbilityList.Publish(false);
         EventAggregator.AbilityCasted.Publish(currentAbility);
@@ -138,6 +153,7 @@ public class HeroUnit : MonoBehaviour
 
     private void OnDestroy()
     {
+        EventAggregator.UpdateHP.Unsubscribe(CheckDeath);
         EventAggregator.DeselectCharacters.Unsubscribe(Deselect);
         EventAggregator.CastAbilityType.Unsubscribe(StartAbility);
         EventAggregator.AbilityTypeInfo.Unsubscribe(ShowAbilityInfoByType);
