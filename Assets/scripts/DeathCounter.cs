@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class DeathCounter : MonoBehaviour
 {
+    [SerializeField] private GameObject ShadingDefeat;
+    [SerializeField] private GameObject ShadingWin;
+
     private void Awake()
     {
         EventAggregator.CharacterDied.Subscribe(CharacterDied);
@@ -13,6 +16,7 @@ public class DeathCounter : MonoBehaviour
         Units.Characters.Remove(character);
         if (Units.Characters.Count == 0)
         {
+            ShadingDefeat.SetActive(true);
             Debug.Log("Game Over");
         }
     }
@@ -22,6 +26,7 @@ public class DeathCounter : MonoBehaviour
         Units.Enemies.Remove(enemy);
         if (Units.Enemies.Count == 0)
         {
+            ShadingWin.SetActive(true);
             Debug.Log("Victory");
         }
     }
