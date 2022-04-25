@@ -19,7 +19,7 @@ public sealed class Damager : Character
     
     private class AttackClass : IAbility
     {
-        public string Description { get; } = "������� ���� ��������� ����";
+        public string Description { get; } = "Наносит урон выбранной цели";
         public int Cost { get; } = 0;
         public int Cooldown { get; } = 0;
         public int TargetCount { get; } = 1;
