@@ -44,7 +44,7 @@ public sealed class Tank : Character
     
     private class CastStun : IAbility
     {
-        public string Description { get; } = "Оглушает цель, лишая ее права хода";
+        public string Description { get; } = "Оглушает цель, лишая ее права хода. Длительность 1 ход";
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 1;
@@ -66,7 +66,7 @@ public sealed class Tank : Character
 
     private class CastDeflect : IAbility
     {
-        public string Description { get; } = "При получение персонажем урона, он наносит урон атакующему";
+        public string Description { get; } = "При получение персонажем урона, он наносит урон в 1 хп атакующему. Длительность 2 хода";
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 3;
         public int TargetCount { get; } = 0;
@@ -88,7 +88,7 @@ public sealed class Tank : Character
     
     private class CastBerserk : IAbility
     {
-        public string Description { get; } = "На время действия заменяет все способности на одну мощную атакующую способность. Замена способности не тратит ход персонажа";
+        public string Description { get; } = "На 3 хода заменяет все способности на одну мощную атакующую способность. Замена способности не тратит ход персонажа";
         public int Cost { get; } = 4;
         public int Cooldown { get; } = 5;
         public int TargetCount { get; } = 0;

@@ -20,7 +20,7 @@ public sealed class Medic : Character
 
     private class CastHeal : IAbility
     {
-        public string Description { get; } = "��������������� ���� ������� ��������";
+        public string Description { get; } = "Восстанавливает 1 хп выбранной цели";
         public int Cost { get; } = 0;
         public int Cooldown { get; } = 1;
         public int TargetCount { get; } = 1;
@@ -42,7 +42,7 @@ public sealed class Medic : Character
 
     private class CastDelayedHealing : IAbility
     {
-        public string Description { get; } = "�������� ���� ������� �� � ������ ����������, �������� �� ������ �� � ������� ���� ����������� �����";
+        public string Description { get; } = "Забирает 1 хп в момент применения, исцеляет по 1 хп в течении трех последующих ходов";
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 3;
         public int TargetCount { get; } = 1;
@@ -64,7 +64,7 @@ public sealed class Medic : Character
     
     private class Dispel : IAbility
     {
-        public string Description { get; } = "������� ��� ������� � ����";
+        public string Description { get; } = "Снимает все эффекты с цели";
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 1;
@@ -86,7 +86,7 @@ public sealed class Medic : Character
     
     private class MakeInvulnerability : IAbility
     {
-        public string Description { get; } = "������������ �� ��������� ����� - �� ����� ��� �������� �� ����� ������ ���� 1";
+        public string Description { get; } = "Неуязвимость на 5 ходов - во время нее здоровье не может упасть ниже 1";
         public int Cost { get; } = 4;
         public int Cooldown { get; } = 5;
         public int TargetCount { get; } = 1;

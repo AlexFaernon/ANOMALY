@@ -19,7 +19,7 @@ public sealed class Damager : Character
     
     private class AttackClass : IAbility
     {
-        public string Description { get; } = "Наносит урон выбранной цели";
+        public string Description { get; } = "Наносит урон в 1 хп выбранной цели";
         public int Cost { get; } = 0;
         public int Cooldown { get; } = 0;
         public int TargetCount { get; } = 1;
@@ -41,7 +41,7 @@ public sealed class Damager : Character
     
     private class CastDamageUp : IAbility
     {
-        public string Description { get; } = "����������� ��������������� ���� � �����. ���������� �� ���� ����� ��������";
+        public string Description { get; } = "Увеличивает восприимчивость цели к урону. Получаемый ею урон будет увеличен на 2 хода";
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 1;
@@ -63,7 +63,7 @@ public sealed class Damager : Character
     
     private class LifeStealing : IAbility
     {
-        public string Description { get; } = "�� ����� �������� ��� ��������� ���������� �����, ��������������� ��� �������� � ����������� �� ����������� �����";
+        public string Description { get; } = "На время действия при нанесении персонажем урона, восстанавливает ему здоровье в половину от нанесенного урона. Длительность 2 хода";
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
         public int TargetCount { get; } = 0;
@@ -85,7 +85,7 @@ public sealed class Damager : Character
 
     private class LotOfDamage : IAbility
     {
-        public string Description { get; } = "������� ������� ���������� �����";
+        public string Description { get; } = "Наносит урон в 4 хп выбранной цели ";
         public int Cost { get; } = 4;
         public int Cooldown { get; } = 5;
         public int TargetCount { get; } = 1;
