@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HeroUnit : MonoBehaviour
+public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private GameObject HPBar;
@@ -11,6 +12,8 @@ public class HeroUnit : MonoBehaviour
     private ICharacter character;
     private IAbility currentAbility;
     private Image image;
+    private const float holdTime = 1f;
+    private PointerEventData eventData;
 
     private bool CanMove
     {
@@ -102,7 +105,14 @@ public class HeroUnit : MonoBehaviour
         }
         
         EventAggregator.GetTargets.Subscribe(CastAbility);
-        EventAggregator.StartChooseTargets.Publish(currentAbility.TargetCount);
+        EventAggregator.StartChooseTargets.Publish(currentAbility);
+    }
+    
+    void OnLongPress()
+    {
+        EventAggregator.ShowEffectsInfo.Publish(character);
+        eventData.eligibleForClick = false;
+        Debug.Log("long");
     }
 
     private void ShowAbilityInfoByType(AbilityType abilityType)
@@ -148,7 +158,10 @@ public class HeroUnit : MonoBehaviour
     private void NewTurn()
     {
         CanMove = true;
-        character.MP += 1;
+        if (character.MP < character.MaxMP)
+        {
+            character.MP += 1;
+        }
     }
 
     private void OnDestroy()
@@ -165,6 +178,23 @@ public class HeroUnit : MonoBehaviour
         Damager,
         Medic,
         Tank
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        this.eventData = eventData;
+        Invoke(nameof(OnLongPress), holdTime);
+    }
+ 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        CancelInvoke(nameof(OnLongPress));
+        EventAggregator.HideEffectsInfo.Publish();
+    }
+ 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        CancelInvoke(nameof(OnLongPress));
     }
 }
 

@@ -6,6 +6,7 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private Transform squaresParent;
     [SerializeField] private GameObject targetSquare;
+    [SerializeField] private GameObject abilityIcon;
     private readonly List<IUnit> targets = new List<IUnit>();
     private readonly List<GameObject> targetsSquares = new List<GameObject>();
     private int maxTargetCount;
@@ -15,6 +16,9 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
     {
         EventAggregator.StartChooseTargets.Subscribe(StartPicking);
         EventAggregator.PickTarget.Subscribe(ChooseTarget);
+        EventAggregator.GetTargetsNow.Subscribe(GetTargetsNow);
+        EventAggregator.NewTurn.Subscribe(ResetOnTurn);
+
     }
     
     public void OnPointerDown(PointerEventData eventData)
@@ -25,9 +29,9 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         EventAggregator.DeselectCharacters.Publish();
     }
 
-    void StartPicking(int count)
+    void StartPicking(IAbility ability)
     {
-        maxTargetCount = count;
+        maxTargetCount = ability.TargetCount;
 
         if (maxTargetCount == 0)
         {
@@ -63,6 +67,23 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    private void GetTargetsNow()
+    {
+        if (targets.Count == 0) return;
+        
+        EventAggregator.GetTargets.Publish(targets);
+        ClearTargets();
+    }
+
+    private void ResetOnTurn()
+    {
+        if (!isPicking) return;
+        
+        ClearTargets();
+        EventAggregator.DeselectCharacters.Publish();
+        EventAggregator.ToggleAbilityList.Publish(false);
+    }
+    
     private void ClearTargets()
     {
         foreach (var targetsSquare in targetsSquares)
@@ -74,11 +95,13 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         targets.Clear();
         isPicking = false;
         EventAggregator.DeselectTargets.Publish();
+        abilityIcon.SetActive(false);
     }
 
     private void OnDestroy()
     {
         EventAggregator.StartChooseTargets.Unsubscribe(StartPicking);
         EventAggregator.PickTarget.Unsubscribe(ChooseTarget);
+        EventAggregator.GetTargetsNow.Unsubscribe(GetTargetsNow);
     }
 }

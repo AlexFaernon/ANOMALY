@@ -10,6 +10,8 @@ public static class StatusSystem
 
 public abstract class Status
 {
+    public abstract string Name { get; }
+    public abstract string Description { get; }
     public abstract int Duration { get; set; }
     public abstract IUnit Target { get; set; }
     public abstract void Dispel();
@@ -17,6 +19,8 @@ public abstract class Status
 
 public sealed class Invulnerability : Status
 {
+    public override string Name { get; } = "Отсрочка смерти";
+    public override string Description { get; } = "Здоровье не может упасть ниже 1";
     public override int Duration { get; set; } = 5;
     public override IUnit Target { get; set; }
 
@@ -61,6 +65,8 @@ public sealed class Invulnerability : Status
 
 public sealed class Protect : Status
 {
+    public override string Name { get; } = "Защита";
+    public override string Description { get; } = "При атаке, другой юнит получит урон вместо данного";
     public override int Duration { get; set; } = 1;
     public readonly IUnit Protector;
     public override IUnit Target { get; set; }
@@ -76,6 +82,11 @@ public sealed class Protect : Status
     {
         Target = target;
         Protector = protector;
+        if (target == protector)
+        {
+            Dispel();
+            return;
+        }
         target.ModifyReceivedDamage.Event.AddListener(RedirectDamage);
         EventAggregator.NewTurn.Subscribe(OnTurn);
         Debug.Log("Protect added");
@@ -105,10 +116,13 @@ public sealed class Protect : Status
 
 public sealed class Stun : Status
 {
+    public override string Name { get; } = "Оглушение";
+    public override string Description { get; } = "Данный юнит не может действовать";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override void Dispel()
     {
+        Target.CanMove = true;
         EventAggregator.NewTurn.Unsubscribe(KeepStun);
         StatusSystem.StatusList.Remove(this);
         Debug.Log("Stun end");
@@ -139,6 +153,8 @@ public sealed class Stun : Status
 
 public sealed class Deflect : Status
 {
+    public override string Name { get; } = "Отражение урона";
+    public override string Description { get; } = "Наносит 2 урона юнитам, атакующего данного юнита";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override void Dispel()
@@ -178,6 +194,8 @@ public sealed class Deflect : Status
 
 public sealed class Berserk : Status
 {
+    public override string Name { get; } = "Берсерк";
+    public override string Description { get; } = "Ультимативная способность заменена на разрушительную атаку";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     private readonly ICharacter targetCharacter;
@@ -217,6 +235,8 @@ public sealed class Berserk : Status
 
 public sealed class AmplifyDamage : Status
 {
+    public override string Name { get; } = "Хрупкость";
+    public override string Description { get; } = "Урон по данному юниту увеличен в 1.5 раза";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override void Dispel()
@@ -255,6 +275,8 @@ public sealed class AmplifyDamage : Status
 
 public sealed class DelayedHealing : Status
 {
+    public override string Name { get; } = "Регенерация";
+    public override string Description { get; } = "Исцеляет на 1 пункт каждый ход";
     public override int Duration { get; set; } = 3;
     public override IUnit Target { get; set; }
     public override void Dispel()
@@ -283,6 +305,8 @@ public sealed class DelayedHealing : Status
 
 public sealed class LifeSteal : Status
 {
+    public override string Name { get; } = "Кража жизни";
+    public override string Description { get; } = "Восстанавливает здоровье в половину от нанесенного урона";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override void Dispel()

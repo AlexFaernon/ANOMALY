@@ -19,7 +19,7 @@ public sealed class Damager : Character
     
     private class AttackClass : IAbility
     {
-        public string Description { get; } = "Наносит урон в 1 хп выбранной цели";
+        public string Description { get; } = "Наносит урон в 2 хп выбранной цели";
         public int Cost { get; } = 0;
         public int Cooldown { get; } = 0;
         public int TargetCount { get; } = 1;
@@ -34,7 +34,7 @@ public sealed class Damager : Character
         {
             foreach (var unit in units)
             {
-                unit.TakeDamage(1, source);
+                unit.TakeDamage(2, source);
             }
         }
     }

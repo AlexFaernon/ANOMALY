@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 public class ModifyReceivedDamage
 {
@@ -15,9 +16,9 @@ public abstract class Character : ICharacter
     private int _mp = 6;
 
     public int MaxHP { get; } = 6;
-    public int MaxMP { get; set; } = 6;
     public int HPSegmentLength { get; } = 3;
-    
+    public int MaxMP { get; set; } = 6;
+
     public virtual int HP
     {
         get => _hp;
@@ -53,7 +54,9 @@ public abstract class Character : ICharacter
 
     public virtual void Heal(int heal)
     {
-        HP += heal;
+        var lastHPSegment = HP % HPSegmentLength;
+        var actualHeal = HPSegmentLength - lastHPSegment;
+        HP += Math.Min(actualHeal, MaxHP - HP);
     }
 
     public Dictionary<AbilityType, IAbility> Abilities => new Dictionary<AbilityType, IAbility>

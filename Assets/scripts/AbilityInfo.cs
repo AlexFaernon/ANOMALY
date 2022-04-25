@@ -23,7 +23,7 @@ public class AbilityInfo : MonoBehaviour
     private void ShowInfo(IAbility ability)
     {
         gameObject.SetActive(true);
-        Title.text = "заглушк";
+        Title.text = ability.ToString();
         Description.text = ability.Description;
         Cooldown.text = ability.Cooldown.ToString();
         Cost.text = ability.Cost.ToString();

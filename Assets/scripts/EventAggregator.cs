@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class EventAggregator
 {
-    public static readonly Event<int> StartChooseTargets = new Event<int>();
+    public static readonly Event<IAbility> StartChooseTargets = new Event<IAbility>();
     public static readonly Event<IUnit> PickTarget = new Event<IUnit>();
     public static readonly Event<List<IUnit>> GetTargets = new Event<List<IUnit>>();
     public static readonly Event<IUnit> UpdateHP = new Event<IUnit>();
@@ -31,6 +31,10 @@ public static class EventAggregator
     public static readonly Event<IAbility> AbilityCasted = new Event<IAbility>();
     public static readonly Event<ICharacter> CharacterDied = new Event<ICharacter>();
     public static readonly Event<IEnemy> EnemyDied = new Event<IEnemy>();
+    public static readonly Event<IUnit> ShowEffectsInfo = new Event<IUnit>();
+    public static readonly Event HideEffectsInfo = new Event();
+    public static readonly Event<GameObject, Status> CreateEffectRow = new Event<GameObject, Status>();
+    public static readonly Event GetTargetsNow = new Event();
 }
 
 public class Event<T>
