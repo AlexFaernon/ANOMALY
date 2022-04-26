@@ -35,6 +35,11 @@ public class HPSegmentScript : MonoBehaviour
     private void UpdateHPSegment(GameObject other, int hp)
     {
         if (gameObject != other) return;
+
+        if (hp == 0)
+        {
+            GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+        }
         
         foreach (var hpSquare in hpSquares)
         {

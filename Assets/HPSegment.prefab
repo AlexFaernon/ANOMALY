@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5515182996064817502}
   - component: {fileID: 3281719833928907547}
   - component: {fileID: 4745314116609425541}
+  - component: {fileID: 7290754769255076012}
   m_Layer: 0
   m_Name: HPSegment
   m_TagString: Untagged
@@ -37,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 55.91, y: 46.49}
+  m_SizeDelta: {x: 0, y: 46.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1170196389919446251
 CanvasRenderer:
@@ -103,8 +104,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
+    m_Left: 2
+    m_Right: 2
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
@@ -114,3 +115,17 @@ MonoBehaviour:
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 2
   m_ConstraintCount: 1
+--- !u!114 &7290754769255076012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4158244973157893995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 0

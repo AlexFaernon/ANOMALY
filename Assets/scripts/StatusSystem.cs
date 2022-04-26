@@ -14,6 +14,7 @@ public abstract class Status
     public abstract string Description { get; }
     public abstract int Duration { get; set; }
     public abstract IUnit Target { get; set; }
+
     public abstract void Dispel();
 }
 
@@ -38,6 +39,7 @@ public sealed class Invulnerability : Status
         Debug.Log("Invul removed");
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
         StatusSystem.StatusList.Remove(this);
+        EventAggregator.UpdateStatus.Publish();
     }
     
     public Invulnerability(IUnit target)
@@ -76,6 +78,7 @@ public sealed class Protect : Status
         Debug.Log("Protect removed");
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
         StatusSystem.StatusList.Remove(this);
+        EventAggregator.UpdateStatus.Publish();
     }
 
     public Protect(IUnit target, IUnit protector)
@@ -126,6 +129,7 @@ public sealed class Stun : Status
         EventAggregator.NewTurn.Unsubscribe(KeepStun);
         StatusSystem.StatusList.Remove(this);
         Debug.Log("Stun end");
+        EventAggregator.UpdateStatus.Publish();
     }
 
     public Stun(IUnit target)
@@ -163,6 +167,7 @@ public sealed class Deflect : Status
         Target.ModifyReceivedDamage.Event.RemoveListener(TakeDamageFromDeflect);
         StatusSystem.StatusList.Remove(this);
         Debug.Log("Deflect stop");
+        EventAggregator.UpdateStatus.Publish();
     }
 
     public Deflect(IUnit target)
@@ -206,6 +211,7 @@ public sealed class Berserk : Status
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
         StatusSystem.StatusList.Remove(this);
         Debug.Log("Berserk returned");
+        EventAggregator.UpdateStatus.Publish();
     }
 
     public Berserk(ICharacter target, IAbility ability)
@@ -245,6 +251,7 @@ public sealed class AmplifyDamage : Status
         Target.ModifyReceivedDamage.Event.RemoveListener(DamageUp);
         StatusSystem.StatusList.Remove(this);
         Debug.Log("DamageUp stop");
+        EventAggregator.UpdateStatus.Publish();
     }
 
     public AmplifyDamage(IUnit target)
@@ -283,6 +290,7 @@ public sealed class DelayedHealing : Status
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
         StatusSystem.StatusList.Remove(this);
+        EventAggregator.UpdateStatus.Publish();
     }
 
     public DelayedHealing(IUnit target)
@@ -315,6 +323,7 @@ public sealed class LifeSteal : Status
         EventAggregator.DamageDealtByUnit.Unsubscribe(HealByDamage);
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
         Debug.Log("LifeSteal stop");
+        EventAggregator.UpdateStatus.Publish();
     }
 
     public LifeSteal(IUnit target)

@@ -35,6 +35,8 @@ public static class EventAggregator
     public static readonly Event HideEffectsInfo = new Event();
     public static readonly Event<GameObject, Status> CreateEffectRow = new Event<GameObject, Status>();
     public static readonly Event GetTargetsNow = new Event();
+    public static readonly Event<GameObject, IUnit> BindStatusBarToUnit = new Event<GameObject, IUnit>();
+    public static readonly Event UpdateStatus = new Event();
 }
 
 public class Event<T>

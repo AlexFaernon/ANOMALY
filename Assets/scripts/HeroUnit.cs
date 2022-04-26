@@ -9,6 +9,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private GameObject HPBar;
     [SerializeField] private GameObject MPBar;
+    [SerializeField] private GameObject StatusBar;
     private ICharacter character;
     private IAbility currentAbility;
     private Image image;
@@ -75,6 +76,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     {
         EventAggregator.BindHPBarToCharacter.Publish(HPBar, character);
         EventAggregator.BindMPBarToCharacter.Publish(MPBar, character);
+        EventAggregator.BindStatusBarToUnit.Publish(StatusBar, character);
         EventAggregator.UpdateHP.Publish(character);
     }
 
@@ -153,6 +155,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         EventAggregator.GetTargets.Unsubscribe(CastAbility);
         EventAggregator.ToggleAbilityList.Publish(false);
         EventAggregator.AbilityCasted.Publish(currentAbility);
+        EventAggregator.UpdateStatus.Publish();
     }
 
     private void NewTurn()
