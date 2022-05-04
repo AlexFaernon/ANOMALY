@@ -7,7 +7,7 @@ public class OnClickShading : MonoBehaviour
 {
     public void OnClickWin()
     {
-        SceneManager.LoadScene("MainMenu"); // поменять на локацию, когда она будет
+        SceneManager.LoadScene("Map");
     }
 
     public void OnClickDefeat()

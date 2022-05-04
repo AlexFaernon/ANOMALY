@@ -16,6 +16,7 @@ public interface ICharacter : IUnit
     public int HPSegmentLength { get; }
     public int MaxMP { get; set; }
     public int MP { get; set; }
+    public bool IsDead { get; set; }
     public Dictionary<AbilityType, IAbility> Abilities { get; }
     public IAbility BasicAbility { get; set; }
     public IAbility FirstAbility { get; set; }

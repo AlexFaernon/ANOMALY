@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class DeathCounter : MonoBehaviour
@@ -13,12 +14,10 @@ public class DeathCounter : MonoBehaviour
 
     private void CharacterDied(ICharacter character)
     {
-        Units.Characters.Remove(character);
-        if (Units.Characters.Count == 0)
-        {
-            ShadingDefeat.SetActive(true);
-            Debug.Log("Game Over");
-        }
+        if (!Units.Characters.Values.All(character1 => character1.IsDead)) return;
+        
+        ShadingDefeat.SetActive(true);
+        Debug.Log("Game Over");
     }
     
     private void EnemyDied(IEnemy enemy)

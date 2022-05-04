@@ -38,7 +38,9 @@ public abstract class Character : ICharacter
             EventAggregator.UpdateMP.Publish(this);
         }
     }
-    
+
+    public bool IsDead { get; set; }
+
     public bool CanMove { get; set; }
     public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();
     public virtual void TakeDamage(int damage, IUnit source)

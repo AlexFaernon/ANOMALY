@@ -43,7 +43,7 @@ public class EnemyUnit : MonoBehaviour
 
         if (enemy.CanMove)
         {
-            var character = Units.Characters.OrderByDescending(character => character.HP).First();
+            var character = Units.Characters.Values.OrderByDescending(character => character.HP).First();
             character.TakeDamage(1, enemy);
             Debug.Log(character);
         }

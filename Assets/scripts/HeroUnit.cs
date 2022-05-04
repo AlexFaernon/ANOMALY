@@ -49,19 +49,18 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     private void Awake()
     {
-        character = characterClass switch
+        character = Units.Characters[characterClass];
+
+        if (character.IsDead)
         {
-            CharacterClass.Damager => new Damager(),
-            CharacterClass.Medic => new Medic(),
-            CharacterClass.Tank => new Tank(),
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            gameObject.SetActive(false);
+            return;
+        }
         
         image = GetComponent<Image>();
-        
-        Units.Characters.Add(character);
 
         CanMove = true;
+        character.MP = character.MaxMP;
 
         GetComponent<Button>().onClick.AddListener(SelectCharacter);
 
@@ -85,6 +84,8 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         if (unit != character) return;
 
         if (character.HP > 0) return;
+
+        character.IsDead = true;
         EventAggregator.CharacterDied.Publish(character);
         gameObject.SetActive(false);
     }
@@ -144,9 +145,11 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         {
             IsSelected = false;
         }
+        
+        EventAggregator.GetTargets.Unsubscribe(CastAbility);
     }
 
-    void CastAbility(List<IUnit> units)
+    private void CastAbility(List<IUnit> units)
     {
         IsSelected = false;
         CanMove = false;
@@ -176,13 +179,6 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         EventAggregator.NewTurn.Unsubscribe(NewTurn);
     }
 
-    private enum CharacterClass
-    {
-        Damager,
-        Medic,
-        Tank
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         this.eventData = eventData;
@@ -208,3 +204,10 @@ public enum AbilityType
     Second,
     Ultimate
 }
+
+public enum CharacterClass
+    {
+        Damager,
+        Medic,
+        Tank
+    }
