@@ -54,11 +54,17 @@ public abstract class Character : ICharacter
         HP -= ModifyReceivedDamage.Damage;
     }
 
-    public virtual void Heal(int heal)
+    public virtual void Heal(int heal, bool canSurpassSegment = false)
     {
+        if (canSurpassSegment)
+        {
+            HP += heal;
+            return;
+        }
+        
         var lastHPSegment = HP % HPSegmentLength;
         var actualHeal = HPSegmentLength - lastHPSegment;
-        HP += Math.Min(actualHeal, MaxHP - HP);
+        HP += actualHeal;
     }
 
     public Dictionary<AbilityType, IAbility> Abilities => new Dictionary<AbilityType, IAbility>

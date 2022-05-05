@@ -18,7 +18,6 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         EventAggregator.PickTarget.Subscribe(ChooseTarget);
         EventAggregator.GetTargetsNow.Subscribe(GetTargetsNow);
         EventAggregator.NewTurn.Subscribe(ResetOnTurn);
-
     }
     
     public void OnPointerDown(PointerEventData eventData)
@@ -103,5 +102,6 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         EventAggregator.StartChooseTargets.Unsubscribe(StartPicking);
         EventAggregator.PickTarget.Unsubscribe(ChooseTarget);
         EventAggregator.GetTargetsNow.Unsubscribe(GetTargetsNow);
+        EventAggregator.NewTurn.Unsubscribe(ResetOnTurn);
     }
 }

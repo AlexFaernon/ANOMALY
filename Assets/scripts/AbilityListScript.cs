@@ -29,6 +29,6 @@ public class AbilityListScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventAggregator.ToggleAbilityList.Subscribe(ToggleSelf);
+        EventAggregator.ToggleAbilityList.Unsubscribe(ToggleSelf);
     }
 }

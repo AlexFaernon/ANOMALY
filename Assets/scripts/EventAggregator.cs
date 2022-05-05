@@ -37,7 +37,8 @@ public static class EventAggregator
     public static readonly Event GetTargetsNow = new Event();
     public static readonly Event<GameObject, IUnit> BindStatusBarToUnit = new Event<GameObject, IUnit>();
     public static readonly Event UpdateStatus = new Event();
-    public static readonly Event<GameObject> NodeComplited = new Event<GameObject>();
+    public static readonly Event<GameObject> NodeCompleted = new Event<GameObject>();
+    public static readonly Event CampCharacterSelected = new Event();
 }
 
 public class Event<T>

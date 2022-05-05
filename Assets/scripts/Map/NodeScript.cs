@@ -9,52 +9,69 @@ public class NodeScript : MonoBehaviour
 {
     [SerializeField] private List<GameObject> linkedNodes;
     [SerializeField] private GameObject locker;
-    [SerializeField] private bool isUnlocked;
-    private bool isComplited;
+    [SerializeField] private GameObject campWindow;
+    private Node node;
     private Button button;
-    private bool isCamp;
-    private static Random random = new Random();
+    private static readonly Random random = new Random();
     
     private void Awake()
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
+
+        if (MapSingleton.Nodes[Convert.ToInt32(name)] == null)
+        {
+            node = new Node();
+            if (name == "0")
+            {
+                node.IsUnlocked = true;
+            }
+            node.IsCamp = random.Next(2) == 1;
+
+            MapSingleton.Nodes[Convert.ToInt32(name)] = node;
+        }
+        else
+        {
+            node = MapSingleton.Nodes[Convert.ToInt32(name)];
+        }
         
-        EventAggregator.NodeComplited.Subscribe(CheckUnlocking);
-        
-        isCamp = random.Next(2) == 1;
-        
+        EventAggregator.NodeCompleted.Subscribe(CheckUnlocking);
+
         ChangeStatus();
     }
 
     private void OnClick()
     {
-        EventAggregator.NodeComplited.Publish(gameObject);
-        isComplited = true;
-        if (!isCamp)
+        EventAggregator.NodeCompleted.Publish(gameObject);
+        node.IsCompleted = true;
+        if (node.IsCamp)
+        {
+            campWindow.SetActive(true);
+        }
+        else
         {
             SceneManager.LoadScene("Battle");
         }
         ChangeStatus();
     }
 
-    private void CheckUnlocking(GameObject node)
+    private void CheckUnlocking(GameObject otherNode)
     {
-        if (isUnlocked || !linkedNodes.Contains(node)) return;
+        if (node.IsUnlocked || !linkedNodes.Contains(otherNode)) return;
         
-        isUnlocked = true;
+        node.IsUnlocked = true;
         ChangeStatus();
     }
 
     private void ChangeStatus()
     {
-        if (isUnlocked)
+        if (node.IsUnlocked)
         {
             locker.SetActive(false);
             button.interactable = true;
-            if (isCamp) GetComponent<Image>().color = Color.green;
+            if (node.IsCamp) GetComponent<Image>().color = Color.green;
 
-            if (!isComplited) return;
+            if (!node.IsCompleted) return;
             GetComponent<Image>().color = Color.yellow;
             button.interactable = false;
         }
@@ -66,6 +83,13 @@ public class NodeScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventAggregator.NodeComplited.Unsubscribe(CheckUnlocking);
+        EventAggregator.NodeCompleted.Unsubscribe(CheckUnlocking);
     }
+}
+
+public class Node
+{
+    public bool IsCamp;
+    public bool IsUnlocked;
+    public bool IsCompleted;
 }

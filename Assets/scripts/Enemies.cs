@@ -32,7 +32,7 @@ public class Enemy : IEnemy
         Debug.Log(HP);
     }
 
-    public void Heal(int heal)
+    public void Heal(int heal, bool canSurpassSegment = false)
     {
         HP += heal;
     }

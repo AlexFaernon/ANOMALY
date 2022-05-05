@@ -8,7 +8,7 @@ public interface IUnit
     public bool CanMove { get; set; }
     public ModifyReceivedDamage ModifyReceivedDamage { get; set; }
     public void TakeDamage(int damage, IUnit source);
-    public void Heal(int heal);
+    public void Heal(int heal, bool canSurpassSegment = false);
 }
 
 public interface ICharacter : IUnit
@@ -18,9 +18,6 @@ public interface ICharacter : IUnit
     public int MP { get; set; }
     public bool IsDead { get; set; }
     public Dictionary<AbilityType, IAbility> Abilities { get; }
-    public IAbility BasicAbility { get; set; }
-    public IAbility FirstAbility { get; set; }
-    public IAbility SecondAbility { get; set; }
     public IAbility Ultimate { get; set; }
 }
 

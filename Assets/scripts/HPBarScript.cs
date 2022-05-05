@@ -9,7 +9,7 @@ public class HPBarScript : MonoBehaviour
 {
     [SerializeField] private GameObject hpSegmentPrefab;
     private ICharacter character;
-    private List<GameObject> hpSegments = new List<GameObject>();
+    private readonly List<GameObject> hpSegments = new List<GameObject>();
     private void Awake()
     {
         EventAggregator.BindHPBarToCharacter.Subscribe(BindHPBarToCharacter);
