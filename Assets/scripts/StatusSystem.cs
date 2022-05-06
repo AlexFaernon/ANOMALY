@@ -264,7 +264,7 @@ public sealed class AmplifyDamage : Status
 
     private void DamageUp()
     {
-        Target.ModifyReceivedDamage.Damage = (int)(Target.ModifyReceivedDamage.Damage * 1.5);
+        Target.ModifyReceivedDamage.Damage += 1;
     }
 
     private void OnTurn()
@@ -348,7 +348,7 @@ public sealed class LifeSteal : Status
     {
         if (source == Target)
         {
-            Target.Heal(damage / 2);
+            Target.Heal(1);
         }
     }
 }

@@ -2646,7 +2646,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0074310303, y: 44.100006}
+  m_AnchoredPosition: {x: 0.0074310303, y: 44.100002}
   m_SizeDelta: {x: 0, y: 15.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1059961794
@@ -3588,7 +3588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 60.125}
+  m_AnchoredPosition: {x: 0, y: 60.124996}
   m_SizeDelta: {x: 0, y: 17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1181496071
@@ -4433,7 +4433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1373274940
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7061,6 +7061,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShadingDefeat: {fileID: 1305521562}
   ShadingWin: {fileID: 1373274939}
+  newBasicTokens: {fileID: 1761386979}
+  newAdvancedTokens: {fileID: 1676237934}
+  newUltimateTokens: {fileID: 1020538105}
 --- !u!1 &2138116440
 GameObject:
   m_ObjectHideFlags: 0

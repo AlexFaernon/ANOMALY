@@ -21,10 +21,7 @@ public class CampCharacterIconScript : MonoBehaviour
     {
         HealButton.Character = Units.Characters[characterClass];
         EventAggregator.CampCharacterSelected.Publish();
-        if (!TryGetComponent(typeof(Outline), out _))
-        {
-            gameObject.AddComponent<Outline>().effectColor = Color.red;
-        }
+        gameObject.AddComponent<Outline>().effectColor = Color.red;
     }
 
     private void DestroyOutline()
