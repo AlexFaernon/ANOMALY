@@ -24,12 +24,13 @@ public sealed class Invulnerability : Status
     public override string Description { get; } = "Здоровье не может упасть ниже 1";
     public override int Duration { get; set; } = 5;
     public override IUnit Target { get; set; }
+    private int minHP;
 
     private void MakeInvulnerable()
     {
-        if (Target.HP - Target.ModifyReceivedDamage.Damage < 1)
+        if (Target.HP - Target.ModifyReceivedDamage.Damage < minHP)
         {
-            Target.ModifyReceivedDamage.Damage = Target.HP - 1;
+            Target.ModifyReceivedDamage.Damage = Math.Max(Target.HP - minHP, 0);
         }
     }
     
@@ -42,12 +43,13 @@ public sealed class Invulnerability : Status
         EventAggregator.UpdateStatus.Publish();
     }
     
-    public Invulnerability(IUnit target)
+    public Invulnerability(IUnit target, int minHP)
     {
         Target = target;
         Target.ModifyReceivedDamage.Event.AddListener(MakeInvulnerable);
         Debug.Log("Invul added");
-
+        this.minHP = minHP;
+        
         EventAggregator.NewTurn.Subscribe(OnTurn);
     }
 
@@ -72,6 +74,7 @@ public sealed class Protect : Status
     public override int Duration { get; set; } = 1;
     public readonly IUnit Protector;
     public override IUnit Target { get; set; }
+    private double damageReduction;
     public override void Dispel()
     {
         Target.ModifyReceivedDamage.Event.RemoveListener(RedirectDamage);
@@ -81,8 +84,9 @@ public sealed class Protect : Status
         EventAggregator.UpdateStatus.Publish();
     }
 
-    public Protect(IUnit target, IUnit protector)
+    public Protect(IUnit target, IUnit protector, double damageReduction)
     {
+        this.damageReduction = damageReduction;
         Target = target;
         Protector = protector;
         if (target == protector)
@@ -112,7 +116,7 @@ public sealed class Protect : Status
     {
         var damage = Target.ModifyReceivedDamage.Damage;
         Target.ModifyReceivedDamage.Damage = 0;
-        Protector.TakeDamage(damage, Target.ModifyReceivedDamage.Source);
+        Protector.TakeDamage((int)Math.Ceiling(damage*damageReduction), Target.ModifyReceivedDamage.Source);
         Debug.Log("redirected");
     }
 }
@@ -132,8 +136,9 @@ public sealed class Stun : Status
         EventAggregator.UpdateStatus.Publish();
     }
 
-    public Stun(IUnit target)
+    public Stun(IUnit target, int duration)
     {
+        Duration = duration;
         Target = target;
         Target.CanMove = false;
         EventAggregator.NewTurn.Subscribe(KeepStun);
@@ -161,6 +166,7 @@ public sealed class Deflect : Status
     public override string Description { get; } = "Наносит 2 урона юнитам, атакующего данного юнита";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
+    private int damageLevel;
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
@@ -170,8 +176,9 @@ public sealed class Deflect : Status
         EventAggregator.UpdateStatus.Publish();
     }
 
-    public Deflect(IUnit target)
+    public Deflect(IUnit target, int damageLevel)
     {
+        this.damageLevel = damageLevel;
         Target = target;
         Target.ModifyReceivedDamage.Event.AddListener(TakeDamageFromDeflect);
         EventAggregator.NewTurn.Subscribe(OnTurn);
@@ -193,7 +200,8 @@ public sealed class Deflect : Status
 
     private void TakeDamageFromDeflect()
     {
-        Target.ModifyReceivedDamage.Source?.TakeDamage(2, null);
+        var damage = Target.ModifyReceivedDamage.Damage;
+        Target.ModifyReceivedDamage.Source?.TakeDamage(1, null);
     }
 }
 
@@ -245,6 +253,7 @@ public sealed class AmplifyDamage : Status
     public override string Description { get; } = "Урон по данному юниту увеличен в 1.5 раза";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
+    private int additionalDamage;
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
@@ -254,8 +263,9 @@ public sealed class AmplifyDamage : Status
         EventAggregator.UpdateStatus.Publish();
     }
 
-    public AmplifyDamage(IUnit target)
+    public AmplifyDamage(IUnit target, int additionalDamage)
     {
+        this.additionalDamage = additionalDamage;
         Target = target;
         Target.ModifyReceivedDamage.Event.AddListener(DamageUp);
         EventAggregator.NewTurn.Subscribe(OnTurn);
@@ -264,7 +274,7 @@ public sealed class AmplifyDamage : Status
 
     private void DamageUp()
     {
-        Target.ModifyReceivedDamage.Damage += 1;
+        Target.ModifyReceivedDamage.Damage += additionalDamage;
     }
 
     private void OnTurn()
@@ -286,6 +296,7 @@ public sealed class DelayedHealing : Status
     public override string Description { get; } = "Исцеляет на 1 пункт каждый ход";
     public override int Duration { get; set; } = 3;
     public override IUnit Target { get; set; }
+    private int healPower;
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
@@ -293,16 +304,17 @@ public sealed class DelayedHealing : Status
         EventAggregator.UpdateStatus.Publish();
     }
 
-    public DelayedHealing(IUnit target)
+    public DelayedHealing(IUnit target, int healPower, int lifeTake)
     {
         Target = target;
-        Target.TakeDamage(1, null);
+        this.healPower = healPower;
+        Target.TakeDamage(lifeTake, null);
         EventAggregator.NewTurn.Subscribe(OnTurn);
     }
 
     private void OnTurn()
     {
-        Target.Heal(1);
+        Target.Heal(healPower);
         Duration -= 1;
         if (Duration == 0)
         {

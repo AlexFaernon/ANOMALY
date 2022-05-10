@@ -19,10 +19,12 @@ public sealed class Damager : Character
     
     private class AttackClass : IAbility
     {
-        public string Description { get; } = "Наносит урон в 2 хп выбранной цели";
-        public int Cost { get; } = 0;
-        public int Cooldown { get; } = 0;
-        public int TargetCount { get; } = 1;
+        public int UpgradeLevel { get; set; } = 0;
+        public string Description => $"Наносит урон в {Damage} хп выбранной цели";
+        public int Cost => 0;
+        public int Cooldown => 0;
+        public int TargetCount => 1;
+        private int Damage => new[] { 1, 2, 3 }[UpgradeLevel];
         public Sprite Icon { get; }
         
         public AttackClass(Sprite icon)
@@ -34,17 +36,21 @@ public sealed class Damager : Character
         {
             foreach (var unit in units)
             {
-                unit.TakeDamage(2, source);
+                unit.TakeDamage(Damage, source);
             }
         }
     }
     
     private class CastDamageUp : IAbility
     {
-        public string Description { get; } = "Увеличивает восприимчивость цели к урону. Получаемый ею урон будет увеличен на 2 хода";
-        public int Cost { get; } = 2;
-        public int Cooldown { get; } = 2;
-        public int TargetCount { get; } = 1;
+        public int UpgradeLevel { get; set; } = 0;
+
+        public string Description =>
+            $"Увеличивает восприимчивость цели к урону на 2 хода. Получаемый ею урон будет увеличен на {AdditionalDamage}";
+        public int Cost => new[] { 2, 3, 4 }[UpgradeLevel];
+        public int Cooldown => new[] { 2, 2, 3 }[UpgradeLevel];
+        public int TargetCount => 1;
+        private int AdditionalDamage => new[] { 1, 2, 3 }[UpgradeLevel];
         public Sprite Icon { get; }
 
         public CastDamageUp(Sprite icon)
@@ -56,13 +62,14 @@ public sealed class Damager : Character
         {
             foreach (var unit in units)
             {
-                StatusSystem.StatusList.Add(new AmplifyDamage(unit));
+                StatusSystem.StatusList.Add(new AmplifyDamage(unit, AdditionalDamage));
             }
         }
     }
     
-    private class LifeStealing : IAbility
+    private class LifeStealing : IAbility //todo
     {
+        public int UpgradeLevel { get; set; } = 0;
         public string Description { get; } = "На время действия при нанесении персонажем урона, восстанавливает ему здоровье в половину от нанесенного урона. Длительность 2 хода";
         public int Cost { get; } = 2;
         public int Cooldown { get; } = 2;
@@ -85,10 +92,12 @@ public sealed class Damager : Character
 
     private class LotOfDamage : IAbility
     {
-        public string Description { get; } = "Наносит урон в 4 хп выбранной цели ";
-        public int Cost { get; } = 4;
-        public int Cooldown { get; } = 5;
-        public int TargetCount { get; } = 1;
+        public int UpgradeLevel { get; set; } = 0;
+        public string Description => $"Наносит урон в {Damage} хп выбранной цели ";
+        public int Cost => new[] { 4, 5, 6 }[UpgradeLevel];
+        public int Cooldown  => new[] { 5, 6, 7 }[UpgradeLevel];
+        public int TargetCount => 1;
+        private int Damage => new[] { 4, 6, 10 }[UpgradeLevel];
         public Sprite Icon { get; }
         
         public LotOfDamage(Sprite icon)
@@ -100,7 +109,7 @@ public sealed class Damager : Character
         {
             foreach (var unit in units)
             {
-                unit.TakeDamage(4, source);
+                unit.TakeDamage(Damage, source);
             }
         }
     }

@@ -20,10 +20,15 @@ public sealed class Medic : Character
 
     private class CastHeal : IAbility
     {
-        public string Description { get; } = "Восстанавливает 1 хп выбранной цели";
-        public int Cost { get; } = 0;
-        public int Cooldown { get; } = 1;
-        public int TargetCount { get; } = 1;
+        public int UpgradeLevel { get; set; } = 0;
+        public string Description => $"Восстанавливает {healPower} хп выбранной цели";
+        public int Cost => 0;
+        public int Cooldown => 0;
+
+        public int TargetCount => new[] { 1, 2, 2 }[UpgradeLevel];
+
+        private int healPower => new[] { 1, 1, 2 }[UpgradeLevel];
+
         public Sprite Icon { get; }
         
         public CastHeal(Sprite icon)
@@ -35,39 +40,18 @@ public sealed class Medic : Character
         {
             foreach (var unit in units)
             {
-                unit.Heal(1);
+                unit.Heal(healPower);
             }
         }
     }
 
-    private class CastDelayedHealing : IAbility
-    {
-        public string Description { get; } = "Забирает 1 хп в момент применения, исцеляет по 1 хп в течении трех последующих ходов";
-        public int Cost { get; } = 2;
-        public int Cooldown { get; } = 3;
-        public int TargetCount { get; } = 1;
-        public Sprite Icon { get; }
-        
-        public CastDelayedHealing(Sprite icon)
-        {
-            Icon = icon;
-        }
-
-        public void CastAbility(List<IUnit> units, IUnit source)
-        {
-            foreach (var unit in units)
-            {
-                StatusSystem.StatusList.Add(new DelayedHealing(unit));
-            }
-        }
-    }
-    
     private class Dispel : IAbility
     {
-        public string Description { get; } = "Снимает все эффекты с цели";
-        public int Cost { get; } = 2;
-        public int Cooldown { get; } = 2;
-        public int TargetCount { get; } = 1;
+        public int UpgradeLevel { get; set; } = 0;
+        public string Description => "Снимает все эффекты с целей";
+        public int Cost => new[] { 2, 3, 4 }[UpgradeLevel];
+        public int Cooldown => new[] { 2, 2, 3 }[UpgradeLevel];
+        public int TargetCount => new[] { 1, 2, 3 }[UpgradeLevel];
         public Sprite Icon { get; }
         
         public Dispel(Sprite icon)
@@ -84,12 +68,40 @@ public sealed class Medic : Character
         }
     }
     
-    private class MakeInvulnerability : IAbility
+    private class CastDelayedHealing : IAbility
     {
-        public string Description { get; } = "Неуязвимость на 5 ходов - во время нее здоровье не может упасть ниже 1";
-        public int Cost { get; } = 4;
-        public int Cooldown { get; } = 5;
-        public int TargetCount { get; } = 1;
+        public int UpgradeLevel { get; set; } = 0;
+
+        public string Description =>
+            $"{(lifeTake == 0 ? "И" : "Забирает {lifeTake} хп в момент применения, и")}сцеляет по {healPower} хп в течении трех последующих ходов";
+        public int Cost => new[] { 2, 3, 5 }[UpgradeLevel];
+        public int Cooldown => new[] { 3, 3, 4 }[UpgradeLevel];
+        public int TargetCount => 1;
+        private int healPower => new[] { 1, 2, 2 }[UpgradeLevel];
+        private int lifeTake => new[] { 1, 2, 0 }[UpgradeLevel];
+        public Sprite Icon { get; }
+        
+        public CastDelayedHealing(Sprite icon)
+        {
+            Icon = icon;
+        }
+
+        public void CastAbility(List<IUnit> units, IUnit source)
+        {
+            foreach (var unit in units)
+            {
+                StatusSystem.StatusList.Add(new DelayedHealing(unit, healPower, lifeTake));
+            }
+        }
+    }
+
+    private class MakeInvulnerability : IAbility //todo
+    {
+        public int UpgradeLevel { get; set; } = 0;
+        public string Description => $"В течение 3-ех ходов здоровье цели не может упасть ниже {new[] {1,3,5}[UpgradeLevel]}";
+        public int Cost => new[] { 4, 5, 6 }[UpgradeLevel];
+        public int Cooldown => new[] { 5, 5, 6 }[UpgradeLevel];
+        public int TargetCount => 1;
         public Sprite Icon { get; }
         
         public MakeInvulnerability(Sprite icon)
@@ -101,7 +113,7 @@ public sealed class Medic : Character
         {
             foreach (var unit in units)
             {
-                StatusSystem.StatusList.Add(new Invulnerability(unit));
+                StatusSystem.StatusList.Add(new Invulnerability(unit, new[] {1,3,5}[UpgradeLevel]));
             }
         }
     }
