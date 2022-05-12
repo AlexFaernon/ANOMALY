@@ -67,13 +67,13 @@ public sealed class Damager : Character
         }
     }
     
-    private class LifeStealing : IAbility //todo
+    private class LifeStealing : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
-        public string Description { get; } = "На время действия при нанесении персонажем урона, восстанавливает ему здоровье в половину от нанесенного урона. Длительность 2 хода";
-        public int Cost { get; } = 2;
-        public int Cooldown { get; } = 2;
-        public int TargetCount { get; } = 0;
+        public string Description => "На время действия при нанесении персонажем урона восстанавливает ему здоровье. Длительность 2 хода";
+        public int Cost => new[] { 2, 3, 4 }[UpgradeLevel];
+        public int Cooldown => new[] { 2, 3, 4 }[UpgradeLevel];
+        public int TargetCount => 0;
         public Sprite Icon { get; }
         
         public LifeStealing(Sprite icon)
@@ -85,7 +85,7 @@ public sealed class Damager : Character
         {
             foreach (var unit in units)
             {
-                StatusSystem.StatusList.Add(new LifeSteal(unit));
+                StatusSystem.StatusList.Add(new LifeSteal(unit, UpgradeLevel));
             }
         }
     }

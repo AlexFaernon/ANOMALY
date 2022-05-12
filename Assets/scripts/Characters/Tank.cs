@@ -48,10 +48,10 @@ public sealed class Tank : Character
     private class CastStun : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
-        public string Description { get; } = "Оглушает цель, лишая ее права хода. Длительность 1 ход";
-        public int Cost { get; } = 2;
-        public int Cooldown { get; } = 2;
-        public int TargetCount { get; } = 1;
+        public string Description => "Оглушает цель, лишая ее права хода. Длительность 1 ход";
+        public int Cost => new[] { 2, 4, 5 }[UpgradeLevel];
+        public int Cooldown => new[] { 2, 3, 4 }[UpgradeLevel];
+        public int TargetCount => new[] { 1, 1, 2 }[UpgradeLevel];
         public Sprite Icon { get; }
         
         public CastStun(Sprite icon)
@@ -72,17 +72,18 @@ public sealed class Tank : Character
         private void UpgradedCast(List<IUnit> units, IUnit source)
         {
             StatusSystem.StatusList.Add(new Stun(units[0], 2));
-            StatusSystem.StatusList.Add(new Stun(units[0], 1));
+            StatusSystem.StatusList.Add(new Stun(units[1], 1));
         }
     }
 
-    private class CastDeflect : IAbility //todo upgrade
+    private class CastDeflect : IAbility
     {
-        public int UpgradeLevel { get; set; }
-        public string Description { get; } = "При получение персонажем урона, он наносит урон в 1 хп атакующему. Длительность 2 хода";
-        public int Cost { get; } = 2;
-        public int Cooldown { get; } = 3;
-        public int TargetCount { get; } = 0;
+        public int UpgradeLevel { get; set; } = 0;
+        public string Description => $"При получение персонажем урона, он наносит урон в {damage} хп атакующему. Длительность 2 хода";
+        public int Cost => new[] { 2, 3, 4 }[UpgradeLevel];
+        public int Cooldown => 3;
+        public int TargetCount => 0;
+        private int damage => new[] { 1, 2, 4 }[UpgradeLevel];
         public Sprite Icon { get; }
         
         public CastDeflect(Sprite icon)
@@ -94,7 +95,7 @@ public sealed class Tank : Character
         {
             foreach (var unit in units)
             {
-                StatusSystem.StatusList.Add(new Deflect(unit, 1));
+                StatusSystem.StatusList.Add(new Deflect(unit, damage));
             }
         }
     }

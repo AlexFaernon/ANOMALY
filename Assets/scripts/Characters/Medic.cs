@@ -95,10 +95,10 @@ public sealed class Medic : Character
         }
     }
 
-    private class MakeInvulnerability : IAbility //todo
+    private class MakeInvulnerability : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
-        public string Description => $"В течение 3-ех ходов здоровье цели не может упасть ниже {new[] {1,3,5}[UpgradeLevel]}";
+        public string Description => $"В течение 3-ех ходов здоровье цели не может упасть ниже {new object[] {1,3,"последней секции или ее остатка"}[UpgradeLevel]}.{(UpgradeLevel == 2 ? " При наложении на врага в течении 3 ходов убавляет по 1 хп" : "")}";
         public int Cost => new[] { 4, 5, 6 }[UpgradeLevel];
         public int Cooldown => new[] { 5, 5, 6 }[UpgradeLevel];
         public int TargetCount => 1;
@@ -113,7 +113,14 @@ public sealed class Medic : Character
         {
             foreach (var unit in units)
             {
-                StatusSystem.StatusList.Add(new Invulnerability(unit, new[] {1,3,5}[UpgradeLevel]));
+                if (UpgradeLevel < 2 || UpgradeLevel == 2 && unit is ICharacter)
+                {
+                    StatusSystem.StatusList.Add(new Invulnerability(unit, UpgradeLevel));
+                }
+                else
+                {
+                    StatusSystem.StatusList.Add(new HPLoss(unit));
+                }
             }
         }
     }

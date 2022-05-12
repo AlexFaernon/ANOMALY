@@ -27,7 +27,7 @@ public class Enemy : IEnemy
         
         ModifyReceivedDamage.Event.Invoke();
         
-        EventAggregator.DamageDealtByUnit.Publish(ModifyReceivedDamage.Damage, source);
+        EventAggregator.UnitDamagedUnit.Publish(ModifyReceivedDamage.Damage, source, this);
         HP -= ModifyReceivedDamage.Damage;
         Debug.Log(HP);
     }

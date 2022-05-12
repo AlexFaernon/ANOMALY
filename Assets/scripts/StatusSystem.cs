@@ -20,14 +20,16 @@ public abstract class Status
 
 public sealed class Invulnerability : Status
 {
-    public override string Name { get; } = "Отсрочка смерти";
-    public override string Description { get; } = "Здоровье не может упасть ниже 1";
+    public override string Name => "Отсрочка смерти";
+    public override string Description => "Здоровье не может упасть ниже 1";
     public override int Duration { get; set; } = 5;
     public override IUnit Target { get; set; }
-    private int minHP;
+    private readonly int upgradeLevel;
 
     private void MakeInvulnerable()
     {
+        var minHP = new[] { 1, 3, ((ICharacter)Target).HPSegmentLength }[upgradeLevel];
+        
         if (Target.HP - Target.ModifyReceivedDamage.Damage < minHP)
         {
             Target.ModifyReceivedDamage.Damage = Math.Max(Target.HP - minHP, 0);
@@ -43,12 +45,13 @@ public sealed class Invulnerability : Status
         EventAggregator.UpdateStatus.Publish();
     }
     
-    public Invulnerability(IUnit target, int minHP)
+    public Invulnerability(IUnit target, int upgradeLevel)
     {
         Target = target;
+        this.upgradeLevel = upgradeLevel;
+
         Target.ModifyReceivedDamage.Event.AddListener(MakeInvulnerable);
         Debug.Log("Invul added");
-        this.minHP = minHP;
         
         EventAggregator.NewTurn.Subscribe(OnTurn);
     }
@@ -67,10 +70,45 @@ public sealed class Invulnerability : Status
     }
 }
 
+public sealed class HPLoss : Status
+{
+    public override string Name => "";
+    public override string Description => "Цель теряет 1 здоровья каждый ход";
+    public override int Duration { get; set; } = 3;
+    public override IUnit Target { get; set; }
+    public override void Dispel()
+    {
+        EventAggregator.NewTurn.Unsubscribe(OnTurn);
+        StatusSystem.StatusList.Remove(this);
+        EventAggregator.UpdateStatus.Publish();
+    }
+
+    public HPLoss(IUnit target)
+    {
+        Target = target;
+        
+        EventAggregator.NewTurn.Subscribe(OnTurn);
+    }
+
+    private void OnTurn()
+    {
+        Duration -= 1;
+        Target.TakeDamage(1, null);
+
+        if (Duration == 0)
+        {
+            Dispel();
+            return;
+        }
+        
+        Debug.Log("HPLoss " + Duration);
+    }
+}
+
 public sealed class Protect : Status
 {
-    public override string Name { get; } = "Защита";
-    public override string Description { get; } = "При атаке, другой юнит получит урон вместо данного";
+    public override string Name => "Защита";
+    public override string Description => "При атаке, другой юнит получит урон вместо данного";
     public override int Duration { get; set; } = 1;
     public readonly IUnit Protector;
     public override IUnit Target { get; set; }
@@ -123,8 +161,8 @@ public sealed class Protect : Status
 
 public sealed class Stun : Status
 {
-    public override string Name { get; } = "Оглушение";
-    public override string Description { get; } = "Данный юнит не может действовать";
+    public override string Name => "Оглушение";
+    public override string Description => "Данный юнит не может действовать";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override void Dispel()
@@ -162,11 +200,11 @@ public sealed class Stun : Status
 
 public sealed class Deflect : Status
 {
-    public override string Name { get; } = "Отражение урона";
-    public override string Description { get; } = "Наносит 2 урона юнитам, атакующего данного юнита";
+    public override string Name => "Отражение урона";
+    public override string Description => "Наносит 2 урона юнитам, атакующего данного юнита";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
-    private int damageLevel;
+    private int damage;
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
@@ -176,9 +214,9 @@ public sealed class Deflect : Status
         EventAggregator.UpdateStatus.Publish();
     }
 
-    public Deflect(IUnit target, int damageLevel)
+    public Deflect(IUnit target, int damage)
     {
-        this.damageLevel = damageLevel;
+        this.damage = damage;
         Target = target;
         Target.ModifyReceivedDamage.Event.AddListener(TakeDamageFromDeflect);
         EventAggregator.NewTurn.Subscribe(OnTurn);
@@ -200,15 +238,14 @@ public sealed class Deflect : Status
 
     private void TakeDamageFromDeflect()
     {
-        var damage = Target.ModifyReceivedDamage.Damage;
-        Target.ModifyReceivedDamage.Source?.TakeDamage(1, null);
+        Target.ModifyReceivedDamage.Source?.TakeDamage(damage, null);
     }
 }
 
 public sealed class Berserk : Status
 {
-    public override string Name { get; } = "Берсерк";
-    public override string Description { get; } = "Ультимативная способность заменена на разрушительную атаку";
+    public override string Name => "Берсерк";
+    public override string Description => "Ультимативная способность заменена на разрушительную атаку";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     private readonly ICharacter targetCharacter;
@@ -249,8 +286,8 @@ public sealed class Berserk : Status
 
 public sealed class AmplifyDamage : Status
 {
-    public override string Name { get; } = "Хрупкость";
-    public override string Description { get; } = "Урон по данному юниту увеличен в 1.5 раза";
+    public override string Name => "Хрупкость";
+    public override string Description => "Урон по данному юниту увеличен в 1.5 раза";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     private int additionalDamage;
@@ -292,8 +329,8 @@ public sealed class AmplifyDamage : Status
 
 public sealed class DelayedHealing : Status
 {
-    public override string Name { get; } = "Регенерация";
-    public override string Description { get; } = "Исцеляет на 1 пункт каждый ход";
+    public override string Name => "Регенерация";
+    public override string Description => "Исцеляет на 1 пункт каждый ход";
     public override int Duration { get; set; } = 3;
     public override IUnit Target { get; set; }
     private int healPower;
@@ -325,24 +362,33 @@ public sealed class DelayedHealing : Status
 
 public sealed class LifeSteal : Status
 {
-    public override string Name { get; } = "Кража жизни";
-    public override string Description { get; } = "Восстанавливает здоровье в половину от нанесенного урона";
+    public override string Name => "Кража жизни";
+    public override string Description => $"Восстанавливает {(upgradeLevel == 1 ? "1 хп" : "половину от нанесенного урона")} при ударе.{(upgradeLevel == 2 ? $" Если персонаж не получил урона то на второй ход восстановление увеличится до 80% (урон {(damageTaken ? "получен" : "не получен")})" : "")}";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
+    private readonly int upgradeLevel;
+    private bool damageTaken;
     public override void Dispel()
     {
         StatusSystem.StatusList.Remove(this);
-        EventAggregator.DamageDealtByUnit.Unsubscribe(HealByDamage);
+        
+        EventAggregator.UnitDamagedUnit.Unsubscribe(HealByDamage);
+        EventAggregator.UnitDamagedUnit.Unsubscribe(CheckDamage);
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
+        
         Debug.Log("LifeSteal stop");
         EventAggregator.UpdateStatus.Publish();
     }
 
-    public LifeSteal(IUnit target)
+    public LifeSteal(IUnit target, int upgradeLevel)
     {
+        this.upgradeLevel = upgradeLevel;
         Target = target;
-        EventAggregator.DamageDealtByUnit.Subscribe(HealByDamage);
+        
+        EventAggregator.UnitDamagedUnit.Subscribe(HealByDamage);
+        EventAggregator.UnitDamagedUnit.Subscribe(CheckDamage);
         EventAggregator.NewTurn.Subscribe(OnTurn);
+        
         Debug.Log("LifeSteal start");
     }
     
@@ -356,11 +402,21 @@ public sealed class LifeSteal : Status
         }
     }
 
-    private void HealByDamage(int damage, IUnit source)
+    private void CheckDamage(int damage, IUnit source, IUnit target)
     {
+        if (target == Target)
+        {
+            damageTaken = true;
+        }
+    }
+
+    private void HealByDamage(int damage, IUnit source, IUnit target)
+    {
+        var heal = new[] { 1, damage / 2, !damageTaken && Duration == 1 ? (int)Math.Floor(damage * 0.8) : damage / 2 }[upgradeLevel];
+        
         if (source == Target)
         {
-            Target.Heal(1);
+            Target.Heal(heal);
         }
     }
 }

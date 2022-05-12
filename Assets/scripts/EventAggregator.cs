@@ -19,7 +19,7 @@ public static class EventAggregator
     public static readonly Event<IEnemy> EnemyTurn = new Event<IEnemy>();
     public static readonly Event<AbilityType> CastAbilityType = new Event<AbilityType>();
     public static readonly Event<AbilityType> AbilityTypeInfo = new Event<AbilityType>();
-    public static readonly Event<int, IUnit> DamageDealtByUnit = new Event<int, IUnit>();
+    public static readonly Event<int, IUnit, IUnit> UnitDamagedUnit = new Event<int, IUnit, IUnit>();
     public static readonly Event<GameObject, int> SetMaxHPSegment = new Event<GameObject, int>();
     public static readonly Event<GameObject, int> UpdateHPSegment = new Event<GameObject, int>();
     public static readonly Event<GameObject, ICharacter> BindHPBarToCharacter = new Event<GameObject, ICharacter>();

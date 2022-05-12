@@ -15,8 +15,8 @@ public abstract class Character : ICharacter
     private int _hp = 6;
     private int _mp = 6;
 
-    public int MaxHP { get; } = 6;
-    public int HPSegmentLength { get; } = 3;
+    public int MaxHP => 6;
+    public int HPSegmentLength => 3;
     public int MaxMP { get; set; } = 6;
 
     public virtual int HP
@@ -50,7 +50,7 @@ public abstract class Character : ICharacter
         
         ModifyReceivedDamage.Event.Invoke();
         
-        EventAggregator.DamageDealtByUnit.Publish(ModifyReceivedDamage.Damage, source);
+        EventAggregator.UnitDamagedUnit.Publish(ModifyReceivedDamage.Damage, source, this);
         HP -= ModifyReceivedDamage.Damage;
     }
 
