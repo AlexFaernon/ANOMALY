@@ -39,6 +39,10 @@ public static class EventAggregator
     public static readonly Event UpdateStatus = new Event();
     public static readonly Event<GameObject> NodeCompleted = new Event<GameObject>();
     public static readonly Event CampCharacterSelected = new Event();
+    public static readonly Event<ICharacter> UpgradeCharacterSelected = new Event<ICharacter>();
+
+    public static readonly Event<AbilityType, AbilityUpgradeScript.UpgradeLevel> UpgradeAbilitySelected =
+        new Event<AbilityType, AbilityUpgradeScript.UpgradeLevel>();
 }
 
 public class Event<T>
