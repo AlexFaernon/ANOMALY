@@ -20,6 +20,7 @@ public sealed class Damager : Character
     private class AttackClass : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
+        public int NextUpgradeLevel => UpgradeLevel + 1;
         public string Description => $"Наносит урон в {Damage} хп выбранной цели";
         public int Cost => 0;
         public int Cooldown => 0;
@@ -44,6 +45,7 @@ public sealed class Damager : Character
     private class CastDamageUp : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
+        public int NextUpgradeLevel => UpgradeLevel + 1;
 
         public string Description =>
             $"Увеличивает восприимчивость цели к урону на 2 хода. Получаемый ею урон будет увеличен на {AdditionalDamage}";
@@ -70,6 +72,7 @@ public sealed class Damager : Character
     private class LifeStealing : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
+        public int NextUpgradeLevel => UpgradeLevel + 1;
         public string Description => "На время действия при нанесении персонажем урона восстанавливает ему здоровье. Длительность 2 хода";
         public int Cost => new[] { 2, 3, 4 }[UpgradeLevel];
         public int Cooldown => new[] { 2, 3, 4 }[UpgradeLevel];

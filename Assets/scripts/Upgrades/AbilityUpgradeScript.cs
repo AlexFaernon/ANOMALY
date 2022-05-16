@@ -8,6 +8,7 @@ public class AbilityUpgradeScript : MonoBehaviour
 {
     [SerializeField] private AbilityType abilityType;
     [SerializeField] private UpgradeLevel upgradeLevel;
+    [SerializeField] private int cost;
     private IAbility ability;
     private Image image;
 
@@ -20,7 +21,7 @@ public class AbilityUpgradeScript : MonoBehaviour
 
     private void OnClick()
     {
-        EventAggregator.UpgradeAbilitySelected.Publish(abilityType, upgradeLevel);
+        EventAggregator.UpgradeAbilitySelected.Publish(abilityType, upgradeLevel, cost);
     }
 
     private void SelectCharacter(ICharacter character)

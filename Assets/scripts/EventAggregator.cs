@@ -41,8 +41,8 @@ public static class EventAggregator
     public static readonly Event CampCharacterSelected = new Event();
     public static readonly Event<ICharacter> UpgradeCharacterSelected = new Event<ICharacter>();
 
-    public static readonly Event<AbilityType, AbilityUpgradeScript.UpgradeLevel> UpgradeAbilitySelected =
-        new Event<AbilityType, AbilityUpgradeScript.UpgradeLevel>();
+    public static readonly Event<AbilityType, AbilityUpgradeScript.UpgradeLevel, int> UpgradeAbilitySelected =
+        new Event<AbilityType, AbilityUpgradeScript.UpgradeLevel, int>();
 }
 
 public class Event<T>

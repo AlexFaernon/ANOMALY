@@ -23,6 +23,7 @@ public sealed class Tank : Character
     private class CastProtect : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
+        public int NextUpgradeLevel => UpgradeLevel + 1;
         public string Description => $"Защита персонажа: во время хода выбирается персонаж, которого в течении одного хода, герой будет защищать. Если на него нападут, то герой получит {DamageReduction*100}% урон вместо цели. (ради бога не кастуйте это на самого танка, там баг)";
         public int Cost => 0;
         public int Cooldown => 0;
@@ -48,6 +49,7 @@ public sealed class Tank : Character
     private class CastStun : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
+        public int NextUpgradeLevel => UpgradeLevel + 1;
         public string Description => "Оглушает цель, лишая ее права хода. Длительность 1 ход";
         public int Cost => new[] { 2, 4, 5 }[UpgradeLevel];
         public int Cooldown => new[] { 2, 3, 4 }[UpgradeLevel];
@@ -79,6 +81,7 @@ public sealed class Tank : Character
     private class CastDeflect : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
+        public int NextUpgradeLevel => UpgradeLevel + 1;
         public string Description => $"При получение персонажем урона, он наносит урон в {damage} хп атакующему. Длительность 2 хода";
         public int Cost => new[] { 2, 3, 4 }[UpgradeLevel];
         public int Cooldown => 3;
@@ -103,6 +106,7 @@ public sealed class Tank : Character
     private class CastBerserk : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
+        public int NextUpgradeLevel => UpgradeLevel + 1;
         public string Description => "На 3 хода заменяет все способности на одну мощную атакующую способность. Замена способности не тратит ход персонажа";
         public int Cost => new[] { 4, 5, 6 }[UpgradeLevel];
         public int Cooldown => new[] { 5, 5, 6 }[UpgradeLevel];
@@ -125,6 +129,7 @@ public sealed class Tank : Character
         private class BerserkAbility : IAbility
         {
             public int UpgradeLevel { get; set; }
+            public int NextUpgradeLevel => UpgradeLevel + 1;
             public string Description => $"Наносит {Damage} урона 3-ем целям";
             public int Cost => 0;
             public int Cooldown => 0;
