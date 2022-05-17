@@ -12,6 +12,12 @@ public class TokensText : MonoBehaviour
     private void Awake()
     {
         text = GetComponent<TMP_Text>();
+        UpdateText();
+        EventAggregator.AbilityUpgraded.Subscribe(UpdateText);
+    }
+
+    private void UpdateText()
+    {
         text.text = tokenType switch
         {
             Token.Basic => AbilityResources.BasicTokens.ToString(),
@@ -26,5 +32,10 @@ public class TokensText : MonoBehaviour
         Basic,
         Advanced,
         Ultimate
+    }
+
+    private void OnDestroy()
+    {
+        EventAggregator.AbilityUpgraded.Unsubscribe(UpdateText);
     }
 }

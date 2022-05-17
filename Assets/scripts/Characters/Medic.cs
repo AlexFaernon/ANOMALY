@@ -21,7 +21,7 @@ public sealed class Medic : Character
     private class CastHeal : IAbility
     {
         public int UpgradeLevel { get; set; } = 0;
-        public string Description => $"Восстанавливает {healPower} хп выбранной цели";
+        public string Description => $"Восстанавливает {healPower} хп {TargetCount} цели(ям)";
         public int Cost => 0;
         public int Cooldown => 0;
 

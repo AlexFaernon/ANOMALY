@@ -12,9 +12,6 @@ public class UpgradeInfoScript : MonoBehaviour
     [SerializeField] private TMP_Text cooldown;
     [SerializeField] private TMP_Text cost;
     [SerializeField] private TMP_Text targetCount;
-    [SerializeField] private TMP_Text upgradeCostText;
-    [SerializeField] private Image upgradeIcon;
-    [SerializeField] private List<Sprite> icons;
     private ICharacter character;
 
     private void Awake()
@@ -39,8 +36,6 @@ public class UpgradeInfoScript : MonoBehaviour
         cost.text = ability.Cost.ToString();
         cooldown.text = ability.Cooldown.ToString();
         targetCount.text = ability.TargetCount.ToString();
-        upgradeCostText.text = upgradeCost.ToString();
-        upgradeIcon.sprite = icons[(int)abilityType];
         ability.UpgradeLevel = level;
     }
 

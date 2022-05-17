@@ -43,6 +43,8 @@ public static class EventAggregator
 
     public static readonly Event<AbilityType, AbilityUpgradeScript.UpgradeLevel, int> UpgradeAbilitySelected =
         new Event<AbilityType, AbilityUpgradeScript.UpgradeLevel, int>();
+
+    public static readonly Event AbilityUpgraded = new Event();
 }
 
 public class Event<T>
