@@ -1,17 +1,18 @@
+using System;
 using UnityEngine;
 
 public class Enemy : IEnemy
 {
     private int _hp = 5;
 
-    public int MaxHP { get; }
+    public int MaxHP { get; set; }
 
     public int HP
     {
         get => _hp;
         private set
         {
-            _hp = value;
+            _hp = Math.Min(value, MaxHP);
             EventAggregator.UpdateHP.Publish(this);
         }
     }

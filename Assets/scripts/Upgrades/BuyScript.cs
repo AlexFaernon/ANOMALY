@@ -19,10 +19,14 @@ public class BuyScript : MonoBehaviour
         icon.gameObject.SetActive(false);
         price.gameObject.SetActive(false);
         boughtText.SetActive(false);
-        buyButton.gameObject.SetActive(false);
         EventAggregator.UpgradeAbilitySelected.Subscribe(AbilitySelected);
         EventAggregator.UpgradeCharacterSelected.Subscribe(SelectCharacter);
         EventAggregator.AbilityUpgraded.Subscribe(OnAbilityUpgrade);
+    }
+
+    private void Start()
+    {
+        buyButton.gameObject.SetActive(false);
     }
 
     private void OnAbilityUpgrade()
@@ -42,16 +46,25 @@ public class BuyScript : MonoBehaviour
         buyButton.gameObject.SetActive(false);
     }
 
-    private void AbilitySelected(AbilityType abilityType, AbilityUpgradeScript.UpgradeLevel upgradeLevel, int cost)
+    private void AbilitySelected(AbilityType abilityType, UpgradeLevel upgradeLevel, StatsUpgradeType statsUpgradeType, int cost)
     {
         icon.gameObject.SetActive(false);
         price.gameObject.SetActive(false);
         boughtText.SetActive(false);
         buyButton.gameObject.SetActive(false);
         buyButton.interactable = false;
+
+        var hpUpgraded = statsUpgradeType == StatsUpgradeType.HP &&
+                         (character.HP1Upgrade && upgradeLevel == UpgradeLevel.Second ||
+                          character.HP2Upgrade && upgradeLevel == UpgradeLevel.Fourth);
+        var mpUpgraded = statsUpgradeType == StatsUpgradeType.MP &&
+                         (character.MP1Upgrade && upgradeLevel == UpgradeLevel.Second ||
+                          character.MP2Upgrade && upgradeLevel == UpgradeLevel.Fourth);
         
         var ability = character.Abilities[abilityType];
-        if ((int)upgradeLevel <= ability.UpgradeLevel)
+        if ((int)upgradeLevel <= ability.OverallUpgradeLevel &&
+            (statsUpgradeType == StatsUpgradeType.None || abilityType != AbilityType.Basic ||
+             hpUpgraded || mpUpgraded))
         {
             boughtText.SetActive(true);
             return;
@@ -61,7 +74,13 @@ public class BuyScript : MonoBehaviour
         price.gameObject.SetActive(true);
         price.text = cost.ToString();
         icon.sprite = icons[(int)abilityType];
-        if ((int)upgradeLevel == ability.UpgradeLevel + 1)
+        if ((int)upgradeLevel == ability.OverallUpgradeLevel + 1 ||
+            (int)upgradeLevel <= ability.OverallUpgradeLevel && !hpUpgraded && !mpUpgraded ||
+            abilityType == AbilityType.Ultimate &&
+            (int)upgradeLevel == ability.OverallUpgradeLevel + 2 ||
+            statsUpgradeType == StatsUpgradeType.HPMP &&
+            (character.Abilities[AbilityType.First].OverallUpgradeLevel + 1 == (int)upgradeLevel ||
+             character.Abilities[AbilityType.Second].OverallUpgradeLevel + 1 == (int)upgradeLevel))
         {
             buyButton.gameObject.SetActive(true);
             if (AbilityResources.Resources[abilityType] < cost)

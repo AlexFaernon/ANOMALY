@@ -41,8 +41,8 @@ public static class EventAggregator
     public static readonly Event CampCharacterSelected = new Event();
     public static readonly Event<ICharacter> UpgradeCharacterSelected = new Event<ICharacter>();
 
-    public static readonly Event<AbilityType, AbilityUpgradeScript.UpgradeLevel, int> UpgradeAbilitySelected =
-        new Event<AbilityType, AbilityUpgradeScript.UpgradeLevel, int>();
+    public static readonly Event<AbilityType, UpgradeLevel, StatsUpgradeType, int> UpgradeAbilitySelected =
+        new Event<AbilityType, UpgradeLevel, StatsUpgradeType, int>();
 
     public static readonly Event AbilityUpgraded = new Event();
 }
@@ -134,6 +134,29 @@ public class Event<T1, T2, T3>
     }
 
     public void Unsubscribe(Action<T1 ,T2, T3> action)
+    {
+        callbacks.Remove(action);
+    }
+}
+
+public class Event<T1, T2, T3, T4>
+{
+    private readonly List<Action<T1, T2, T3, T4>> callbacks = new List<Action<T1, T2, T3, T4>>();
+
+    public void Subscribe(Action<T1, T2, T3, T4> action)
+    {
+        callbacks.Add(action);
+    }
+
+    public void Publish(T1 t1, T2 t2, T3 t3, T4 t4)
+    {
+        foreach (var action in callbacks.ToList())
+        {
+            action(t1, t2, t3, t4);
+        }
+    }
+
+    public void Unsubscribe(Action<T1, T2, T3, T4> action)
     {
         callbacks.Remove(action);
     }

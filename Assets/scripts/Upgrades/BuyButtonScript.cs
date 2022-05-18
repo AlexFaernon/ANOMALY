@@ -8,9 +8,10 @@ public class BuyButtonScript : MonoBehaviour
 {
     private ICharacter character;
     private IAbility ability;
-    private AbilityUpgradeScript.UpgradeLevel upgradeLevel;
+    private UpgradeLevel upgradeLevel;
     private AbilityType abilityType;
     private int cost;
+    private StatsUpgradeType statsUpgradeType;
 
     private void Awake()
     {
@@ -21,7 +22,54 @@ public class BuyButtonScript : MonoBehaviour
 
     private void UpgradeAbility()
     {
-        ability.UpgradeLevel = (int)upgradeLevel;
+        
+        if ((int)upgradeLevel % 2 == 1)
+        {
+            if (abilityType == AbilityType.Basic)
+            {
+                ability.OverallUpgradeLevel = Math.Max((int)upgradeLevel, ability.OverallUpgradeLevel);
+                if (statsUpgradeType == StatsUpgradeType.HP)
+                {
+                    if (upgradeLevel == UpgradeLevel.Second)
+                    {
+                        character.HP1Upgrade = true;
+                    }
+                    else
+                    {
+                        character.HP2Upgrade = true;
+                    }
+                }
+                else
+                {
+                    if (upgradeLevel == UpgradeLevel.Second)
+                    {
+                        character.MP1Upgrade = true;
+                    }
+                    else
+                    {
+                        character.MP2Upgrade = true;
+                    }
+                }
+            }
+            else
+            {
+                if (character.Abilities[AbilityType.First].OverallUpgradeLevel + 1 == (int)upgradeLevel)
+                {
+                    character.Abilities[AbilityType.First].OverallUpgradeLevel = (int)upgradeLevel;
+                }
+                if (character.Abilities[AbilityType.Second].OverallUpgradeLevel + 1 == (int)upgradeLevel)
+                {
+                    character.Abilities[AbilityType.Second].OverallUpgradeLevel = (int)upgradeLevel;
+                }
+            }
+            
+            StatsUpgrades.Upgrades[statsUpgradeType][upgradeLevel].Upgrade(character);
+            Debug.Log($"max {character.MaxHP.ToString()}, segment {character.HPSegmentLength}, hp {character.HP}");
+        }
+        else
+        {
+            ability.OverallUpgradeLevel = (int)upgradeLevel;
+        }
         switch (abilityType)
         {
             case AbilityType.Basic:
@@ -47,8 +95,9 @@ public class BuyButtonScript : MonoBehaviour
         character = character1;
     }
 
-    private void AbilitySelected(AbilityType abilityType, AbilityUpgradeScript.UpgradeLevel upgradeLevel1, int cost)
+    private void AbilitySelected(AbilityType abilityType, UpgradeLevel upgradeLevel1, StatsUpgradeType statsUpgradeType, int cost)
     {
+        this.statsUpgradeType = statsUpgradeType;
         this.cost = cost;
         this.abilityType = abilityType;
         ability = character.Abilities[abilityType];

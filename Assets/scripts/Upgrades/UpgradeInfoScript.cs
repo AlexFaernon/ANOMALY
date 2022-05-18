@@ -16,8 +16,14 @@ public class UpgradeInfoScript : MonoBehaviour
 
     private void Awake()
     {
+        title.text = "";
+        upgradeLevelText.text = "";
+        text.text = "";
+        cooldown.gameObject.SetActive(false);
+        cost.gameObject.SetActive(false);
+        targetCount.gameObject.SetActive(false);
         EventAggregator.UpgradeCharacterSelected.Subscribe(SelectCharacter);
-        EventAggregator.UpgradeAbilitySelected.Subscribe(SelectUpgrade);
+        EventAggregator.UpgradeAbilitySelected.Subscribe(SelectAbilityUpgrade);
     }
 
     private void SelectCharacter(ICharacter character1)
@@ -25,23 +31,36 @@ public class UpgradeInfoScript : MonoBehaviour
         character = character1;
     }
 
-    private void SelectUpgrade(AbilityType abilityType, AbilityUpgradeScript.UpgradeLevel upgradeLevel, int upgradeCost)
+    private void SelectAbilityUpgrade(AbilityType abilityType, UpgradeLevel upgradeLevel, StatsUpgradeType statsUpgradeType, int cost1)
     {
-        var ability = character.Abilities[abilityType];
-        var level = ability.UpgradeLevel;
-        ability.UpgradeLevel = (int)upgradeLevel;
-        title.text = ability.ToString();
         upgradeLevelText.text = $"Уровень {(int)upgradeLevel + 1}";
+        if ((int)upgradeLevel % 2 == 1)
+        {
+            cooldown.gameObject.SetActive(false);
+            cost.gameObject.SetActive(false);
+            targetCount.gameObject.SetActive(false);
+            var upgrade = StatsUpgrades.Upgrades[statsUpgradeType][upgradeLevel];
+            title.text = "Улучшение характеристик";
+            text.text = upgrade.Description;
+            return;
+        }
+        cooldown.gameObject.SetActive(true);
+        cost.gameObject.SetActive(true);
+        targetCount.gameObject.SetActive(true);
+        var ability = character.Abilities[abilityType];
+        var level = ability.OverallUpgradeLevel;
+        ability.OverallUpgradeLevel = (int)upgradeLevel;
+        title.text = ability.ToString();
         text.text = ability.Description;
         cost.text = ability.Cost.ToString();
         cooldown.text = ability.Cooldown.ToString();
         targetCount.text = ability.TargetCount.ToString();
-        ability.UpgradeLevel = level;
+        ability.OverallUpgradeLevel = level;
     }
 
     private void OnDestroy()
     {
         EventAggregator.UpgradeCharacterSelected.Unsubscribe(SelectCharacter);
-        EventAggregator.UpgradeAbilitySelected.Unsubscribe(SelectUpgrade);
+        EventAggregator.UpgradeAbilitySelected.Unsubscribe(SelectAbilityUpgrade);
     }
 }

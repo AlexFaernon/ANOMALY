@@ -11,6 +11,6 @@ public static class AbilityResources
     };
 
     public static int BasicTokens { get; set; } = 10;
-    public static int AdvancedTokens { get; set; }
-    public static int UltimateTokens { get; set; }
+    public static int AdvancedTokens { get; set; } = 10;
+    public static int UltimateTokens { get; set; } = 10;
 }

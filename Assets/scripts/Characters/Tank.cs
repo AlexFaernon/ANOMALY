@@ -22,13 +22,13 @@ public sealed class Tank : Character
     
     private class CastProtect : IAbility
     {
-        public int UpgradeLevel { get; set; } = 0;
-        public int NextUpgradeLevel => UpgradeLevel + 1;
+        public int OverallUpgradeLevel { get; set; } = 0;
+        public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Description => $"Защита персонажа: во время хода выбирается персонаж, которого в течении одного хода, герой будет защищать. Если на него нападут, то герой получит {DamageReduction*100}% урон вместо цели. (ради бога не кастуйте это на самого танка, там баг)";
         public int Cost => 0;
         public int Cooldown => 0;
         public int TargetCount => 1;
-        private double DamageReduction => new[] { 1, 0.8, 0.5 }[UpgradeLevel];
+        private double DamageReduction => new[] { 1, 0.8, 0.5 }[AbilityUpgradeLevel];
         public Sprite Icon { get; }
         
         public CastProtect(Sprite icon)
@@ -48,12 +48,12 @@ public sealed class Tank : Character
     
     private class CastStun : IAbility
     {
-        public int UpgradeLevel { get; set; } = 0;
-        public int NextUpgradeLevel => UpgradeLevel + 1;
+        public int OverallUpgradeLevel { get; set; } = 0;
+        public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Description => "Оглушает цель, лишая ее права хода. Длительность 1 ход";
-        public int Cost => new[] { 2, 4, 5 }[UpgradeLevel];
-        public int Cooldown => new[] { 2, 3, 4 }[UpgradeLevel];
-        public int TargetCount => new[] { 1, 1, 2 }[UpgradeLevel];
+        public int Cost => new[] { 2, 4, 5 }[AbilityUpgradeLevel];
+        public int Cooldown => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
+        public int TargetCount => new[] { 1, 1, 2 }[AbilityUpgradeLevel];
         public Sprite Icon { get; }
         
         public CastStun(Sprite icon)
@@ -63,12 +63,12 @@ public sealed class Tank : Character
 
         public void CastAbility(List<IUnit> units, IUnit source)
         {
-            new Action<List<IUnit>, IUnit>[] { BasicCast, BasicCast, UpgradedCast }[UpgradeLevel].Invoke(units, source);
+            new Action<List<IUnit>, IUnit>[] { BasicCast, BasicCast, UpgradedCast }[AbilityUpgradeLevel].Invoke(units, source);
         }
 
         private void BasicCast(List<IUnit> units, IUnit source)
         {
-            StatusSystem.StatusList.Add(new Stun(units[0], new[] { 1, 2 }[UpgradeLevel]));
+            StatusSystem.StatusList.Add(new Stun(units[0], new[] { 1, 2 }[AbilityUpgradeLevel]));
         }
 
         private void UpgradedCast(List<IUnit> units, IUnit source)
@@ -80,13 +80,13 @@ public sealed class Tank : Character
 
     private class CastDeflect : IAbility
     {
-        public int UpgradeLevel { get; set; } = 0;
-        public int NextUpgradeLevel => UpgradeLevel + 1;
-        public string Description => $"При получение персонажем урона, он наносит урон в {damage} хп атакующему. Длительность 2 хода";
-        public int Cost => new[] { 2, 3, 4 }[UpgradeLevel];
+        public int OverallUpgradeLevel { get; set; } = 0;
+        public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
+        public string Description => $"При получение персонажем урона, он наносит урон в {Damage} хп атакующему. Длительность 2 хода";
+        public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int Cooldown => 3;
         public int TargetCount => 0;
-        private int damage => new[] { 1, 2, 4 }[UpgradeLevel];
+        private int Damage => new[] { 1, 2, 4 }[AbilityUpgradeLevel];
         public Sprite Icon { get; }
         
         public CastDeflect(Sprite icon)
@@ -98,18 +98,18 @@ public sealed class Tank : Character
         {
             foreach (var unit in units)
             {
-                StatusSystem.StatusList.Add(new Deflect(unit, damage));
+                StatusSystem.StatusList.Add(new Deflect(unit, Damage));
             }
         }
     }
     
     private class CastBerserk : IAbility
     {
-        public int UpgradeLevel { get; set; } = 0;
-        public int NextUpgradeLevel => UpgradeLevel + 1;
+        public int OverallUpgradeLevel { get; set; } = 0;
+        public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Description => "На 3 хода заменяет все способности на одну мощную атакующую способность. Замена способности не тратит ход персонажа";
-        public int Cost => new[] { 4, 5, 6 }[UpgradeLevel];
-        public int Cooldown => new[] { 5, 5, 6 }[UpgradeLevel];
+        public int Cost => new[] { 4, 5, 6 }[AbilityUpgradeLevel];
+        public int Cooldown => new[] { 5, 5, 6 }[AbilityUpgradeLevel];
         public int TargetCount => 0;
         public Sprite Icon { get; }
         
@@ -122,24 +122,24 @@ public sealed class Tank : Character
         {
             foreach (var unit in units)
             {
-                StatusSystem.StatusList.Add(new Berserk((ICharacter)unit, new BerserkAbility(Icon, UpgradeLevel)));
+                StatusSystem.StatusList.Add(new Berserk((ICharacter)unit, new BerserkAbility(Icon, AbilityUpgradeLevel)));
             }
         }
 
         private class BerserkAbility : IAbility
         {
-            public int UpgradeLevel { get; set; }
-            public int NextUpgradeLevel => UpgradeLevel + 1;
+            public int OverallUpgradeLevel { get; set; }
+            public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
             public string Description => $"Наносит {Damage} урона 3-ем целям";
             public int Cost => 0;
             public int Cooldown => 0;
             public int TargetCount => 3;
-            private int Damage => new[] { 2, 3, 5 }[UpgradeLevel];
+            private int Damage => new[] { 2, 3, 5 }[AbilityUpgradeLevel];
             public Sprite Icon { get; }
             
             public BerserkAbility(Sprite icon, int upgradeLevel)
             {
-                UpgradeLevel = upgradeLevel;
+                OverallUpgradeLevel = upgradeLevel;
                 Icon = icon;
             }
 

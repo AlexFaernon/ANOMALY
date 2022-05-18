@@ -336,7 +336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityType: 1
-  upgradeLevel: 1
+  upgradeLevel: 2
+  statsUpgradeType: 0
   cost: 1
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &19440060
@@ -658,11 +659,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1143396487}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -13.46, y: 0.0000019073486}
+  m_AnchoredPosition: {x: -13.46, y: 0}
   m_SizeDelta: {x: 26.92, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &81775564
@@ -1573,17 +1574,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192943607}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1143396487}
-  m_RootOrder: 1
+  m_Father: {fileID: 1542678933}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -12.584992, y: 0}
-  m_SizeDelta: {x: 25.17, y: 25.17}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -25.789986, y: 0}
+  m_SizeDelta: {x: -1.8299999, y: 25.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &192943609
 MonoBehaviour:
@@ -3218,7 +3219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityType: 0
-  upgradeLevel: 2
+  upgradeLevel: 4
+  statsUpgradeType: 0
   cost: 2
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &604088224
@@ -3430,7 +3432,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityType: 0
-  upgradeLevel: 1
+  upgradeLevel: 2
+  statsUpgradeType: 0
   cost: 2
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &659205583
@@ -4135,7 +4138,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityType: 3
-  upgradeLevel: 2
+  upgradeLevel: 4
+  statsUpgradeType: 0
   cost: 2
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &953882872
@@ -4148,6 +4152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 953882873}
   - component: {fileID: 953882876}
+  - component: {fileID: 953882877}
   - component: {fileID: 953882875}
   - component: {fileID: 953882874}
   m_Layer: 0
@@ -4258,6 +4263,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953882872}
   m_CullTransparentMesh: 1
+--- !u!114 &953882877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953882872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feff4fe5e01381a4888690eeb2357f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityType: 0
+  upgradeLevel: 3
+  statsUpgradeType: 1
+  cost: 2
+  lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &966912766
 GameObject:
   m_ObjectHideFlags: 0
@@ -4670,6 +4692,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1013521333}
   - component: {fileID: 1013521336}
+  - component: {fileID: 1013521337}
   - component: {fileID: 1013521335}
   - component: {fileID: 1013521334}
   m_Layer: 0
@@ -4780,6 +4803,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013521332}
   m_CullTransparentMesh: 1
+--- !u!114 &1013521337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013521332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feff4fe5e01381a4888690eeb2357f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityType: 0
+  upgradeLevel: 3
+  statsUpgradeType: 2
+  cost: 2
+  lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1051913855
 GameObject:
   m_ObjectHideFlags: 0
@@ -5459,9 +5499,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1542678933}
-  - {fileID: 192943608}
   - {fileID: 1572640146}
-  - {fileID: 1343014777}
   - {fileID: 81775563}
   m_Father: {fileID: 1859991217}
   m_RootOrder: 3
@@ -5625,7 +5663,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityType: 1
-  upgradeLevel: 2
+  upgradeLevel: 4
+  statsUpgradeType: 0
   cost: 2
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1178386204
@@ -6353,17 +6392,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343014776}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1143396487}
-  m_RootOrder: 3
+  m_Father: {fileID: 1572640146}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -82.735, y: 0.198}
-  m_SizeDelta: {x: 15.92, y: 24.774}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -20.779995, y: 0.19799995}
+  m_SizeDelta: {x: -10.08, y: 24.774}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1343014778
 MonoBehaviour:
@@ -6439,7 +6478,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -200.00026}
   m_SizeDelta: {x: 0, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1358626268
@@ -6654,6 +6693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityType: 3
   upgradeLevel: 0
+  statsUpgradeType: 0
   cost: 0
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1380633928
@@ -7208,7 +7248,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityType: 2
-  upgradeLevel: 2
+  upgradeLevel: 4
+  statsUpgradeType: 0
   cost: 2
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1442848656
@@ -7296,6 +7337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1464409823}
   - component: {fileID: 1464409826}
+  - component: {fileID: 1464409827}
   - component: {fileID: 1464409825}
   - component: {fileID: 1464409824}
   m_Layer: 0
@@ -7406,6 +7448,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464409822}
   m_CullTransparentMesh: 1
+--- !u!114 &1464409827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464409822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feff4fe5e01381a4888690eeb2357f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityType: 0
+  upgradeLevel: 1
+  statsUpgradeType: 1
+  cost: 1
+  lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1470149153
 GameObject:
   m_ObjectHideFlags: 0
@@ -7860,6 +7919,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1533346853}
   - component: {fileID: 1533346856}
+  - component: {fileID: 1533346857}
   - component: {fileID: 1533346855}
   - component: {fileID: 1533346854}
   m_Layer: 0
@@ -7970,6 +8030,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533346852}
   m_CullTransparentMesh: 1
+--- !u!114 &1533346857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533346852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feff4fe5e01381a4888690eeb2357f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityType: 0
+  upgradeLevel: 1
+  statsUpgradeType: 2
+  cost: 1
+  lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1542678932
 GameObject:
   m_ObjectHideFlags: 0
@@ -7998,7 +8075,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 192943608}
   m_Father: {fileID: 1143396487}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8313,7 +8391,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityType: 3
-  upgradeLevel: 1
+  upgradeLevel: 2
+  statsUpgradeType: 0
   cost: 2
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1564530241
@@ -8410,9 +8489,10 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1343014777}
   m_Father: {fileID: 1143396487}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -8527,6 +8607,7 @@ GameObject:
   - component: {fileID: 1628340954}
   - component: {fileID: 1628340957}
   - component: {fileID: 1628340956}
+  - component: {fileID: 1628340958}
   - component: {fileID: 1628340955}
   m_Layer: 0
   m_Name: AdvancedMP_HP1
@@ -8636,6 +8717,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628340953}
   m_CullTransparentMesh: 1
+--- !u!114 &1628340958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628340953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feff4fe5e01381a4888690eeb2357f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityType: 1
+  upgradeLevel: 1
+  statsUpgradeType: 3
+  cost: 2
+  lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1683774591
 GameObject:
   m_ObjectHideFlags: 0
@@ -9004,6 +9102,7 @@ GameObject:
   - component: {fileID: 1720875868}
   - component: {fileID: 1720875867}
   - component: {fileID: 1720875866}
+  - component: {fileID: 1720875869}
   m_Layer: 0
   m_Name: AdvancedMP_HP2
   m_TagString: Untagged
@@ -9112,6 +9211,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1720875864}
   m_CullTransparentMesh: 1
+--- !u!114 &1720875869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720875864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feff4fe5e01381a4888690eeb2357f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityType: 1
+  upgradeLevel: 3
+  statsUpgradeType: 3
+  cost: 2
+  lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1749262242
 GameObject:
   m_ObjectHideFlags: 0
@@ -9568,6 +9684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityType: 0
   upgradeLevel: 0
+  statsUpgradeType: 0
   cost: 0
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1859991216
@@ -9831,6 +9948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityType: 1
   upgradeLevel: 0
+  statsUpgradeType: 0
   cost: 0
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1885828821
@@ -10042,7 +10160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityType: 2
-  upgradeLevel: 1
+  upgradeLevel: 2
+  statsUpgradeType: 0
   cost: 1
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &1931333905
@@ -10679,6 +10798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityType: 2
   upgradeLevel: 0
+  statsUpgradeType: 0
   cost: 0
   lockedPrefab: {fileID: 7560256281950380670, guid: f45edd2f95f4e0d44983d552757a822a, type: 3}
 --- !u!1 &2080294842

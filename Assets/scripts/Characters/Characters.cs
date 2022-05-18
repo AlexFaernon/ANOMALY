@@ -14,9 +14,20 @@ public abstract class Character : ICharacter
 
     private int _hp = 6;
     private int _mp = 6;
+    private int _maxHP = 6;
 
-    public int MaxHP => 6;
-    public int HPSegmentLength => 3;
+    public int MaxHP
+    {
+        get => _maxHP;
+        set
+        {
+            var prev = _maxHP;
+            _maxHP = value;
+            HP += value - prev;
+        }
+    }
+
+    public int HPSegmentLength { get; set; } = 3;
     public int MaxMP { get; set; } = 6;
 
     public virtual int HP
@@ -40,6 +51,10 @@ public abstract class Character : ICharacter
     }
 
     public bool IsDead { get; set; }
+    public bool HP1Upgrade { get; set; }
+    public bool HP2Upgrade { get; set; }
+    public bool MP1Upgrade { get; set; }
+    public bool MP2Upgrade { get; set; }
 
     public bool CanMove { get; set; }
     public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();

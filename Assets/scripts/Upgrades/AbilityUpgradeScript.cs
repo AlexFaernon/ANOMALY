@@ -5,6 +5,7 @@ public class AbilityUpgradeScript : MonoBehaviour
 {
     [SerializeField] private AbilityType abilityType;
     [SerializeField] private UpgradeLevel upgradeLevel;
+    [SerializeField] private StatsUpgradeType statsUpgradeType;
     [SerializeField] private int cost;
     [SerializeField] private GameObject lockedPrefab;
     private IAbility ability;
@@ -14,8 +15,24 @@ public class AbilityUpgradeScript : MonoBehaviour
     private Button button;
     private Color color;
     private ICharacter character;
-    private bool isUpgraded => (int)upgradeLevel <= ability.UpgradeLevel;
-    private bool isOpened => (int)upgradeLevel == ability.UpgradeLevel + 1;
+    private bool hpUpgraded => statsUpgradeType == StatsUpgradeType.HP &&
+                               (character.HP1Upgrade && upgradeLevel == UpgradeLevel.Second ||
+                                character.HP2Upgrade && upgradeLevel == UpgradeLevel.Fourth);
+    private bool mpUpgraded => statsUpgradeType == StatsUpgradeType.MP &&
+                               (character.MP1Upgrade && upgradeLevel == UpgradeLevel.Second ||
+                                character.MP2Upgrade && upgradeLevel == UpgradeLevel.Fourth);
+
+    private bool isUpgraded => (int)upgradeLevel <= ability.OverallUpgradeLevel &&
+                               (statsUpgradeType == StatsUpgradeType.None || abilityType != AbilityType.Basic ||
+                                hpUpgraded || mpUpgraded);
+
+    private bool isOpened => (int)upgradeLevel == ability.OverallUpgradeLevel + 1 ||
+                             (int)upgradeLevel <= ability.OverallUpgradeLevel && !hpUpgraded && !mpUpgraded ||
+                             abilityType == AbilityType.Ultimate &&
+                             (int)upgradeLevel == ability.OverallUpgradeLevel + 2 ||
+                             statsUpgradeType == StatsUpgradeType.HPMP &&
+                             (character.Abilities[AbilityType.First].OverallUpgradeLevel + 1 == (int)upgradeLevel ||
+                              character.Abilities[AbilityType.Second].OverallUpgradeLevel + 1 == (int)upgradeLevel);
     private bool isAbleToBy => isOpened && AbilityResources.Resources[abilityType] >= cost;
 
     private void Awake()
@@ -34,11 +51,11 @@ public class AbilityUpgradeScript : MonoBehaviour
 
     private void OnClick()
     {
-        EventAggregator.UpgradeAbilitySelected.Publish(abilityType, upgradeLevel, cost);
+        EventAggregator.UpgradeAbilitySelected.Publish(abilityType, upgradeLevel, statsUpgradeType, cost);
         image.color = Color.cyan;
     }
 
-    private void Deselect(AbilityType type, UpgradeLevel level, int cost1)
+    private void Deselect(AbilityType type, UpgradeLevel level, StatsUpgradeType arg3, int arg4)
     {
         image.color = color;
     }
@@ -50,7 +67,11 @@ public class AbilityUpgradeScript : MonoBehaviour
         color = image.color;
         button.interactable = true;
         ability = character.Abilities[abilityType];
-        image.sprite = ability.Icon;
+        if ((int)upgradeLevel % 2 == 0)
+        {
+            image.sprite = ability.Icon;
+        }
+
         lockedIcon.SetActive(false);
         Destroy(outline);
         
@@ -77,17 +98,19 @@ public class AbilityUpgradeScript : MonoBehaviour
         RedrawButton(character);
     }
 
-    public enum UpgradeLevel
-    {
-        First,
-        Second,
-        Third
-    }
-
     private void OnDestroy()
     {
         EventAggregator.UpgradeCharacterSelected.Unsubscribe(RedrawButton);
         EventAggregator.UpgradeAbilitySelected.Unsubscribe(Deselect);
         EventAggregator.AbilityUpgraded.Unsubscribe(OnAbilityUpgrade);
     }
+}
+
+public enum UpgradeLevel
+{
+    First,
+    Second,
+    Third,
+    Fourth,
+    Fifth
 }
