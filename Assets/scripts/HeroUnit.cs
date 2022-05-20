@@ -9,7 +9,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private GameObject HPBar;
     [SerializeField] private GameObject MPBar;
-    [SerializeField] private GameObject StatusBar;
+    [SerializeField] private GameObject statusBar;
     private ICharacter character;
     private IAbility currentAbility;
     private Image image;
@@ -75,7 +75,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     {
         EventAggregator.BindHPBarToCharacter.Publish(HPBar, character);
         EventAggregator.BindMPBarToCharacter.Publish(MPBar, character);
-        EventAggregator.BindStatusBarToUnit.Publish(StatusBar, character);
+        EventAggregator.BindStatusBarToUnit.Publish(statusBar, character);
         EventAggregator.UpdateHP.Publish(character);
     }
 

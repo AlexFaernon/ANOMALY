@@ -9,6 +9,7 @@ public class StatusInfoScript : MonoBehaviour
 {
     [SerializeField] private GameObject effectInfoPrefab;
     [SerializeField] private Transform parent;
+    [SerializeField] private bool isForCharacters;
     private void Awake()
     {
         EventAggregator.ShowEffectsInfo.Subscribe(ShowEffectsInfo);
@@ -18,6 +19,8 @@ public class StatusInfoScript : MonoBehaviour
 
     private void ShowEffectsInfo(IUnit unit)
     {
+        if (isForCharacters != unit is ICharacter) return;
+        
         gameObject.SetActive(true);
         
         foreach (var status in StatusSystem.StatusList.Where(status => status.Target == unit))

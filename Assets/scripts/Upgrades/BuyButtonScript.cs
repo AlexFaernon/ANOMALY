@@ -53,14 +53,8 @@ public class BuyButtonScript : MonoBehaviour
             }
             else
             {
-                if (character.Abilities[AbilityType.First].OverallUpgradeLevel + 1 == (int)upgradeLevel)
-                {
-                    character.Abilities[AbilityType.First].OverallUpgradeLevel = (int)upgradeLevel;
-                }
-                if (character.Abilities[AbilityType.Second].OverallUpgradeLevel + 1 == (int)upgradeLevel)
-                {
-                    character.Abilities[AbilityType.Second].OverallUpgradeLevel = (int)upgradeLevel;
-                }
+                character.Abilities[AbilityType.First].OverallUpgradeLevel = (int)upgradeLevel;
+                character.Abilities[AbilityType.Second].OverallUpgradeLevel = (int)upgradeLevel;
             }
             
             StatsUpgrades.Upgrades[statsUpgradeType][upgradeLevel].Upgrade(character);

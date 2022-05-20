@@ -1,23 +1,27 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using Random = System.Random;
 
-public class EnemyUnit : MonoBehaviour
+public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject hpBar;
-    private readonly IEnemy enemy = new Enemy();
+    [SerializeField] private GameObject statusBar;
+    private IEnemy enemy;
     private bool IsPicked;
+    private const float holdTime = 1f;
+    private PointerEventData eventData;
+    private static readonly Random random = new Random();
 
     private void Awake()
     {
-        GetComponent<Button>().onClick.AddListener(PickTarget);
+        enemy = new IEnemy[] {new Weakling(), new FatBoy(), new Killer()}[random.Next(3)];
         Units.Enemies.Add(enemy);
-
         enemy.CanMove = true;
         
+        GetComponent<Button>().onClick.AddListener(PickTarget);
+
         EventAggregator.UpdateHP.Subscribe(CheckDeath);
         EventAggregator.EnemyTurn.Subscribe(MakeMove);
         EventAggregator.NewTurn.Subscribe(NewTurn);
@@ -26,6 +30,7 @@ public class EnemyUnit : MonoBehaviour
     private void Start()
     {
         EventAggregator.BindHPBarToEnemy.Publish(hpBar, enemy);
+        EventAggregator.BindStatusBarToUnit.Publish(statusBar, enemy);
     }
 
     private void CheckDeath(IUnit unit)
@@ -39,14 +44,11 @@ public class EnemyUnit : MonoBehaviour
 
     private void MakeMove(IEnemy other)
     {
-        if (enemy != other) return;
+        if (enemy != other || !enemy.CanMove) return;
 
-        if (enemy.CanMove)
-        {
-            var character = Units.Characters.Values.OrderByDescending(character => character.HP).First();
-            character.TakeDamage(1, enemy);
-            Debug.Log(character);
-        }
+        var character = Units.Characters.Values.OrderByDescending(character => character.HP).First();
+        character.TakeDamage(enemy.Attack, enemy);
+        Debug.Log(character);
     }
 
     private void NewTurn()
@@ -59,6 +61,29 @@ public class EnemyUnit : MonoBehaviour
         if (!TargetPicker.isPicking) return;
         
         EventAggregator.PickTarget.Publish(enemy);
+    }
+
+    private void ShowEffectsInfo()
+    {
+        EventAggregator.ShowEffectsInfo.Publish(enemy);
+        eventData.eligibleForClick = false;
+    }
+    
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        this.eventData = eventData;
+        Invoke(nameof(ShowEffectsInfo), holdTime);
+    }
+ 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        CancelInvoke(nameof(ShowEffectsInfo));
+        EventAggregator.HideEffectsInfo.Publish();
+    }
+ 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        CancelInvoke(nameof(ShowEffectsInfo));
     }
 
     private void OnDestroy()

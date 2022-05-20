@@ -45,6 +45,9 @@ public static class EventAggregator
         new Event<AbilityType, UpgradeLevel, StatsUpgradeType, int>();
 
     public static readonly Event AbilityUpgraded = new Event();
+
+    public static readonly Event<CharacterAbilitiesStoryButton.InfoButtonType> InfoButtonClicked =
+        new Event<CharacterAbilitiesStoryButton.InfoButtonType>();
 }
 
 public class Event<T>

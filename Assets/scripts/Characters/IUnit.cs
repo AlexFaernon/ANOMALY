@@ -40,5 +40,5 @@ public interface IAbility
 
 public interface IEnemy : IUnit
 {
-    
+    public int Attack { get; }
 }

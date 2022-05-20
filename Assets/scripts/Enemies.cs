@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 
-public class Enemy : IEnemy
+public abstract class Enemy : IEnemy
 {
-    private int _hp = 5;
+    private int _hp;
 
-    public int MaxHP { get; set; }
+    public virtual int MaxHP { get; set; }
 
     public int HP
     {
@@ -19,7 +19,12 @@ public class Enemy : IEnemy
 
     public bool CanMove { get; set; }
 
-    public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();
+    public Enemy()
+    {
+        HP = MaxHP;
+    }
+
+    public ModifyReceivedDamage ModifyReceivedDamage { get; } = new ModifyReceivedDamage();
 
     public void TakeDamage(int damage, IUnit source)
     {
@@ -37,4 +42,24 @@ public class Enemy : IEnemy
     {
         HP += heal;
     }
+
+    public virtual int Attack { get; }
+}
+
+public sealed class Weakling : Enemy
+{
+    public override int MaxHP { get; set; } = 3;
+    public override int Attack => 1;
+}
+
+public sealed class FatBoy : Enemy
+{
+    public override int MaxHP { get; set; } = 6;
+    public override int Attack => 1;
+}
+
+public sealed class Killer : Enemy
+{
+    public override int MaxHP { get; set; } = 4;
+    public override int Attack => 2;
 }

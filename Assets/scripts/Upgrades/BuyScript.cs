@@ -76,11 +76,10 @@ public class BuyScript : MonoBehaviour
         icon.sprite = icons[(int)abilityType];
         if ((int)upgradeLevel == ability.OverallUpgradeLevel + 1 ||
             (int)upgradeLevel <= ability.OverallUpgradeLevel && !hpUpgraded && !mpUpgraded ||
-            abilityType == AbilityType.Ultimate &&
-            (int)upgradeLevel == ability.OverallUpgradeLevel + 2 ||
+            abilityType == AbilityType.Ultimate && (int)upgradeLevel == ability.OverallUpgradeLevel + 2 ||
             statsUpgradeType == StatsUpgradeType.HPMP &&
-            (character.Abilities[AbilityType.First].OverallUpgradeLevel + 1 == (int)upgradeLevel ||
-             character.Abilities[AbilityType.Second].OverallUpgradeLevel + 1 == (int)upgradeLevel))
+            character.Abilities[AbilityType.First].OverallUpgradeLevel + 1 == (int)upgradeLevel &&
+            character.Abilities[AbilityType.Second].OverallUpgradeLevel + 1 == (int)upgradeLevel)
         {
             buyButton.gameObject.SetActive(true);
             if (AbilityResources.Resources[abilityType] < cost)

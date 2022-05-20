@@ -26,13 +26,12 @@ public class AbilityUpgradeScript : MonoBehaviour
                                (statsUpgradeType == StatsUpgradeType.None || abilityType != AbilityType.Basic ||
                                 hpUpgraded || mpUpgraded);
 
-    private bool isOpened => (int)upgradeLevel == ability.OverallUpgradeLevel + 1 ||
+    private bool isOpened => (int)upgradeLevel == ability.OverallUpgradeLevel + 1 && statsUpgradeType != StatsUpgradeType.HPMP ||
                              (int)upgradeLevel <= ability.OverallUpgradeLevel && !hpUpgraded && !mpUpgraded ||
-                             abilityType == AbilityType.Ultimate &&
-                             (int)upgradeLevel == ability.OverallUpgradeLevel + 2 ||
+                             abilityType == AbilityType.Ultimate && (int)upgradeLevel == ability.OverallUpgradeLevel + 2 ||
                              statsUpgradeType == StatsUpgradeType.HPMP &&
-                             (character.Abilities[AbilityType.First].OverallUpgradeLevel + 1 == (int)upgradeLevel ||
-                              character.Abilities[AbilityType.Second].OverallUpgradeLevel + 1 == (int)upgradeLevel);
+                             character.Abilities[AbilityType.First].OverallUpgradeLevel + 1 == (int)upgradeLevel &&
+                             character.Abilities[AbilityType.Second].OverallUpgradeLevel + 1 == (int)upgradeLevel;
     private bool isAbleToBy => isOpened && AbilityResources.Resources[abilityType] >= cost;
 
     private void Awake()

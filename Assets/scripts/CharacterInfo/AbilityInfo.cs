@@ -15,5 +15,16 @@ public class AbilityInfo : MonoBehaviour
         icon.sprite = lastAbility.Icon;
         title.text = lastAbility.ToString();
         description.text = lastAbility.Description;
+        EventAggregator.InfoButtonClicked.Subscribe(OnButtonClick);
+    }
+
+    private void OnButtonClick(CharacterAbilitiesStoryButton.InfoButtonType infoButtonType)
+    {
+        gameObject.SetActive(infoButtonType == CharacterAbilitiesStoryButton.InfoButtonType.Abilities);
+    }
+
+    private void OnDestroy()
+    {
+        EventAggregator.InfoButtonClicked.Unsubscribe(OnButtonClick);
     }
 }
