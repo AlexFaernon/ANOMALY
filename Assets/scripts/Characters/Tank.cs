@@ -5,6 +5,9 @@ using UnityEngine.Assertions;
 
 public sealed class Tank : Character
 {
+    public override string Name => "Теодор Роджерс";
+    public override string Info =>
+        "Теодор с детства занимался ремеслом. Его завораживали доспехи, их изящество, но в то же время прочность и стойкость. Когда Тео вырос, он стал одержимым идеей сделать идеальный доспех, которому будут нипочем никакие атаки исчадий аномалий. Ради этого он сам записался в \"уничтожителей\", чтобы тестировать свои доспехи и выявлять дефекты, делая новые, более близкие к идеалу.";
     public override IAbility BasicAbility { get; set; }
     public override IAbility FirstAbility { get; set; }
     public override IAbility SecondAbility { get; set; }

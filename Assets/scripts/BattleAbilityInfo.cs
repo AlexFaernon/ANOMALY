@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class AbilityInfo : MonoBehaviour
+public class BattleAbilityInfo : MonoBehaviour
 {
     [SerializeField] private TMP_Text Title;
     [SerializeField] private TMP_Text Description;

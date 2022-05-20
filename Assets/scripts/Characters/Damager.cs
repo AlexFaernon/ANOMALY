@@ -3,6 +3,10 @@ using UnityEngine;
 
 public sealed class Damager : Character
 {
+    public override string Name => "Маркус Кокс";
+
+    public override string Info =>
+        "Авантюрист который ищет наживы. Хоть Маркус человек не из высших слоев общества, он всю жизнь славился изворотливым характером, поэтому знал где и когда можно неплохо заработать. Пошел в \"Уничтожителей аномалий\" из-за хорошего дохода (и возможно опасности).";
     public override IAbility BasicAbility { get; set; }
     public override IAbility FirstAbility { get; set; }
     public override IAbility SecondAbility { get; set; }

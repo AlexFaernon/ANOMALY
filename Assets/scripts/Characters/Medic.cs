@@ -4,6 +4,11 @@ using UnityEngine;
 
 public sealed class Medic : Character
 {
+    public override string Name => "Парацельсис";
+
+    public override string Info =>
+        "В прошлом Парацельсис рьяно служила рыцарским идеалам, следуя по стопам своего отца. Однако ее мечты были сломлены, когда во время заговора в ордене отца убили и она потеряла глаз. Девушка публично сломала свой меч, поклявшись никогда не возвращаться туда. Теперь Парацельсис нашла свое призвание в медицине и уничтожении аномалий";
+
     public override IAbility BasicAbility { get; set; }
     public override IAbility FirstAbility { get; set; }
     public override IAbility SecondAbility { get; set; }

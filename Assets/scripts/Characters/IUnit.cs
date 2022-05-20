@@ -13,6 +13,8 @@ public interface IUnit
 
 public interface ICharacter : IUnit
 {
+    public string Name { get; }
+    public string Info { get; }
     public int HPSegmentLength { get; set; }
     public int MaxMP { get; set; }
     public int MP { get; set; }

@@ -27,6 +27,8 @@ public abstract class Character : ICharacter
         }
     }
 
+    public virtual string Name { get; }
+    public virtual string Info { get; }
     public int HPSegmentLength { get; set; } = 3;
     public int MaxMP { get; set; } = 6;
 

@@ -10,12 +10,12 @@ public class Flip : MonoBehaviour
     [SerializeField] private Image panel;
     [SerializeField] private Button Forward;
     [SerializeField] private Button Back;
-    private int index = 0;
+    private int index;
 
     private void Awake()
     {
-        Forward.onClick.AddListener(() =>OnClickForward());
-        Back.onClick.AddListener(() => OnClickBack());
+        Forward.onClick.AddListener(OnClickForward);
+        Back.onClick.AddListener(OnClickBack);
     }
     private void OnClickForward()
     {
