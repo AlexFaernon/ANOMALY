@@ -3,8 +3,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class UpgradeButton : MonoBehaviour
 {
-    private void Awake()
+    public void ToUpgrades() 
     {
-        GetComponent<Button>().onClick.AddListener(() => SceneManager.LoadScene("AbilityImprovement"));
+        CurrentGameScene.GameScene = GameScene.CharacterInfo;
+        SceneManager.LoadScene("AbilityImprovement");
     }
 }
