@@ -81,6 +81,8 @@ public class BuyButtonScript : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        BattleResultsSingleton.UpgradesMade++;
         EventAggregator.AbilityUpgraded.Publish();
     }
     

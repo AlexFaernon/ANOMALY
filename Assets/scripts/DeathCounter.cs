@@ -30,6 +30,7 @@ public class DeathCounter : MonoBehaviour
     private void EnemyDied(IEnemy enemy)
     {
         Units.Enemies.Remove(enemy);
+        BattleResultsSingleton.EnemiesKilled++;
         if (Units.Enemies.Count != 0) return;
         
         CreateNewTokens();

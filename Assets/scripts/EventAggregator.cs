@@ -48,6 +48,8 @@ public static class EventAggregator
 
     public static readonly Event<CharacterAbilitiesStoryButton.InfoButtonType> InfoButtonClicked =
         new Event<CharacterAbilitiesStoryButton.InfoButtonType>();
+
+    public static readonly Event<int> LocationSwitched = new Event<int>();
 }
 
 public class Event<T>

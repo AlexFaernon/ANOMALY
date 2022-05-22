@@ -10,12 +10,15 @@ public class NodeScript : MonoBehaviour
     [SerializeField] private List<GameObject> linkedNodes;
     [SerializeField] private GameObject locker;
     [SerializeField] private GameObject campWindow;
+    [SerializeField] private Sprite completedSprite;
     private Node node;
     private Button button;
     private static readonly Random random = new Random();
-    
+    private Image image;
+
     private void Awake()
     {
+        image = GetComponent<Image>();
         button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
 
@@ -26,7 +29,15 @@ public class NodeScript : MonoBehaviour
             {
                 node.IsUnlocked = true;
             }
-            node.IsCamp = random.Next(2) == 1;
+
+            if (name == "0" || name == "6")
+            {
+                node.IsCamp = false;
+            }
+            else
+            {
+                node.IsCamp = random.Next(4) == 0;
+            }
 
             MapSingleton.Nodes[Convert.ToInt32(name)] = node;
         }
@@ -52,7 +63,6 @@ public class NodeScript : MonoBehaviour
         {
             SceneManager.LoadScene("Battle");
         }
-        ChangeStatus();
     }
 
     private void CheckUnlocking(GameObject otherNode)
@@ -69,10 +79,12 @@ public class NodeScript : MonoBehaviour
         {
             locker.SetActive(false);
             button.interactable = true;
-            if (node.IsCamp) GetComponent<Image>().color = Color.green;
+            image = GetComponent<Image>();
+            if (node.IsCamp) image.color = Color.green;
 
             if (!node.IsCompleted) return;
-            GetComponent<Image>().color = Color.yellow;
+            image.color = Color.white;
+            image.sprite = completedSprite;
             button.interactable = false;
         }
         else

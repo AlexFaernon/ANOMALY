@@ -26,6 +26,14 @@ public class UpgradeInfoScript : MonoBehaviour
         EventAggregator.UpgradeAbilitySelected.Subscribe(SelectAbilityUpgrade);
     }
 
+    private void Start()
+    {
+        if (CurrentGameScene.GameScene == GameScene.CharacterInfo)
+        {
+            EventAggregator.UpgradeCharacterSelected.Publish(CharacterInfoButton.SelectedCharacter);
+        }
+    }
+
     private void SelectCharacter(ICharacter character1)
     {
         character = character1;
