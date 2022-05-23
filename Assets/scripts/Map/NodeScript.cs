@@ -56,6 +56,7 @@ public class NodeScript : MonoBehaviour
 
     private void OnClick()
     {
+        EventAggregator.NodeIsChosen.Publish();
         if (node.IsCamp)
         {
             campWindow.SetActive(true);
@@ -66,7 +67,6 @@ public class NodeScript : MonoBehaviour
         else
         {
             battleButton.interactable = true;
-            EventAggregator.NodeIsChosen.Publish();
             image.color = Color.cyan;
             MapSingleton.ChosenNode = gameObject;
         }

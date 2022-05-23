@@ -46,8 +46,8 @@ public class DeathCounter : MonoBehaviour
 
     private void CreateNewTokens()
     {
-        var basic = random.Next(3);
-        var advanced = random.Next(3);
+        var basic = random.Next(1, 4);
+        var advanced = random.Next(1, 4);
         var ultimate = random.Next(3);
 
         AbilityResources.BasicTokens += basic;

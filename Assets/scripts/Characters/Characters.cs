@@ -58,7 +58,18 @@ public abstract class Character : ICharacter
     public bool MP1Upgrade { get; set; }
     public bool MP2Upgrade { get; set; }
 
-    public bool CanMove { get; set; }
+    private bool _canMove;
+
+    public bool CanMove
+    {
+        get => _canMove;
+        set
+        {
+            _canMove = value;
+            EventAggregator.UpdateMovability.Publish(this);
+        }
+    }
+
     public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();
     public virtual void TakeDamage(int damage, IUnit source)
     {

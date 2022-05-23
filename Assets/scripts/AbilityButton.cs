@@ -52,14 +52,14 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       currentAbility = character.Abilities[abilityType];
       image.sprite = currentAbility.Icon;
 
-      if (abilitiesCooldown.TryGetValue(currentAbility, out var cooldown))
+      if (abilitiesCooldown.TryGetValue(currentAbility, out _))
       {
-         SetButtonInteractable(cooldown == 0);
+         SetButtonInteractable();
       }
       else
       {
          abilitiesCooldown[currentAbility] = abilityType == AbilityType.Ultimate ? currentAbility.Cooldown : 0;
-         SetButtonInteractable(abilityType != AbilityType.Ultimate);
+         SetButtonInteractable();
       }
    }
 
@@ -71,7 +71,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       }
 
       if (currentAbility != null)
-         SetButtonInteractable(abilitiesCooldown[currentAbility] <= 0);
+         SetButtonInteractable();
    }
 
    private void SetCooldownOnCast(IAbility ability)
@@ -82,9 +82,9 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       }
    }
 
-   private void SetButtonInteractable(bool isInteractable)
+   private void SetButtonInteractable()
    {
-      if (isInteractable)
+      if (abilitiesCooldown[currentAbility] == 0)
       {
          cooldownText.text = "";
          image.color = Color.white;

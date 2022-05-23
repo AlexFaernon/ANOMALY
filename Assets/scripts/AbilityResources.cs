@@ -10,15 +10,15 @@ public static class AbilityResources
         { AbilityType.Ultimate, UltimateTokens }
     };
 
-    private static int _basicTokens;
-    private static int _advancedTokens;
-    private static int _ultimateTokens;
+    private static int _basicTokens = 10;
+    private static int _advancedTokens = 10;
+    private static int _ultimateTokens = 10;
     public static int BasicTokens
     {
         get => _basicTokens;
         set
         {
-            _basicTokens += value;
+            _basicTokens = value;
             BattleResultsSingleton.TotalBasicTokens += value;
         }
     }
@@ -28,7 +28,7 @@ public static class AbilityResources
         get => _advancedTokens;
         set
         {
-            _advancedTokens += value;
+            _advancedTokens = value;
             BattleResultsSingleton.TotalAdvancedTokens += value;
         }
     }
@@ -38,7 +38,7 @@ public static class AbilityResources
         get => _ultimateTokens;
         set
         {
-            _ultimateTokens += value;
+            _ultimateTokens = value;
             BattleResultsSingleton.TotalUltimateTokens += value;
         }
     }

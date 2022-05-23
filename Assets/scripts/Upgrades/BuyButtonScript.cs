@@ -22,7 +22,6 @@ public class BuyButtonScript : MonoBehaviour
 
     private void UpgradeAbility()
     {
-        
         if ((int)upgradeLevel % 2 == 1)
         {
             if (abilityType == AbilityType.Basic)

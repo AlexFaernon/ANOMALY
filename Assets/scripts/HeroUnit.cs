@@ -16,16 +16,6 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private const float holdTime = 1f;
     private PointerEventData eventData;
 
-    private bool CanMove
-    {
-        get => character.CanMove;
-        set
-        {
-            image.color = value ? Color.white : new Color(1,1,1,0.5f);
-            character.CanMove = value;
-        }
-    }
-
     private bool _isSelected;
     
     private bool IsSelected
@@ -59,12 +49,13 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         
         image = GetComponent<Image>();
 
-        CanMove = true;
+        character.CanMove = true;
         character.MP = character.MaxMP;
 
         GetComponent<Button>().onClick.AddListener(SelectCharacter);
 
         EventAggregator.UpdateHP.Subscribe(CheckDeath);
+        EventAggregator.UpdateMovability.Subscribe(UpdateMovability);
         EventAggregator.DeselectCharacters.Subscribe(Deselect);
         EventAggregator.CastAbilityType.Subscribe(StartAbility);
         EventAggregator.AbilityTypeInfo.Subscribe(ShowAbilityInfoByType);
@@ -76,6 +67,13 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         EventAggregator.BindHPBarToCharacter.Publish(HPBar, character);
         EventAggregator.BindMPBarToCharacter.Publish(MPBar, character);
         EventAggregator.BindStatusBarToUnit.Publish(statusBar, character);
+    }
+
+    private void UpdateMovability(IUnit unit)
+    {
+        if (unit != character) return;
+
+        image.color = character.CanMove ? Color.white : new Color(1,1,1,0.5f);
     }
 
     private void CheckDeath(IUnit unit)
@@ -126,7 +124,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     private void SelectCharacter()
     {
-        if (!TargetPicker.isPicking && CanMove)
+        if (!TargetPicker.isPicking && character.CanMove)
         {
             IsSelected = true;
             EventAggregator.ToggleAbilityList.Publish(true);
@@ -151,7 +149,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private void CastAbility(List<IUnit> units)
     {
         IsSelected = false;
-        CanMove = false;
+        character.CanMove = false;
         currentAbility.CastAbility(units, character);
         character.MP -= currentAbility.Cost;
         EventAggregator.GetTargets.Unsubscribe(CastAbility);
@@ -162,7 +160,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     private void NewTurn()
     {
-        CanMove = true;
+        character.CanMove = true;
         if (character.MP < character.MaxMP)
         {
             character.MP += 1;

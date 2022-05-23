@@ -51,6 +51,7 @@ public static class EventAggregator
 
     public static readonly Event<int> LocationSwitched = new Event<int>();
     public static readonly Event NodeIsChosen = new Event();
+    public static readonly Event<IUnit> UpdateMovability = new Event<IUnit>();
 }
 
 public class Event<T>
