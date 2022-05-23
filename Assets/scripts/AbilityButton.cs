@@ -58,8 +58,8 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       }
       else
       {
-         abilitiesCooldown[currentAbility] = 0;
-         SetButtonInteractable(true);
+         abilitiesCooldown[currentAbility] = abilityType == AbilityType.Ultimate ? currentAbility.Cooldown : 0;
+         SetButtonInteractable(abilityType != AbilityType.Ultimate);
       }
    }
 

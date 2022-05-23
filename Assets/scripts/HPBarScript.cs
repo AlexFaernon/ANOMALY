@@ -47,6 +47,8 @@ public class HPBarScript : MonoBehaviour
             EventAggregator.SetMaxHPSegment.Publish(segment, segmentMaxHP);
             hpSegments.Add(segment);
         }
+        
+        UpdateHP(character);
     }
 
     private void UpdateHP(IUnit unit)

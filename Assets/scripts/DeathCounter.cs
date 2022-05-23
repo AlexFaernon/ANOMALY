@@ -1,6 +1,7 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class DeathCounter : MonoBehaviour
@@ -22,9 +23,9 @@ public class DeathCounter : MonoBehaviour
     private void CharacterDied(ICharacter character)
     {
         if (!Units.Characters.Values.All(character1 => character1.IsDead)) return;
-        
-        ShadingDefeat.SetActive(true);
-        Debug.Log("Game Over");
+
+        BattleResultsSingleton.isWin = false;
+        SceneManager.LoadScene("BattleResult");
     }
     
     private void EnemyDied(IEnemy enemy)
@@ -34,8 +35,13 @@ public class DeathCounter : MonoBehaviour
         if (Units.Enemies.Count != 0) return;
         
         CreateNewTokens();
+        if (MapSingleton.Nodes[6].IsCompleted)
+        {
+            BattleResultsSingleton.isWin = true;
+            SceneManager.LoadScene("BattleResult");
+        }
+        
         ShadingWin.SetActive(true);
-        Debug.Log("Victory");
     }
 
     private void CreateNewTokens()

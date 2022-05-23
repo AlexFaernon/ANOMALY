@@ -76,7 +76,6 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         EventAggregator.BindHPBarToCharacter.Publish(HPBar, character);
         EventAggregator.BindMPBarToCharacter.Publish(MPBar, character);
         EventAggregator.BindStatusBarToUnit.Publish(statusBar, character);
-        EventAggregator.UpdateHP.Publish(character);
     }
 
     private void CheckDeath(IUnit unit)

@@ -12,6 +12,15 @@ public static class BattleResultsSingleton
     public static int TotalBasicTokens;
     public static int TotalAdvancedTokens;
     public static int TotalUltimateTokens;
+
+    public static void ResetResults()
+    {
+        EnemiesKilled = 0;
+        UpgradesMade = 0;
+        TotalBasicTokens = 0;
+        TotalAdvancedTokens = 0;
+        TotalUltimateTokens = 0;
+    }
 }
 
 public class BattleResults : MonoBehaviour

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class NodeScript : MonoBehaviour
     [SerializeField] private GameObject locker;
     [SerializeField] private GameObject campWindow;
     [SerializeField] private Sprite completedSprite;
+    [SerializeField] private Button battleButton;
     private Node node;
     private Button button;
     private static readonly Random random = new Random();
@@ -47,27 +49,32 @@ public class NodeScript : MonoBehaviour
         }
         
         EventAggregator.NodeCompleted.Subscribe(CheckUnlocking);
+        EventAggregator.NodeIsChosen.Subscribe(ChangeStatus);
 
         ChangeStatus();
     }
 
     private void OnClick()
     {
-        EventAggregator.NodeCompleted.Publish(gameObject);
-        node.IsCompleted = true;
         if (node.IsCamp)
         {
             campWindow.SetActive(true);
+            battleButton.interactable = false;
+            node.IsCompleted = true;
+            EventAggregator.NodeCompleted.Publish(name);
         }
         else
         {
-            SceneManager.LoadScene("Battle");
+            battleButton.interactable = true;
+            EventAggregator.NodeIsChosen.Publish();
+            image.color = Color.cyan;
+            MapSingleton.ChosenNode = gameObject;
         }
     }
 
-    private void CheckUnlocking(GameObject otherNode)
+    private void CheckUnlocking(string nodeName)
     {
-        if (node.IsUnlocked || !linkedNodes.Contains(otherNode)) return;
+        if (linkedNodes.All(other => other.name != nodeName)) return;
         
         node.IsUnlocked = true;
         ChangeStatus();
@@ -96,6 +103,7 @@ public class NodeScript : MonoBehaviour
     private void OnDestroy()
     {
         EventAggregator.NodeCompleted.Unsubscribe(CheckUnlocking);
+        EventAggregator.NodeIsChosen.Unsubscribe(ChangeStatus);
     }
 }
 

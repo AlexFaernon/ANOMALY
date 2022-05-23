@@ -80,8 +80,9 @@ public abstract class Character : ICharacter
         }
         
         var lastHPSegment = HP % HPSegmentLength;
+        if (lastHPSegment == 0) return;
         var actualHeal = HPSegmentLength - lastHPSegment;
-        HP += actualHeal;
+        HP += Math.Min(actualHeal, heal);
     }
 
     public Dictionary<AbilityType, IAbility> Abilities => new Dictionary<AbilityType, IAbility>

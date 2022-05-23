@@ -1,4 +1,7 @@
-﻿public static class MapSingleton
+﻿using UnityEngine;
+
+public static class MapSingleton
 {
-    public static readonly Node[] Nodes = new Node[7];
+    public static Node[] Nodes = new Node[7];
+    public static GameObject ChosenNode;
 }
