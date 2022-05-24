@@ -7,11 +7,17 @@ public class OnClickShading : MonoBehaviour
 {
     public void OnClickWin()
     {
+        StatusSystem.DispelAll();
         SceneManager.LoadScene("Map");
     }
 
-    public void OnClickDefeat()
+    public void AbandonBattle()
     {
+        MapSingleton.Nodes = new Node[7];
+        StatusSystem.DispelAll();
+        Units.ResetUnits();
+        BattleResultsSingleton.ResetResults();
+        GameState.isGame = false;
         SceneManager.LoadScene("MainMenu");
     }
 }

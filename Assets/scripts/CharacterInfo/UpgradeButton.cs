@@ -5,7 +5,7 @@ public class UpgradeButton : MonoBehaviour
 {
     public void ToUpgrades() 
     {
-        CurrentGameScene.GameScene = GameScene.CharacterInfo;
+        GameState.GameScene = GameScene.CharacterInfo;
         SceneManager.LoadScene("AbilityImprovement");
     }
 }

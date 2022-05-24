@@ -4,8 +4,20 @@ using UnityEngine.UI;
 
 public class GameStart : MonoBehaviour
 {
+    [SerializeField] private GameObject newGameConfirm;
     private void Awake()
     {
-        GetComponent<Button>().onClick.AddListener(() => SceneManager.LoadScene("GlobalMap"));
+        GetComponent<Button>().onClick.AddListener(OnClick);
+    }
+
+    private void OnClick()
+    {
+        if (GameState.isGame)
+        {
+            newGameConfirm.SetActive(true);
+            return;
+        }
+        
+        SceneManager.LoadScene("GlobalMap");
     }
 }

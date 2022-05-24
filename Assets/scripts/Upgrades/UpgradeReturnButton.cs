@@ -6,7 +6,7 @@ public class UpgradeReturnButton : MonoBehaviour
 {
     public void Back()
     {
-        switch (CurrentGameScene.GameScene)
+        switch (GameState.GameScene)
         {
             case GameScene.Map:
                 SceneManager.LoadScene("Map");

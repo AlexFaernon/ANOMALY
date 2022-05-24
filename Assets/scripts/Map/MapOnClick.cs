@@ -7,7 +7,7 @@ public class MapOnClick : MonoBehaviour
 {
     public void ToUpgrades()
     {
-        CurrentGameScene.GameScene = GameScene.Map;
+        GameState.GameScene = GameScene.Map;
         SceneManager.LoadScene("AbilityImprovement");
     }
 }

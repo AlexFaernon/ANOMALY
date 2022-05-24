@@ -7,6 +7,12 @@ public class StartButton : MonoBehaviour
 {
     private void Awake()
     {
-        GetComponent<Button>().onClick.AddListener(() => SceneManager.LoadScene("Map"));
+        GetComponent<Button>().onClick.AddListener(OnClick);
+    }
+
+    private void OnClick()
+    {
+        GameState.isGame = true;
+        SceneManager.LoadScene("Map");
     }
 }

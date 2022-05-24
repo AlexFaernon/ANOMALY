@@ -12,8 +12,10 @@ public class OnClick : MonoBehaviour
     private void ResetGame()
     {
         MapSingleton.Nodes = new Node[7];
+        StatusSystem.DispelAll();
         Units.ResetUnits();
         BattleResultsSingleton.ResetResults();
+        GameState.isGame = false;
         SceneManager.LoadScene("MainMenu");
     }
 }

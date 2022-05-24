@@ -6,6 +6,14 @@ using UnityEngine;
 public static class StatusSystem
 {
     public static readonly List<Status> StatusList = new List<Status>();
+
+    public static void DispelAll()
+    {
+        foreach (var status in StatusList)
+        {
+            status.Dispel();
+        }
+    }
 }
 
 public abstract class Status

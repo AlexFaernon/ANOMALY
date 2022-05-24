@@ -28,7 +28,7 @@ public class UpgradeInfoScript : MonoBehaviour
 
     private void Start()
     {
-        if (CurrentGameScene.GameScene == GameScene.CharacterInfo)
+        if (GameState.GameScene == GameScene.CharacterInfo)
         {
             EventAggregator.UpgradeCharacterSelected.Publish(CharacterInfoButton.SelectedCharacter);
         }
