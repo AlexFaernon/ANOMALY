@@ -10,9 +10,9 @@ public static class AbilityResources
         { AbilityType.Ultimate, UltimateTokens }
     };
 
-    private static int _basicTokens = 10;
-    private static int _advancedTokens = 10;
-    private static int _ultimateTokens = 10;
+    private static int _basicTokens = 0;
+    private static int _advancedTokens = 0;
+    private static int _ultimateTokens = 0;
     public static int BasicTokens
     {
         get => _basicTokens;

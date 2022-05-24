@@ -9,7 +9,7 @@ public static class StatusSystem
 
     public static void DispelAll()
     {
-        foreach (var status in StatusList)
+        foreach (var status in StatusList.ToList())
         {
             status.Dispel();
         }
