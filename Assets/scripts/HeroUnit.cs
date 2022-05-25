@@ -49,9 +49,6 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         
         image = GetComponent<Image>();
 
-        character.CanMove = true;
-        character.MP = character.MaxMP;
-
         GetComponent<Button>().onClick.AddListener(SelectCharacter);
 
         EventAggregator.UpdateHP.Subscribe(CheckDeath);
@@ -64,6 +61,8 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     private void Start()
     {
+        character.CanMove = true;
+        character.MP = character.MaxMP;
         EventAggregator.BindHPBarToCharacter.Publish(HPBar, character);
         EventAggregator.BindMPBarToCharacter.Publish(MPBar, character);
         EventAggregator.BindStatusBarToUnit.Publish(statusBar, character);

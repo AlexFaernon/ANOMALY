@@ -59,10 +59,11 @@ public class NodeScript : MonoBehaviour
         EventAggregator.NodeIsChosen.Publish();
         if (node.IsCamp)
         {
-            campWindow.SetActive(true);
             battleButton.interactable = false;
+            campWindow.SetActive(true);
             node.IsCompleted = true;
             EventAggregator.NodeCompleted.Publish(name);
+            ChangeStatus();
         }
         else
         {
