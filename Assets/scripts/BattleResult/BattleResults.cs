@@ -36,7 +36,8 @@ public class BattleResults : MonoBehaviour
 
     private void Awake()
     {
-        locations.text = BattleResultsSingleton.LevelsCompleted.ToString();
+
+        locations.text = (BattleResultsSingleton.LevelsCompleted - (BattleResultsSingleton.isWin ? 0 : 1)).ToString();
         enemies.text = BattleResultsSingleton.EnemiesKilled.ToString();
         upgrades.text = BattleResultsSingleton.UpgradesMade.ToString();
         basic.text = BattleResultsSingleton.TotalBasicTokens.ToString();
