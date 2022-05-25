@@ -70,7 +70,7 @@ public abstract class Character : ICharacter
         }
     }
 
-    public ModifyReceivedDamage ModifyReceivedDamage { get; set; } = new ModifyReceivedDamage();
+    public ModifyReceivedDamage ModifyReceivedDamage { get; } = new ModifyReceivedDamage();
     public virtual void TakeDamage(int damage, IUnit source)
     {
         ModifyReceivedDamage.Source = source;

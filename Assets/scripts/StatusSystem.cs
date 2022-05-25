@@ -123,7 +123,14 @@ public sealed class Protect : Status
     private double damageReduction;
     public override void Dispel()
     {
-        Target.ModifyReceivedDamage.Event.RemoveListener(RedirectDamage);
+        if (Target == Protector)
+        {
+            Target.ModifyReceivedDamage.Event.RemoveListener(ReduceDamage);
+        }
+        else
+        {
+            Target.ModifyReceivedDamage.Event.RemoveListener(RedirectDamage);
+        }
         Debug.Log("Protect removed");
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
         StatusSystem.StatusList.Remove(this);
@@ -137,10 +144,12 @@ public sealed class Protect : Status
         Protector = protector;
         if (target == protector)
         {
-            Dispel();
-            return;
+            target.ModifyReceivedDamage.Event.AddListener(ReduceDamage);
         }
-        target.ModifyReceivedDamage.Event.AddListener(RedirectDamage);
+        else
+        {
+            target.ModifyReceivedDamage.Event.AddListener(RedirectDamage);
+        }
         EventAggregator.NewTurn.Subscribe(OnTurn);
         Debug.Log("Protect added");
     }
@@ -164,6 +173,12 @@ public sealed class Protect : Status
         Target.ModifyReceivedDamage.Damage = 0;
         Protector.TakeDamage((int)Math.Ceiling(damage*damageReduction), Target.ModifyReceivedDamage.Source);
         Debug.Log("redirected");
+    }
+
+    private void ReduceDamage()
+    {
+        var damage = Target.ModifyReceivedDamage.Damage;
+        Target.TakeDamage((int)Math.Ceiling(damage*damageReduction), Target.ModifyReceivedDamage.Source);
     }
 }
 

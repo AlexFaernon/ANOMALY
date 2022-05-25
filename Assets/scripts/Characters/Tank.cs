@@ -27,7 +27,7 @@ public sealed class Tank : Character
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
-        public string Description => $"Защита персонажа: во время хода выбирается персонаж, которого в течении одного хода, герой будет защищать. Если на него нападут, то герой получит {DamageReduction*100}% урон вместо цели. (ради бога не кастуйте это на самого танка, там баг)";
+        public string Description => $"В течение хода получает {DamageReduction*100}% урона вместо цели. В случае использования на самого персонажа только снижает урон на {100 - DamageReduction*100}%";
         public int Cost => 0;
         public int Cooldown => 0;
         public int TargetCount => 1;
