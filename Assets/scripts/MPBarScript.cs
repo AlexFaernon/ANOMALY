@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class MPBarScript : MonoBehaviour
 {
     [SerializeField] private GameObject hpSquarePrefab;
+    [SerializeField] private Sprite mpSprite;
+    [SerializeField] private Sprite noMPSprite;
     private ICharacter character;
     private readonly List<GameObject> mpSquares = new List<GameObject>();
 
@@ -43,11 +45,11 @@ public class MPBarScript : MonoBehaviour
             if (mp > 0)
             {
                 mp--;
-                mpSquare.GetComponent<Image>().color = Color.blue;
+                mpSquare.GetComponent<Image>().sprite = mpSprite;
             }
             else
             {
-                mpSquare.GetComponent<Image>().color = Color.gray;
+                mpSquare.GetComponent<Image>().sprite = noMPSprite;
             }
         }
     }

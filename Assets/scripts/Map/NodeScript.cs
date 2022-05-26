@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -11,8 +10,12 @@ public class NodeScript : MonoBehaviour
     [SerializeField] private List<GameObject> linkedNodes;
     [SerializeField] private GameObject locker;
     [SerializeField] private GameObject campWindow;
-    [SerializeField] private Sprite completedSprite;
     [SerializeField] private Button battleButton;
+    [SerializeField] private Sprite battleSprite;
+    [SerializeField] private Sprite completedSprite;
+    [SerializeField] private Sprite chosenSprite;
+    [SerializeField] private Sprite campSprite;
+    [SerializeField] private Sprite completedCampSprite;
     private Node node;
     private Button button;
     private static readonly Random random = new Random();
@@ -68,7 +71,7 @@ public class NodeScript : MonoBehaviour
         else
         {
             battleButton.interactable = true;
-            image.color = Color.cyan;
+            image.sprite = chosenSprite;
             MapSingleton.ChosenNode = gameObject;
         }
     }
@@ -88,16 +91,17 @@ public class NodeScript : MonoBehaviour
             locker.SetActive(false);
             button.interactable = true;
             image = GetComponent<Image>();
-            if (node.IsCamp) image.color = Color.green;
+            image.color = Color.white;
+            image.sprite = node.IsCamp ? campSprite : battleSprite;
 
             if (!node.IsCompleted) return;
-            image.color = Color.white;
-            image.sprite = completedSprite;
+            image.sprite = node.IsCamp ? completedCampSprite : completedSprite;
             button.interactable = false;
         }
         else
         {
             button.interactable = false;
+            image.color = Color.gray;
         }
     }
 

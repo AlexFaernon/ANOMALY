@@ -1,12 +1,12 @@
-using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HPSegmentScript : MonoBehaviour
 {
     [SerializeField] private GameObject hpSquarePrefab;
+    [SerializeField] private Sprite hpSprite;
+    [SerializeField] private Sprite noHPSprite;
     private int maxHP;
     private readonly List<GameObject> hpSquares = new List<GameObject>();
 
@@ -38,7 +38,7 @@ public class HPSegmentScript : MonoBehaviour
 
         if (hp == 0)
         {
-            GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+            GetComponent<Image>().color = Color.gray;
         }
         
         foreach (var hpSquare in hpSquares)
@@ -46,11 +46,11 @@ public class HPSegmentScript : MonoBehaviour
             if (hp > 0)
             {
                 hp--;
-                hpSquare.GetComponent<Image>().color = Color.white;
+                hpSquare.GetComponent<Image>().sprite = hpSprite;
             }
             else
             {
-                hpSquare.GetComponent<Image>().color = Color.gray;
+                hpSquare.GetComponent<Image>().sprite = noHPSprite;
             }
         }
     }

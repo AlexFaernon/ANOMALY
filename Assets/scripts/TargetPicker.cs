@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -41,6 +42,7 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         for (var i = 0; i < maxTargetCount; i++)
         {
             targetsSquares.Add(Instantiate(targetSquare, squaresParent));
+            targetsSquares.Last().name = (i + 1).ToString();
         }
     }
     
