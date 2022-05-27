@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
    [SerializeField] private TMP_Text cooldownText;
+   [SerializeField] private TMP_Text level;
    private Button button;
    private Image image;
    private const float holdTime = 1f;
@@ -51,6 +52,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
    {
       currentAbility = character.Abilities[abilityType];
       image.sprite = currentAbility.Icon;
+      level.text = (currentAbility.OverallUpgradeLevel / 2 + 1).ToString();
 
       if (abilitiesCooldown.TryGetValue(currentAbility, out _))
       {

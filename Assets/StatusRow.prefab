@@ -66,6 +66,7 @@ MonoBehaviour:
   title: {fileID: 1678913853344740138}
   description: {fileID: 1678913853670446195}
   duration: {fileID: 1678913853000495082}
+  icon: {fileID: 8751970351947026638}
 --- !u!114 &1678913853658363541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +132,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 25.910011, y: 14.575}
-  m_SizeDelta: {x: 40.68, y: 40.68}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8024542380349030968
 CanvasRenderer:

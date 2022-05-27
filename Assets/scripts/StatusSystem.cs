@@ -14,6 +14,14 @@ public static class StatusSystem
             status.Dispel();
         }
     }
+
+    public static void DispelOnUnit(IUnit unit)
+    {
+        foreach (var status in StatusList.Where(status => status.Target == unit).ToList())
+        {
+            status.Dispel();
+        }
+    }
 }
 
 public abstract class Status
@@ -22,6 +30,7 @@ public abstract class Status
     public abstract string Description { get; }
     public abstract int Duration { get; set; }
     public abstract IUnit Target { get; set; }
+    public abstract Sprite Icon { get; set; }
 
     public abstract void Dispel();
 }
@@ -32,6 +41,7 @@ public sealed class Invulnerability : Status
     public override string Description => "Здоровье не может упасть ниже 1";
     public override int Duration { get; set; } = 5;
     public override IUnit Target { get; set; }
+    public override Sprite Icon { get; set; }
     private readonly int upgradeLevel;
 
     private void MakeInvulnerable()
@@ -55,6 +65,7 @@ public sealed class Invulnerability : Status
     
     public Invulnerability(IUnit target, int upgradeLevel)
     {
+        Icon = Resources.Load<Sprite>("StatusIcons/invul");
         Target = target;
         this.upgradeLevel = upgradeLevel;
 
@@ -84,6 +95,8 @@ public sealed class HPLoss : Status
     public override string Description => "Цель теряет 1 здоровья каждый ход";
     public override int Duration { get; set; } = 3;
     public override IUnit Target { get; set; }
+    public override Sprite Icon { get; set; }
+
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
@@ -93,8 +106,9 @@ public sealed class HPLoss : Status
 
     public HPLoss(IUnit target)
     {
+        Icon = Resources.Load<Sprite>("StatusIcons/bleeding");
         Target = target;
-        
+
         EventAggregator.NewTurn.Subscribe(OnTurn);
     }
 
@@ -116,11 +130,12 @@ public sealed class HPLoss : Status
 public sealed class Protect : Status
 {
     public override string Name => "Защита";
-    public override string Description => "При атаке, другой юнит получит урон вместо данного";
+    public override string Description => "Этот юнит находится под защитой";
     public override int Duration { get; set; } = 1;
     public readonly IUnit Protector;
     public override IUnit Target { get; set; }
-    private double damageReduction;
+    public override Sprite Icon { get; set; }
+    private readonly double damageReduction;
     public override void Dispel()
     {
         if (Target == Protector)
@@ -139,6 +154,7 @@ public sealed class Protect : Status
 
     public Protect(IUnit target, IUnit protector, double damageReduction)
     {
+        Icon = Resources.Load<Sprite>("StatusIcons/protect");
         this.damageReduction = damageReduction;
         Target = target;
         Protector = protector;
@@ -188,6 +204,8 @@ public sealed class Stun : Status
     public override string Description => "Данный юнит не может действовать";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
+    public override Sprite Icon { get; set; }
+
     public override void Dispel()
     {
         Target.CanMove = true;
@@ -199,6 +217,7 @@ public sealed class Stun : Status
 
     public Stun(IUnit target, int duration)
     {
+        Icon = Resources.Load<Sprite>("StatusIcons/stun");
         Duration = duration;
         Target = target;
         Target.CanMove = false;
@@ -227,6 +246,7 @@ public sealed class Deflect : Status
     public override string Description => "Наносит 2 урона юнитам, атакующего данного юнита";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
+    public override Sprite Icon { get; set; }
     private int damage;
     public override void Dispel()
     {
@@ -239,6 +259,7 @@ public sealed class Deflect : Status
 
     public Deflect(IUnit target, int damage)
     {
+        Icon = Resources.Load<Sprite>("StatusIcons/deflect");
         this.damage = damage;
         Target = target;
         Target.ModifyReceivedDamage.Event.AddListener(TakeDamageFromDeflect);
@@ -271,6 +292,7 @@ public sealed class Berserk : Status
     public override string Description => "Ультимативная способность заменена на разрушительную атаку";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
+    public override Sprite Icon { get; set; }
     private readonly ICharacter targetCharacter;
     private readonly IAbility oldAbility;
     public override void Dispel()
@@ -284,6 +306,7 @@ public sealed class Berserk : Status
 
     public Berserk(ICharacter target, IAbility ability)
     {
+        Icon = Resources.Load<Sprite>("StatusIcons/berserk");
         Target = target;
         
         targetCharacter = target;
@@ -313,7 +336,8 @@ public sealed class AmplifyDamage : Status
     public override string Description => "Урон по данному юниту увеличен в 1.5 раза";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
-    private int additionalDamage;
+    public override Sprite Icon { get; set; }
+    private readonly int additionalDamage;
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
@@ -325,6 +349,7 @@ public sealed class AmplifyDamage : Status
 
     public AmplifyDamage(IUnit target, int additionalDamage)
     {
+        Icon = Resources.Load<Sprite>("StatusIcons/fragile");
         this.additionalDamage = additionalDamage;
         Target = target;
         Target.ModifyReceivedDamage.Event.AddListener(DamageUp);
@@ -356,7 +381,8 @@ public sealed class DelayedHealing : Status
     public override string Description => "Исцеляет на 1 пункт каждый ход";
     public override int Duration { get; set; } = 3;
     public override IUnit Target { get; set; }
-    private int healPower;
+    public override Sprite Icon { get; set; }
+    private readonly int healPower;
     public override void Dispel()
     {
         EventAggregator.NewTurn.Unsubscribe(OnTurn);
@@ -366,6 +392,7 @@ public sealed class DelayedHealing : Status
 
     public DelayedHealing(IUnit target, int healPower, int lifeTake)
     {
+        Icon = Resources.Load<Sprite>("StatusIcons/delayed healing");
         Target = target;
         this.healPower = healPower;
         Target.TakeDamage(lifeTake, null);
@@ -386,9 +413,10 @@ public sealed class DelayedHealing : Status
 public sealed class LifeSteal : Status
 {
     public override string Name => "Кража жизни";
-    public override string Description => $"Восстанавливает {(upgradeLevel == 1 ? "1 хп" : "половину от нанесенного урона")} при ударе.{(upgradeLevel == 2 ? $" Если персонаж не получил урона то на второй ход восстановление увеличится до 80% (урон {(damageTaken ? "получен" : "не получен")})" : "")}";
+    public override string Description => $"Восстанавливает здоровье при нанесении урона. {(upgradeLevel == 3 ? $" Восстановит больше при отсутствии урона (урон {(damageTaken ? "получен" : "не получен")})." : "")}";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
+    public override Sprite Icon { get; set; }
     private readonly int upgradeLevel;
     private bool damageTaken;
     public override void Dispel()
@@ -405,6 +433,7 @@ public sealed class LifeSteal : Status
 
     public LifeSteal(IUnit target, int upgradeLevel)
     {
+        Icon = Resources.Load<Sprite>("StatusIcons/life steal");
         this.upgradeLevel = upgradeLevel;
         Target = target;
         

@@ -83,6 +83,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
         character.IsDead = true;
         EventAggregator.CharacterDied.Publish(character);
+        StatusSystem.DispelOnUnit(character);
         gameObject.SetActive(false);
     }
     

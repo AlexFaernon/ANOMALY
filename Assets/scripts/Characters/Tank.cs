@@ -27,7 +27,7 @@ public sealed class Tank : Character
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
-        public string Description => $"В течение хода получает {DamageReduction*100}% урона вместо цели. В случае использования на самого персонажа только снижает урон на {100 - DamageReduction*100}%";
+        public string Description => $"В течение хода получает <color=#E3B81B>{DamageReduction*100}%</color> урона вместо цели. В случае использования на самого персонажа только снижает урон на <color=#E3B81B>{100 - DamageReduction*100}%</color>";
         public int Cost => 0;
         public int Cooldown => 0;
         public int TargetCount => 1;
@@ -53,7 +53,7 @@ public sealed class Tank : Character
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
-        public string Description => "Оглушает цель, лишая ее права хода. Длительность 1 ход";
+        public string Description => $"Оглушает <color=#E3B81B>{TargetCount}</color> цель(ей) на {(AbilityUpgradeLevel == 2 ? "<color=#E3B81B>1 и 2 хода</color> соответственно" : $"<color=#E3B81B>{new[] { 1, 2 }[AbilityUpgradeLevel]} ход(ов)</color>")}, лишая ее/их права хода. Длительность 1 ход";
         public int Cost => new[] { 2, 4, 5 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int TargetCount => new[] { 1, 1, 2 }[AbilityUpgradeLevel];
@@ -85,7 +85,7 @@ public sealed class Tank : Character
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
-        public string Description => $"При получение персонажем урона, он наносит урон в {Damage} хп атакующему. Длительность 2 хода";
+        public string Description => $"При получение персонажем урона, он наносит урон в <color=#E3B81B>{Damage}</color> хп атакующему. Длительность <color=#E3B81B>2 хода</color>";
         public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int Cooldown => 3;
         public int TargetCount => 0;
@@ -110,7 +110,7 @@ public sealed class Tank : Character
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
-        public string Description => "На 3 хода заменяет все способности на одну мощную атакующую способность. Замена способности не тратит ход персонажа";
+        public string Description => "На <color=#E3B81B>3 хода</color> заменяет способность на одну мощную атакующую способность. <color=#E3B81B>Замена способности не тратит ход персонажа</color>";
         public int Cost => new[] { 4, 5, 6 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 5, 5, 6 }[AbilityUpgradeLevel];
         public int TargetCount => 0;

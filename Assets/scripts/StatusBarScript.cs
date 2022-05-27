@@ -8,7 +8,6 @@ public class StatusBarScript : MonoBehaviour
 {
     [SerializeField] private GameObject statusPrefab;
     private IUnit unit;
-
     private void Awake()
     {
         EventAggregator.BindStatusBarToUnit.Subscribe(BindStatusBarToUnit);
@@ -29,9 +28,9 @@ public class StatusBarScript : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var _ in StatusSystem.StatusList.Where(status => status.Target == unit))
+        foreach (var sprite in StatusSystem.StatusList.Where(status => status.Target == unit))
         {
-            Instantiate(statusPrefab, transform);
+            Instantiate(statusPrefab, transform).SendMessage(nameof(StatusIconScript.ChangeSprite), sprite);
         }
     }
 

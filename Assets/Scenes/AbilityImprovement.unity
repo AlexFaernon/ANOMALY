@@ -401,8 +401,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 850f853469c28cb4b8b26ac038666905, type: 2}
-  m_sharedMaterial: {fileID: 60496773788133145, guid: 850f853469c28cb4b8b26ac038666905, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 943099a297ef2b84b83385cb47a04efa, type: 2}
+  m_sharedMaterial: {fileID: 4376189548918943117, guid: 943099a297ef2b84b83385cb47a04efa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -426,11 +426,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.45
+  m_fontSize: 15.85
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 0
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
@@ -492,7 +492,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: 181.39
-  m_PreferredHeight: 20
+  m_PreferredHeight: 10
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0423\u043B\u0443\u0447\u0448\u0438\u0442\u044C"
+  m_text: "\u0423\u041B\u0423\u0427\u0428\u0418\u0422\u042C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 943099a297ef2b84b83385cb47a04efa, type: 2}
   m_sharedMaterial: {fileID: 4376189548918943117, guid: 943099a297ef2b84b83385cb47a04efa, type: 2}
@@ -580,7 +580,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.85
+  m_fontSize: 11.05
   m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1329,7 +1329,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0424\u0424\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444"
+  m_text: "\u0430\u0430\u0430\u0430\u0430\u0430"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 850f853469c28cb4b8b26ac038666905, type: 2}
   m_sharedMaterial: {fileID: 60496773788133145, guid: 850f853469c28cb4b8b26ac038666905, type: 2}
@@ -1356,12 +1356,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
+  m_fontSize: 15
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 12
-  m_fontSizeMax: 18
+  m_fontSizeMax: 15
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -1392,7 +1392,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 3.5722885, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1709,7 +1709,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444\u0444"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 943099a297ef2b84b83385cb47a04efa, type: 2}
   m_sharedMaterial: {fileID: 4376189548918943117, guid: 943099a297ef2b84b83385cb47a04efa, type: 2}
@@ -1736,7 +1736,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.35
+  m_fontSize: 14.1
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1744,7 +1744,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

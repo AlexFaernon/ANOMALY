@@ -10,23 +10,23 @@ public static class StatsUpgrades
         {
             { StatsUpgradeType.HP, new Dictionary<UpgradeLevel, StatsUpgrade>
             {
-                { UpgradeLevel.Second, new StatsUpgrade("+1 макс. хп", character => character.MaxHP += 1)},
-                { UpgradeLevel.Fourth, new StatsUpgrade("+1 секция здоровья",character => character.MaxHP += character.HPSegmentLength) }
+                { UpgradeLevel.Second, new StatsUpgrade("Персонаж получает <color=#5EE67E>1 ед макс здоровья</color>", character => character.MaxHP += 1)},
+                { UpgradeLevel.Fourth, new StatsUpgrade("Персонаж получает <color=#5EE67E>1 секцию здоровья</color>",character => character.MaxHP += character.HPSegmentLength) }
             } },
             { StatsUpgradeType.MP, new Dictionary<UpgradeLevel, StatsUpgrade>
             {
-                { UpgradeLevel.Second, new StatsUpgrade("+1 макс мп.", character => character.MaxMP += 1) },
-                { UpgradeLevel.Fourth, new StatsUpgrade("+2 макс мп.", character => character.MaxMP += 2) }
+                { UpgradeLevel.Second, new StatsUpgrade("Персонаж получает <color=#4BDFC7>1 ед макс. маны</color>", character => character.MaxMP += 1) },
+                { UpgradeLevel.Fourth, new StatsUpgrade("Персонаж получает <color=#4BDFC7>2 ед макс. маны</color>", character => character.MaxMP += 2) }
             } },
             { StatsUpgradeType.HPMP, new Dictionary<UpgradeLevel, StatsUpgrade>
             {
-                { UpgradeLevel.Second, new StatsUpgrade("+1 макс мп, +1 хп в каждой секции", character =>
+                { UpgradeLevel.Second, new StatsUpgrade("Персонаж получает <color=#4BDFC7>1 ед макс маны</color> и <color=#5EE67E>1 ед здоровья в каждой секции</color>", character =>
                 {
                     character.MP += 1;
                     character.HPSegmentLength += 1;
                     character.MaxHP += character.HPSegmentLength;
                 } ) },
-                { UpgradeLevel.Fourth, new StatsUpgrade("+2 макс мп, +1 хп в каждой секции", character =>
+                { UpgradeLevel.Fourth, new StatsUpgrade("Персонаж получает <color=#4BDFC7>2 ед макс маны</color> и <color=#5EE67E>1 ед здоровья в каждой секции</color>", character =>
                 {
                     character.MP += 2;
                     character.HPSegmentLength += 1;

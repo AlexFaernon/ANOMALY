@@ -6,7 +6,6 @@ using Random = System.Random;
 
 public class DeathCounter : MonoBehaviour
 {
-    [SerializeField] private GameObject ShadingDefeat;
     [SerializeField] private GameObject ShadingWin;
     [SerializeField] private TMP_Text newBasicTokens;
     [SerializeField] private TMP_Text newAdvancedTokens;
