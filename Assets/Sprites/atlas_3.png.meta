@@ -4,40 +4,31 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: 4504837951225249383
-    second: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-      \u0430\u0442\u043B\u0430\u0441_0"
+    second: atlas_3_0
   - first:
       213: 753400020461690297
-    second: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-      \u0430\u0442\u043B\u0430\u0441_1"
+    second: atlas_3_1
   - first:
       213: -3692047474899496699
-    second: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-      \u0430\u0442\u043B\u0430\u0441_2"
+    second: atlas_3_2
   - first:
       213: -3043053152380721695
-    second: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-      \u0430\u0442\u043B\u0430\u0441_3"
+    second: atlas_3_3
   - first:
       213: -8549536919421221020
-    second: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-      \u0430\u0442\u043B\u0430\u0441_4"
+    second: atlas_3_4
   - first:
       213: -8446560464852270661
-    second: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-      \u0430\u0442\u043B\u0430\u0441_5"
+    second: atlas_3_5
   - first:
       213: -3797675051427385428
-    second: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-      \u0430\u0442\u043B\u0430\u0441_6"
+    second: atlas_3_6
   - first:
       213: -5210160364844596230
-    second: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-      \u0430\u0442\u043B\u0430\u0441_7"
+    second: atlas_3_7
   - first:
       213: -1814784250765476694
-    second: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-      \u0430\u0442\u043B\u0430\u0441_8"
+    second: atlas_3_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -139,8 +130,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-        \u0430\u0442\u043B\u0430\u0441_0"
+      name: atlas_3_0
       rect:
         serializedVersion: 2
         x: 98
@@ -148,7 +138,7 @@ TextureImporter:
         width: 75
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -161,8 +151,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-        \u0430\u0442\u043B\u0430\u0441_1"
+      name: atlas_3_1
       rect:
         serializedVersion: 2
         x: 189
@@ -170,7 +159,7 @@ TextureImporter:
         width: 70
         height: 66
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -183,8 +172,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-        \u0430\u0442\u043B\u0430\u0441_2"
+      name: atlas_3_2
       rect:
         serializedVersion: 2
         x: 400
@@ -192,7 +180,7 @@ TextureImporter:
         width: 203
         height: 203
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -205,8 +193,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-        \u0430\u0442\u043B\u0430\u0441_3"
+      name: atlas_3_3
       rect:
         serializedVersion: 2
         x: 123
@@ -214,7 +201,7 @@ TextureImporter:
         width: 681
         height: 885
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -227,16 +214,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-        \u0430\u0442\u043B\u0430\u0441_4"
+      name: atlas_3_4
       rect:
         serializedVersion: 2
-        x: 1008
+        x: 1030
         y: 2473
         width: 681
         height: 885
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -249,8 +235,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-        \u0430\u0442\u043B\u0430\u0441_5"
+      name: atlas_3_5
       rect:
         serializedVersion: 2
         x: 1909
@@ -258,7 +243,7 @@ TextureImporter:
         width: 681
         height: 885
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -271,16 +256,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-        \u0430\u0442\u043B\u0430\u0441_6"
+      name: atlas_3_6
       rect:
         serializedVersion: 2
-        x: 76
+        x: 70
         y: 799
         width: 1245
         height: 1513
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -293,8 +277,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-        \u0430\u0442\u043B\u0430\u0441_7"
+      name: atlas_3_7
       rect:
         serializedVersion: 2
         x: 1554
@@ -302,7 +285,7 @@ TextureImporter:
         width: 1245
         height: 1513
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -315,8 +298,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0443\u043B\u044C\u0442\u0440\u0430 \u043C\u0435\u0433\u0430 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439
-        \u0430\u0442\u043B\u0430\u0441_8"
+      name: atlas_3_8
       rect:
         serializedVersion: 2
         x: 2869
@@ -324,7 +306,7 @@ TextureImporter:
         width: 1245
         height: 1513
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
