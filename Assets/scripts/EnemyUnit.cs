@@ -52,7 +52,7 @@ public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         if (enemy.HP > 0) return;
         EventAggregator.EnemyDied.Publish(enemy);
         StatusSystem.DispelOnUnit(enemy);
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 
     private void MakeMove(IEnemy other)

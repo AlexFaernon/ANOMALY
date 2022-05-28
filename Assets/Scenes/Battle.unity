@@ -5946,7 +5946,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\u0421\u0422\u0410\u0422\u0423\u0421-\u042D\u0424\u0424\u0415\u041A\u0422\u042B\n\u041D\u0410
-    \u041F\u0415\u0420\u0421\u041E\u041D\u0410\u0416\u0415"
+    \u041F\u0420\u041E\u0422\u0418\u0412\u041D\u0418\u041A\u0415"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 850f853469c28cb4b8b26ac038666905, type: 2}
   m_sharedMaterial: {fileID: 60496773788133145, guid: 850f853469c28cb4b8b26ac038666905, type: 2}

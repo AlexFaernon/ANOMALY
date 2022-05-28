@@ -46,7 +46,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
         if (character.IsDead)
         {
-            gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
             return;
         }
         
@@ -87,7 +87,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         character.IsDead = true;
         EventAggregator.CharacterDied.Publish(character);
         StatusSystem.DispelOnUnit(character);
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
     
     private void StartAbility(AbilityType abilityType)
