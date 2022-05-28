@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,15 +9,26 @@ public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 {
     [SerializeField] private GameObject hpBar;
     [SerializeField] private GameObject statusBar;
+    [SerializeField] private Sprite blackDude;
+    [SerializeField] private Sprite worm;
+    [SerializeField] private Sprite stump;
     private IEnemy enemy;
     private bool IsPicked;
-    private const float holdTime = 1f;
+    private const float holdTime = 0.7f;
     private PointerEventData eventData;
     private static readonly Random random = new Random();
 
     private void Awake()
     {
         enemy = new IEnemy[] {new Weakling(), new FatBoy(), new Killer()}[random.Next(3)];
+        GetComponent<Image>().sprite = enemy switch
+        {
+            FatBoy _ => stump,
+            Killer _ => worm,
+            Weakling _ => blackDude,
+            Enemy _ => throw new NotImplementedException(),
+            _ => throw new ArgumentOutOfRangeException(nameof(enemy))
+        };
         Units.Enemies.Add(enemy);
         enemy.CanMove = true;
         

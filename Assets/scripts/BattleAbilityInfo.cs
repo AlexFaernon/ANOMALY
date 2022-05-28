@@ -23,7 +23,7 @@ public class BattleAbilityInfo : MonoBehaviour
     private void ShowInfo(IAbility ability)
     {
         gameObject.SetActive(true);
-        Title.text = ability.ToString();
+        Title.text = ability.Name;
         Description.text = ability.Description;
         Cooldown.text = ability.Cooldown.ToString();
         Cost.text = ability.Cost.ToString();

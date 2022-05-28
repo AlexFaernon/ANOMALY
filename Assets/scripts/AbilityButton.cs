@@ -11,7 +11,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
    [SerializeField] private TMP_Text level;
    private Button button;
    private Image image;
-   private const float holdTime = 1f;
+   private const float holdTime = 0.7f;
    private PointerEventData eventData;
    private AbilityType abilityType;
    private readonly Dictionary<IAbility, int> abilitiesCooldown = new Dictionary<IAbility, int>();

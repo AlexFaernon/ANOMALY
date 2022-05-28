@@ -13,7 +13,7 @@ public class AbilityInfo : MonoBehaviour
     private void Awake()
     {
         icon.sprite = lastAbility.Icon;
-        title.text = lastAbility.ToString();
+        title.text = lastAbility.Name;
         description.text = lastAbility.Description;
         EventAggregator.InfoButtonClicked.Subscribe(OnButtonClick);
     }

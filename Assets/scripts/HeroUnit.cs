@@ -13,8 +13,9 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private ICharacter character;
     private IAbility currentAbility;
     private Image image;
-    private const float holdTime = 1f;
+    private const float holdTime = 0.7f;
     private PointerEventData eventData;
+    private Outline outline;
 
     private bool _isSelected;
     
@@ -27,12 +28,14 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
             {
                 EventAggregator.DeselectCharacters.Publish();
                 _isSelected = true;
-                image.color = Color.green;
+                outline = gameObject.AddComponent<Outline>();
+                outline.effectColor = Color.green;
+                outline.effectDistance = new Vector2(1.5f, 1.5f);
             }
             else
             {
                 _isSelected = false;
-                image.color = Color.white;
+                Destroy(outline);
             }
         }
     }

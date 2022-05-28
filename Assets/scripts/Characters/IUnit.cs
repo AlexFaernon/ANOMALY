@@ -30,6 +30,7 @@ public interface ICharacter : IUnit
 public interface IAbility
 {
     public int OverallUpgradeLevel { get; set; }
+    public string Name { get; }
     public string Description { get; }
     public int Cost { get; }
     public int Cooldown { get; }

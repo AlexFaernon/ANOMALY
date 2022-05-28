@@ -25,6 +25,7 @@ public sealed class Damager : Character
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
+        public string Name => "Выпад";
         public string Description => $"Наносит урон в <color=#E3B81B>{Damage}</color> единиц здоровья выбранной цели";
         public int Cost => 0;
         public int Cooldown => 0;
@@ -50,6 +51,8 @@ public sealed class Damager : Character
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
+        public string Name => "Уязвимость";
+
         public string Description =>
             $"Увеличивает восприимчивость цели к урону на <color=#E3B81B>2 хода</color>. Получаемый ею урон будет увеличен на <color=#E3B81B>{AdditionalDamage}</color>";
         public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
@@ -76,6 +79,7 @@ public sealed class Damager : Character
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
+        public string Name => "Адреналин";
         public string Description => $"Восстанавливает <color=#E3B81B>{(AbilityUpgradeLevel == 1 ? "единицу здоровья" : "половину от нанесенного урона")}</color> при ударе.{(AbilityUpgradeLevel == 2 ? " Если персонаж не получил урона то на второй ход восстановление увеличится <color=#E3B81B>до 80%</color>" : "")}";
         public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
@@ -100,6 +104,7 @@ public sealed class Damager : Character
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
+        public string Name => "Жар битвы";
         public string Description => $"Наносит урон в <color=#E3B81B>{Damage}</color> единиц здоровья выбранной цели ";
         public int Cost => new[] { 4, 5, 6 }[AbilityUpgradeLevel];
         public int Cooldown  => new[] { 5, 6, 7 }[AbilityUpgradeLevel];

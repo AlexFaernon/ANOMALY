@@ -52,13 +52,14 @@ public class UpgradeInfoScript : MonoBehaviour
             text.text = upgrade.Description;
             return;
         }
+
         cooldown.gameObject.SetActive(true);
         cost.gameObject.SetActive(true);
         targetCount.gameObject.SetActive(true);
         var ability = character.Abilities[abilityType];
         var level = ability.OverallUpgradeLevel;
         ability.OverallUpgradeLevel = (int)upgradeLevel;
-        title.text = ability.ToString();
+        title.text = ability.Name;
         text.text = ability.Description;
         cost.text = ability.Cost.ToString();
         cooldown.text = ability.Cooldown.ToString();

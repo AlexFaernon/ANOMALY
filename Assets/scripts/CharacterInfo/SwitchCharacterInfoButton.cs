@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 public class SwitchCharacterInfoButton : MonoBehaviour
 {
     [SerializeField] private bool isNext;
-    
+
     private void Awake()
     {
         GetComponent<Button>().onClick.AddListener(OnClick);
