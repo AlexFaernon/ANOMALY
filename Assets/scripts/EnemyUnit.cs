@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +27,7 @@ public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
             FatBoy _ => stump,
             Killer _ => worm,
             Weakling _ => blackDude,
-            Enemy _ => throw new NotImplementedException(),
+            Enemy _ => throw new ArgumentOutOfRangeException(nameof(enemy)),
             _ => throw new ArgumentOutOfRangeException(nameof(enemy))
         };
         Units.Enemies.Add(enemy);
@@ -35,7 +36,7 @@ public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         GetComponent<Button>().onClick.AddListener(PickTarget);
 
         EventAggregator.UpdateHP.Subscribe(CheckDeath);
-        EventAggregator.EnemyTurn.Subscribe(MakeMove);
+        EventAggregator.EnemyMove.Subscribe(MakeMove);
         EventAggregator.NewTurn.Subscribe(NewTurn);
     }
 
@@ -59,9 +60,20 @@ public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     {
         if (enemy != other || !enemy.CanMove) return;
 
+        StartCoroutine(DealDamage());
+    }
+
+    private IEnumerator DealDamage()
+    {
+        var outline = gameObject.AddComponent<Outline>();
+        outline.effectColor = Color.red;
+        yield return new WaitForSeconds(1);
         var character = Units.Characters.Values.OrderByDescending(character => character.HP).First();
         character.TakeDamage(enemy.Attack, enemy);
         Debug.Log(character);
+        yield return new WaitForSeconds(1);
+        Destroy(outline);
+        TurnsScript.enemyMoved = true;
     }
 
     private void NewTurn()
@@ -102,7 +114,7 @@ public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     private void OnDestroy()
     {
         EventAggregator.UpdateHP.Unsubscribe(CheckDeath);
-        EventAggregator.EnemyTurn.Unsubscribe(MakeMove);
+        EventAggregator.EnemyMove.Unsubscribe(MakeMove);
         EventAggregator.NewTurn.Unsubscribe(NewTurn);
     }
 }

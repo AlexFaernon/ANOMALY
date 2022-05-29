@@ -16,7 +16,7 @@ public static class EventAggregator
     public static readonly Event<GameObject, AbilityType> BindAbilityButton = new Event<GameObject, AbilityType>();
     public static readonly Event NewTurn = new Event();
     public static readonly Event<bool> ToggleAbilityList = new Event<bool>();
-    public static readonly Event<IEnemy> EnemyTurn = new Event<IEnemy>();
+    public static readonly Event<IEnemy> EnemyMove = new Event<IEnemy>();
     public static readonly Event<AbilityType> CastAbilityType = new Event<AbilityType>();
     public static readonly Event<AbilityType> AbilityTypeInfo = new Event<AbilityType>();
     public static readonly Event<int, IUnit, IUnit> UnitDamagedUnit = new Event<int, IUnit, IUnit>();
@@ -52,6 +52,7 @@ public static class EventAggregator
     public static readonly Event<int> LocationSwitched = new Event<int>();
     public static readonly Event NodeIsChosen = new Event();
     public static readonly Event<IUnit> UpdateMovability = new Event<IUnit>();
+    public static readonly Event EnemyTurn = new Event();
 }
 
 public class Event<T>

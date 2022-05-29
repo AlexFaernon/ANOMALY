@@ -16,6 +16,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
    private AbilityType abilityType;
    private readonly Dictionary<IAbility, int> abilitiesCooldown = new Dictionary<IAbility, int>();
    private IAbility currentAbility;
+   private ICharacter currentCharacter;
 
    private void Awake()
    {
@@ -50,6 +51,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
    private void SwitchAbilities(ICharacter character)
    {
+      currentCharacter = character;
       currentAbility = character.Abilities[abilityType];
       image.sprite = currentAbility.Icon;
       level.text = (currentAbility.OverallUpgradeLevel / 2 + 1).ToString();
@@ -92,10 +94,16 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
          image.color = Color.white;
          button.interactable = true;
       }
-      else
+      else if (currentAbility.Cost <= currentCharacter.MP)
       {
          cooldownText.text = abilitiesCooldown[currentAbility].ToString();
          image.color = Color.gray;
+         button.interactable = false;
+      }
+      else
+      {
+         cooldownText.text = "";
+         image.color = Color.blue;
          button.interactable = false;
       }
    }
