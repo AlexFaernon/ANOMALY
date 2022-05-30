@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
@@ -10,12 +11,14 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     [SerializeField] private GameObject HPBar;
     [SerializeField] private GameObject MPBar;
     [SerializeField] private GameObject statusBar;
+    [SerializeField] private GameObject scratchPrefab;
     private ICharacter character;
     private IAbility currentAbility;
     private Image image;
     private const float holdTime = 0.7f;
     private PointerEventData eventData;
     private Outline outline;
+    private static Random random = new Random();
 
     private bool _isSelected;
     
@@ -60,6 +63,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         EventAggregator.CastAbilityType.Subscribe(StartAbility);
         EventAggregator.AbilityTypeInfo.Subscribe(ShowAbilityInfoByType);
         EventAggregator.NewTurn.Subscribe(NewTurn);
+        EventAggregator.UnitDamagedUnit.Subscribe(OnDamage);
     }
 
     private void Start()
@@ -76,6 +80,13 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         if (unit != character) return;
 
         image.color = character.CanMove ? Color.white : new Color(1,1,1,0.5f);
+    }
+    
+    private void OnDamage(int damage, IUnit source, IUnit target)
+    {
+        if (target != character) return;
+
+        Instantiate(scratchPrefab, transform.parent).transform.Rotate(new Vector3(0, 0, random.Next(-40, 40)));
     }
 
     private void CheckDeath(IUnit unit)

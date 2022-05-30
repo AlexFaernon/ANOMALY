@@ -71,7 +71,7 @@ public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         var character = Units.Characters.Values.OrderByDescending(character => character.HP).First();
         character.TakeDamage(enemy.Attack, enemy);
         Debug.Log(character);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
         Destroy(outline);
         TurnsScript.enemyMoved = true;
     }

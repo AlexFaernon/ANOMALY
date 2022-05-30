@@ -751,6 +751,7 @@ MonoBehaviour:
   HPBar: {fileID: 1127688741}
   MPBar: {fileID: 450884589}
   statusBar: {fileID: 1960836708}
+  scratchPrefab: {fileID: 7813635772816905854, guid: 35df28298c65cae4d9a93689a036ff1b, type: 3}
 --- !u!222 &241979255
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -915,6 +916,7 @@ MonoBehaviour:
   HPBar: {fileID: 824049134}
   MPBar: {fileID: 823193522}
   statusBar: {fileID: 1506246194}
+  scratchPrefab: {fileID: 7813635772816905854, guid: 35df28298c65cae4d9a93689a036ff1b, type: 3}
 --- !u!222 &242542885
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2392,6 +2394,7 @@ MonoBehaviour:
   HPBar: {fileID: 1909360024}
   MPBar: {fileID: 981620425}
   statusBar: {fileID: 2037492134}
+  scratchPrefab: {fileID: 7813635772816905854, guid: 35df28298c65cae4d9a93689a036ff1b, type: 3}
 --- !u!222 &714399805
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3340,7 +3343,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949383653}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
