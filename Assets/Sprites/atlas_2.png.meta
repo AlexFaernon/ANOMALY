@@ -655,8 +655,8 @@ TextureImporter:
       name: atlas_2_21
       rect:
         serializedVersion: 2
-        x: 5582
-        y: 2091
+        x: 5581
+        y: 2090
         width: 116
         height: 128
       alignment: 0
@@ -676,8 +676,8 @@ TextureImporter:
       name: atlas_2_22
       rect:
         serializedVersion: 2
-        x: 5807
-        y: 2092
+        x: 5806
+        y: 2091
         width: 116
         height: 128
       alignment: 0
@@ -697,8 +697,8 @@ TextureImporter:
       name: atlas_2_23
       rect:
         serializedVersion: 2
-        x: 6028
-        y: 2091
+        x: 6027
+        y: 2090
         width: 116
         height: 128
       alignment: 0
