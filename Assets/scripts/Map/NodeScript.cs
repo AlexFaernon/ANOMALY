@@ -2,119 +2,81 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
 
 public class NodeScript : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> linkedNodes;
-    [SerializeField] private GameObject locker;
+    [SerializeField] private int offsetFromCurrent;
     [SerializeField] private GameObject campWindow;
-    [SerializeField] private Button battleButton;
+    [SerializeField] private GameObject locker;
+    [SerializeField] private GameObject previousLink;
     [SerializeField] private Sprite battleSprite;
     [SerializeField] private Sprite completedSprite;
     [SerializeField] private Sprite chosenSprite;
     [SerializeField] private Sprite campSprite;
     [SerializeField] private Sprite completedCampSprite;
-    private Node node;
+    [SerializeField] private Sprite chosenCampSprite;
+    public static int currentNodeNumber;
+
+    private bool IsCamp =>
+        (currentNodeNumber + offsetFromCurrent) % 5 == 0 && currentNodeNumber + offsetFromCurrent != 0;
     private Button button;
-    private static readonly Random random = new Random();
     private Image image;
 
     private void Awake()
     {
         image = GetComponent<Image>();
-        button = GetComponent<Button>();
-        button.onClick.AddListener(OnClick);
-
-        if (MapSingleton.Nodes[Convert.ToInt32(name)] == null)
+        if (offsetFromCurrent == 0)
         {
-            node = new Node();
-            if (name == "0")
-            {
-                node.IsUnlocked = true;
-            }
-
-            if (name == "0" || name == "6")
-            {
-                node.IsCamp = false;
-            }
-            else
-            {
-                node.IsCamp = random.Next(4) == 0;
-            }
-
-            MapSingleton.Nodes[Convert.ToInt32(name)] = node;
+            button = GetComponent<Button>();
+            button.onClick.AddListener(OnClick);
         }
-        else
-        {
-            node = MapSingleton.Nodes[Convert.ToInt32(name)];
-        }
-        
-        EventAggregator.NodeCompleted.Subscribe(CheckUnlocking);
-        EventAggregator.NodeIsChosen.Subscribe(ChangeStatus);
 
+        EventAggregator.CampOpened.Subscribe(ChangeStatus);
         ChangeStatus();
     }
 
     private void OnClick()
     {
-        EventAggregator.NodeIsChosen.Publish();
-        if (node.IsCamp)
+        if (IsCamp)
         {
-            battleButton.interactable = false;
             campWindow.SetActive(true);
-            node.IsCompleted = true;
-            EventAggregator.NodeCompleted.Publish(name);
             ChangeStatus();
         }
         else
         {
-            battleButton.interactable = true;
-            image.sprite = chosenSprite;
-            MapSingleton.ChosenNode = gameObject;
+            SceneManager.LoadScene("Battle");
         }
-    }
-
-    private void CheckUnlocking(string nodeName)
-    {
-        if (linkedNodes.All(other => other.name != nodeName)) return;
-        
-        node.IsUnlocked = true;
-        ChangeStatus();
+        currentNodeNumber++;
     }
 
     private void ChangeStatus()
     {
-        if (node.IsUnlocked)
+        if (currentNodeNumber + offsetFromCurrent <= 0)
         {
-            locker.SetActive(false);
-            button.interactable = true;
-            image = GetComponent<Image>();
-            image.color = Color.white;
-            image.sprite = node.IsCamp ? campSprite : battleSprite;
-
-            if (!node.IsCompleted) return;
-            image.sprite = node.IsCamp ? completedCampSprite : completedSprite;
-            button.interactable = false;
+            previousLink.SetActive(false);
+        }
+        
+        if (currentNodeNumber + offsetFromCurrent < 0)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        
+        if (offsetFromCurrent == 0)
+        {
+            image.sprite = IsCamp ? chosenCampSprite : chosenSprite;
+        }
+        else if (offsetFromCurrent < 0)
+        {
+            image.sprite = IsCamp ? completedCampSprite : completedSprite;
         }
         else
         {
-            button.interactable = false;
-            image.color = Color.gray;
+            locker.SetActive(true);
+            image.sprite = IsCamp ? campSprite : battleSprite;
         }
     }
-
-    private void OnDestroy()
-    {
-        EventAggregator.NodeCompleted.Unsubscribe(CheckUnlocking);
-        EventAggregator.NodeIsChosen.Unsubscribe(ChangeStatus);
-    }
-}
-
-public class Node
-{
-    public bool IsCamp;
-    public bool IsUnlocked;
-    public bool IsCompleted;
 }

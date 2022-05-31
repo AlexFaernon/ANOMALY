@@ -22,8 +22,7 @@ public class DeathCounter : MonoBehaviour
     private void CharacterDied(ICharacter character)
     {
         if (!Units.Characters.Values.All(character1 => character1.IsDead)) return;
-
-        BattleResultsSingleton.isWin = false;
+        
         SceneManager.LoadScene("BattleResult");
     }
     
@@ -34,12 +33,7 @@ public class DeathCounter : MonoBehaviour
         if (Units.Enemies.Count != 0) return;
         
         CreateNewTokens();
-        if (MapSingleton.Nodes[6].IsCompleted)
-        {
-            BattleResultsSingleton.isWin = true;
-            SceneManager.LoadScene("BattleResult");
-        }
-        
+
         ShadingWin.SetActive(true);
     }
 

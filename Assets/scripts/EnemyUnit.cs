@@ -58,8 +58,14 @@ public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     private void MakeMove(IEnemy other)
     {
-        if (enemy != other || !enemy.CanMove) return;
+        if (enemy != other) return;
 
+        if (!enemy.CanMove)
+        {
+            TurnsScript.enemyMoved = true;
+            return;
+        }
+        
         StartCoroutine(DealDamage());
     }
 

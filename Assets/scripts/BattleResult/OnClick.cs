@@ -11,7 +11,7 @@ public class OnClick : MonoBehaviour
 
     private void ResetGame()
     {
-        MapSingleton.Nodes = new Node[7];
+        NodeScript.currentNodeNumber = 0;
         StatusSystem.DispelAll();
         Units.ResetUnits();
         BattleResultsSingleton.ResetResults();

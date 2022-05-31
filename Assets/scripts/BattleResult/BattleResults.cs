@@ -5,8 +5,7 @@ using UnityEngine;
 
 public static class BattleResultsSingleton
 {
-    public static bool isWin;
-    public static int LevelsCompleted => MapSingleton.Nodes.Count(node => node.IsCompleted);
+    public static int LevelsCompleted => NodeScript.currentNodeNumber - 1;
     public static int EnemiesKilled;
     public static int UpgradesMade;
     public static int TotalBasicTokens;
@@ -31,19 +30,14 @@ public class BattleResults : MonoBehaviour
     [SerializeField] private TMP_Text basic;
     [SerializeField] private TMP_Text advanced;
     [SerializeField] private TMP_Text ultimate;
-    [SerializeField] private TMP_Text resultTitle;
-    [SerializeField] private GameObject locationUnlocked;
 
     private void Awake()
     {
-
-        locations.text = (BattleResultsSingleton.LevelsCompleted - (BattleResultsSingleton.isWin ? 0 : 1)).ToString();
+        locations.text = BattleResultsSingleton.LevelsCompleted.ToString();
         enemies.text = BattleResultsSingleton.EnemiesKilled.ToString();
         upgrades.text = BattleResultsSingleton.UpgradesMade.ToString();
         basic.text = BattleResultsSingleton.TotalBasicTokens.ToString();
         advanced.text = BattleResultsSingleton.TotalAdvancedTokens.ToString();
         ultimate.text = BattleResultsSingleton.TotalUltimateTokens.ToString();
-        locationUnlocked.gameObject.SetActive(BattleResultsSingleton.isWin);
-        resultTitle.text = BattleResultsSingleton.isWin ? "ПОБЕДА!" : "Поражение!";
     }
 }

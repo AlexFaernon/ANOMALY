@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BattleButtonScript : MonoBehaviour
 {
+    [SerializeField] private GameObject campWindow;
     private void Awake()
     {
         GetComponent<Button>().onClick.AddListener(OnClick);
@@ -12,8 +13,15 @@ public class BattleButtonScript : MonoBehaviour
 
     private void OnClick()
     {
-        MapSingleton.Nodes[Convert.ToInt32(MapSingleton.ChosenNode.name)].IsCompleted = true;
-        EventAggregator.NodeCompleted.Publish(MapSingleton.ChosenNode.name);
-        SceneManager.LoadScene("Battle");
+        if (NodeScript.currentNodeNumber % 5 == 0 && NodeScript.currentNodeNumber != 0)
+        {
+            campWindow.SetActive(true);
+            EventAggregator.CampOpened.Publish();
+        }
+        else
+        {
+            SceneManager.LoadScene("Battle");
+        }
+        NodeScript.currentNodeNumber++;
     }
 }
