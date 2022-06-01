@@ -8,7 +8,7 @@ public class UpgradeCharacterName : MonoBehaviour
     private void Awake()
     {
         characterName = GetComponent<TMP_Text>();
-        characterName.text = "Выберите персонажа";
+        characterName.text = "";
         EventAggregator.UpgradeCharacterSelected.Subscribe(SetName);
     }
 

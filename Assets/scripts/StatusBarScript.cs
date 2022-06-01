@@ -27,7 +27,10 @@ public class StatusBarScript : MonoBehaviour
 
         foreach (var sprite in StatusSystem.StatusList.Where(status => status.Target == unit))
         {
-            Instantiate(statusPrefab, transform).SendMessage(nameof(StatusIconScript.ChangeSprite), sprite);
+            if (transform.parent.gameObject.activeSelf)
+            {
+                Instantiate(statusPrefab, transform).SendMessage(nameof(StatusIconScript.ChangeSprite), sprite);
+            }
         }
     }
 

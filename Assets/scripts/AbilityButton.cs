@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
+public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IPointerEnterHandler
 {
    [SerializeField] private TMP_Text cooldownText;
    [SerializeField] private TMP_Text level;
@@ -29,6 +29,14 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       button.onClick.AddListener(OnShortPress);
    }
 
+   private void AddAbilities()
+   {
+      foreach (var ability in Units.Characters.Values.Select(character => character.Abilities[abilityType]))
+      {
+         abilitiesCooldown[ability] = abilityType == AbilityType.Ultimate ? ability.Cooldown : 0;
+      }
+   }
+
    private void OnShortPress()
    {
       EventAggregator.CastAbilityType.Publish(abilityType);
@@ -47,6 +55,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       if (obj != gameObject) return;
       
       abilityType = ability;
+      AddAbilities();
    }
 
    private void SwitchAbilities(ICharacter character)
@@ -55,16 +64,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       currentAbility = character.Abilities[abilityType];
       image.sprite = currentAbility.Icon;
       level.text = (currentAbility.OverallUpgradeLevel / 2 + 1).ToString();
-
-      if (abilitiesCooldown.TryGetValue(currentAbility, out _))
-      {
-         SetButtonInteractable();
-      }
-      else
-      {
-         abilitiesCooldown[currentAbility] = abilityType == AbilityType.Ultimate ? currentAbility.Cooldown : 0;
-         SetButtonInteractable();
-      }
+      SetButtonInteractable();
    }
 
    private void ReduceCooldownOnTurn()
@@ -88,22 +88,23 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
    private void SetButtonInteractable()
    {
-      if (abilitiesCooldown[currentAbility] == 0)
+      if (abilitiesCooldown[currentAbility] > 0)
+      {
+         cooldownText.text = abilitiesCooldown[currentAbility].ToString();
+         image.color = Color.gray;
+         button.interactable = false;
+         
+      }
+      else if (currentAbility.Cost <= currentCharacter.MP)
       {
          cooldownText.text = "";
          image.color = Color.white;
          button.interactable = true;
       }
-      else if (currentAbility.Cost <= currentCharacter.MP)
-      {
-         cooldownText.text = abilitiesCooldown[currentAbility].ToString();
-         image.color = Color.gray;
-         button.interactable = false;
-      }
       else
       {
-         cooldownText.text = "";
-         image.color = Color.blue;
+         cooldownText.text = "Мало энергии";
+         image.color = Color.gray;
          button.interactable = false;
       }
    }
@@ -123,6 +124,7 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
    public void OnPointerExit(PointerEventData eventData)
    {
       CancelInvoke(nameof(OnLongPress));
+      EventAggregator.HideAbilityInfo.Publish();
    }
 
    private void OnDestroy()
@@ -131,5 +133,10 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       EventAggregator.SwitchAbilities.Unsubscribe(SwitchAbilities);
       EventAggregator.NewTurn.Unsubscribe(ReduceCooldownOnTurn);
       EventAggregator.AbilityCasted.Unsubscribe(SetCooldownOnCast);
+   }
+
+   public void OnPointerEnter(PointerEventData eventData)
+   {
+      EventAggregator.AbilityTypeInfo.Publish(abilityType);
    }
 }

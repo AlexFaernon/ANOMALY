@@ -37,7 +37,6 @@ public static class EventAggregator
     public static readonly Event GetTargetsNow = new Event();
     public static readonly Event<GameObject, IUnit> BindStatusBarToUnit = new Event<GameObject, IUnit>();
     public static readonly Event UpdateStatus = new Event();
-    public static readonly Event CampCharacterSelected = new Event();
     public static readonly Event<ICharacter> UpgradeCharacterSelected = new Event<ICharacter>();
 
     public static readonly Event<AbilityType, UpgradeLevel, StatsUpgradeType, int> UpgradeAbilitySelected =
@@ -51,7 +50,7 @@ public static class EventAggregator
     public static readonly Event<int> LocationSwitched = new Event<int>();
     public static readonly Event<IUnit> UpdateMovability = new Event<IUnit>();
     public static readonly Event EnemyTurn = new Event();
-    public static readonly Event CampOpened = new Event();
+    public static readonly Event NodeNumberChanged = new Event();
 }
 
 public class Event<T>

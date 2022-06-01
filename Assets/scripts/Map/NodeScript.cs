@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,10 +15,19 @@ public class NodeScript : MonoBehaviour
     [SerializeField] private Sprite campSprite;
     [SerializeField] private Sprite completedCampSprite;
     [SerializeField] private Sprite chosenCampSprite;
-    public static int currentNodeNumber;
+    private static int _currentNodeNumber;
+    public static int CurrentNodeNumber
+    {
+        get => _currentNodeNumber;
+        set
+        {
+            _currentNodeNumber = value;
+            EventAggregator.NodeNumberChanged.Publish();
+        }
+    }
 
     private bool IsCamp =>
-        (currentNodeNumber + offsetFromCurrent) % 5 == 0 && currentNodeNumber + offsetFromCurrent != 0;
+        (CurrentNodeNumber + offsetFromCurrent) % 5 == 0 && CurrentNodeNumber + offsetFromCurrent != 0;
     private Button button;
     private Image image;
 
@@ -30,7 +40,7 @@ public class NodeScript : MonoBehaviour
             button.onClick.AddListener(OnClick);
         }
 
-        EventAggregator.CampOpened.Subscribe(ChangeStatus);
+        EventAggregator.NodeNumberChanged.Subscribe(ChangeStatus);
         ChangeStatus();
     }
 
@@ -39,28 +49,20 @@ public class NodeScript : MonoBehaviour
         if (IsCamp)
         {
             campWindow.SetActive(true);
-            ChangeStatus();
         }
         else
         {
             SceneManager.LoadScene("Battle");
         }
-        currentNodeNumber++;
+
+        CurrentNodeNumber++;
     }
 
     private void ChangeStatus()
     {
-        if (currentNodeNumber + offsetFromCurrent <= 0)
-        {
-            previousLink.SetActive(false);
-        }
-        
-        if (currentNodeNumber + offsetFromCurrent < 0)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
-        
+        previousLink.SetActive(CurrentNodeNumber + offsetFromCurrent > 0);
+        gameObject.SetActive(CurrentNodeNumber + offsetFromCurrent >= 0);
+
         if (offsetFromCurrent == 0)
         {
             image.sprite = IsCamp ? chosenCampSprite : chosenSprite;
@@ -74,5 +76,10 @@ public class NodeScript : MonoBehaviour
             locker.SetActive(true);
             image.sprite = IsCamp ? campSprite : battleSprite;
         }
+    }
+
+    private void OnDestroy()
+    {
+        EventAggregator.NodeNumberChanged.Unsubscribe(ChangeStatus);
     }
 }

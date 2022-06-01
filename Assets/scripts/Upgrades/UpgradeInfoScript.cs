@@ -9,10 +9,12 @@ public class UpgradeInfoScript : MonoBehaviour
     [SerializeField] private TMP_Text cooldown;
     [SerializeField] private TMP_Text cost;
     [SerializeField] private TMP_Text targetCount;
+    [SerializeField] private TMP_Text emptyInfoText;
     private ICharacter character;
 
     private void Awake()
     {
+        emptyInfoText.text = "Выберите персонажа";
         title.text = "";
         upgradeLevelText.text = "";
         text.text = "";
@@ -34,10 +36,22 @@ public class UpgradeInfoScript : MonoBehaviour
     private void SelectCharacter(ICharacter character1)
     {
         character = character1;
+        title.gameObject.SetActive(false);
+        upgradeLevelText.gameObject.SetActive(false);
+        text.gameObject.SetActive(false);
+        cooldown.gameObject.SetActive(false);
+        cost.gameObject.SetActive(false);
+        targetCount.gameObject.SetActive(false);
+        emptyInfoText.gameObject.SetActive(true);
+        emptyInfoText.text = "Выберите способность для улучшения";
     }
 
     private void SelectAbilityUpgrade(AbilityType abilityType, UpgradeLevel upgradeLevel, StatsUpgradeType statsUpgradeType, int cost1)
     {
+        emptyInfoText.gameObject.SetActive(false);
+        title.gameObject.SetActive(true);
+        upgradeLevelText.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
         upgradeLevelText.text = $"Уровень {(int)upgradeLevel + 1}";
         if ((int)upgradeLevel % 2 == 1)
         {

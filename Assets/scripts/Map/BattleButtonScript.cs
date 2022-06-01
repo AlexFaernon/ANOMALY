@@ -12,15 +12,14 @@ public class BattleButtonScript : MonoBehaviour
 
     private void OnClick()
     {
-        if (NodeScript.currentNodeNumber % 5 == 0 && NodeScript.currentNodeNumber != 0)
+        if (NodeScript.CurrentNodeNumber % 5 == 0 && NodeScript.CurrentNodeNumber != 0)
         {
             campWindow.SetActive(true);
-            EventAggregator.CampOpened.Publish();
         }
         else
         {
             SceneManager.LoadScene("Battle");
         }
-        NodeScript.currentNodeNumber++;
+        NodeScript.CurrentNodeNumber++;
     }
 }

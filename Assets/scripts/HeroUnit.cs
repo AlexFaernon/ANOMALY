@@ -188,7 +188,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         EventAggregator.AbilityTypeInfo.Unsubscribe(ShowAbilityInfoByType);
         EventAggregator.NewTurn.Unsubscribe(NewTurn);
         EventAggregator.UpdateMovability.Unsubscribe(UpdateMovability);
-
+        EventAggregator.UnitDamagedUnit.Unsubscribe(OnDamage);
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -5,7 +5,7 @@ public class NewGameConfirm : MonoBehaviour
 {
     public void NewGame()
     {
-        NodeScript.currentNodeNumber = 0;
+        NodeScript.CurrentNodeNumber = 0;
         Units.ResetUnits();
         BattleResultsSingleton.ResetResults();
         GameState.isGame = false;

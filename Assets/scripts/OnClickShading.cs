@@ -11,7 +11,7 @@ public class OnClickShading : MonoBehaviour
 
     public void AbandonBattle()
     {
-        NodeScript.currentNodeNumber = 0;
+        NodeScript.CurrentNodeNumber = 0;
         StatusSystem.DispelAll();
         Units.ResetUnits();
         BattleResultsSingleton.ResetResults();

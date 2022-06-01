@@ -11,7 +11,7 @@ public class OnClick : MonoBehaviour
 
     private void ResetGame()
     {
-        NodeScript.currentNodeNumber = 0;
+        NodeScript.CurrentNodeNumber = 0;
         StatusSystem.DispelAll();
         Units.ResetUnits();
         BattleResultsSingleton.ResetResults();

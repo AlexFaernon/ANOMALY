@@ -80,7 +80,7 @@ public sealed class Damager : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Адреналин";
-        public string Description => $"Восстанавливает <color=#E3B81B>{(AbilityUpgradeLevel == 1 ? "единицу здоровья" : "половину от нанесенного урона")}</color> при ударе.{(AbilityUpgradeLevel == 2 ? " Если персонаж не получил урона то на второй ход восстановление увеличится <color=#E3B81B>до 80%</color>" : "")}";
+        public string Description => $"Восстанавливает <color=#E3B81B>{(AbilityUpgradeLevel == 0 ? "единицу здоровья" : "половину от нанесенного урона")}</color> при ударе.{(AbilityUpgradeLevel == 2 ? " Если персонаж не получил урона, то на второй ход восстановление увеличится <color=#E3B81B>до 80%</color>" : "")}";
         public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int TargetCount => 0;

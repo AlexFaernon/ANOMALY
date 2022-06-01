@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -30,5 +31,10 @@ public class TurnsScript : MonoBehaviour
         }
         
         EventAggregator.NewTurn.Publish();
+    }
+
+    private void OnDestroy()
+    {
+        EventAggregator.EnemyTurn.Unsubscribe(PassTurnToEnemy);
     }
 }
