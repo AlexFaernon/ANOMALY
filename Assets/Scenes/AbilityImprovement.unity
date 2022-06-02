@@ -9063,6 +9063,7 @@ GameObject:
   - component: {fileID: 1400386732}
   - component: {fileID: 1400386733}
   - component: {fileID: 1400386731}
+  - component: {fileID: 1400386734}
   - component: {fileID: 1400386730}
   m_Layer: 0
   m_Name: Upgrade
@@ -9134,7 +9135,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1400386731}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1400386734}
+        m_TargetAssemblyTypeName: YandexSDK, Assembly-CSharp
+        m_MethodName: ShowInterstitial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1400386731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9183,6 +9196,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca911defa08ae3c48bab18a9b2e3a928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1400386734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400386728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c32130964587364594a9ac7e63e48da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1402522552

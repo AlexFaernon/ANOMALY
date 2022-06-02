@@ -564,6 +564,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 191851809}
+  - component: {fileID: 191851815}
   - component: {fileID: 191851812}
   - component: {fileID: 191851811}
   - component: {fileID: 191851810}
@@ -698,6 +699,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191851808}
   m_CullTransparentMesh: 1
+--- !u!114 &191851815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191851808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c32130964587364594a9ac7e63e48da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &375038326
 GameObject:
   m_ObjectHideFlags: 0
