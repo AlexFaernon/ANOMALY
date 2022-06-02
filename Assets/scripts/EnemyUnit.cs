@@ -51,6 +51,7 @@ public class EnemyUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         if (unit != enemy) return;
 
         if (enemy.HP > 0) return;
+        TurnsScript.enemyMoved = true;
         EventAggregator.EnemyDied.Publish(enemy);
         StatusSystem.DispelOnUnit(enemy);
         transform.parent.gameObject.SetActive(false);

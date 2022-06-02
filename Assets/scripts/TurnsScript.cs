@@ -18,6 +18,7 @@ public class TurnsScript : MonoBehaviour
         {
             character.CanMove = false;
         }
+        enemyMoved = false;
         StartCoroutine(EnemyMoves());
     }
     
