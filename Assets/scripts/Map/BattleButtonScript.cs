@@ -12,7 +12,7 @@ public class BattleButtonScript : MonoBehaviour
 
     private void OnClick()
     {
-        if (NodeScript.CurrentNodeNumber % 5 == 0 && NodeScript.CurrentNodeNumber != 0)
+        if (NodeScript.CurrentNodeNumber % 4 == 0 && NodeScript.CurrentNodeNumber != 0)
         {
             campWindow.SetActive(true);
         }

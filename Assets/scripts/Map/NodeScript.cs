@@ -27,7 +27,7 @@ public class NodeScript : MonoBehaviour
     }
 
     private bool IsCamp =>
-        (CurrentNodeNumber + offsetFromCurrent) % 5 == 0 && CurrentNodeNumber + offsetFromCurrent != 0;
+        (CurrentNodeNumber + offsetFromCurrent) % 4 == 0 && CurrentNodeNumber + offsetFromCurrent != 0;
     private Button button;
     private Image image;
 
