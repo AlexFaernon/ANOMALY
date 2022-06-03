@@ -64,6 +64,12 @@ public class AbilityButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
       currentAbility = character.Abilities[abilityType];
       image.sprite = currentAbility.Icon;
       level.text = (currentAbility.OverallUpgradeLevel / 2 + 1).ToString();
+      
+      if (!abilitiesCooldown.TryGetValue(currentAbility, out _))
+      {
+         abilitiesCooldown[currentAbility] = abilityType == AbilityType.Ultimate ? currentAbility.Cooldown : 0;
+      }
+
       SetButtonInteractable();
    }
 

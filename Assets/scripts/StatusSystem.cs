@@ -193,8 +193,7 @@ public sealed class Protect : Status
 
     private void ReduceDamage()
     {
-        var damage = Target.ModifyReceivedDamage.Damage;
-        Target.TakeDamage((int)Math.Ceiling(damage*damageReduction), Target.ModifyReceivedDamage.Source);
+        Target.ModifyReceivedDamage.Damage = (int)(Target.ModifyReceivedDamage.Damage * damageReduction);
     }
 }
 

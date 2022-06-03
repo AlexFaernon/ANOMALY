@@ -14,6 +14,7 @@ public class DeathCounter : MonoBehaviour
 
     private void Awake()
     {
+        NodeScript.CurrentNodeNumber++;
         random = new Random();
         EventAggregator.CharacterDied.Subscribe(CharacterDied);
         EventAggregator.EnemyDied.Subscribe(EnemyDied);

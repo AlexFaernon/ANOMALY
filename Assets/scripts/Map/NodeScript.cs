@@ -44,18 +44,17 @@ public class NodeScript : MonoBehaviour
         ChangeStatus();
     }
 
-    private void OnClick()
+    public void OnClick()
     {
         if (IsCamp)
         {
             campWindow.SetActive(true);
+            CurrentNodeNumber++;
         }
         else
         {
             SceneManager.LoadScene("Battle");
         }
-
-        CurrentNodeNumber++;
     }
 
     private void ChangeStatus()

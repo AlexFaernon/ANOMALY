@@ -639,7 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b02fb4b2c093ba24497aaabca9af4e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  campWindow: {fileID: 1008029743}
+  currentNode: {fileID: 1224299191}
 --- !u!1 &204784852
 GameObject:
   m_ObjectHideFlags: 0

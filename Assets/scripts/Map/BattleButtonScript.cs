@@ -4,22 +4,9 @@ using UnityEngine.UI;
 
 public class BattleButtonScript : MonoBehaviour
 {
-    [SerializeField] private GameObject campWindow;
+    [SerializeField] private GameObject currentNode;
     private void Awake()
     {
-        GetComponent<Button>().onClick.AddListener(OnClick);
-    }
-
-    private void OnClick()
-    {
-        if (NodeScript.CurrentNodeNumber % 4 == 0 && NodeScript.CurrentNodeNumber != 0)
-        {
-            campWindow.SetActive(true);
-        }
-        else
-        {
-            SceneManager.LoadScene("Battle");
-        }
-        NodeScript.CurrentNodeNumber++;
+        GetComponent<Button>().onClick.AddListener(() => currentNode.SendMessage(nameof(NodeScript.OnClick)));
     }
 }
