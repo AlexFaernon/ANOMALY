@@ -52,12 +52,13 @@ public class UpgradeInfoScript : MonoBehaviour
         title.gameObject.SetActive(true);
         upgradeLevelText.gameObject.SetActive(true);
         text.gameObject.SetActive(true);
-        upgradeLevelText.text = $"Уровень {(int)upgradeLevel + 1}";
+        upgradeLevelText.text = $"Уровень {(int)upgradeLevel / 2 + 1}";
         if ((int)upgradeLevel % 2 == 1)
         {
             cooldown.gameObject.SetActive(false);
             cost.gameObject.SetActive(false);
             targetCount.gameObject.SetActive(false);
+            upgradeLevelText.gameObject.SetActive(false);
             var upgrade = StatsUpgrades.Upgrades[statsUpgradeType][upgradeLevel];
             title.text = "Улучшение характеристик";
             text.text = upgrade.Description;
