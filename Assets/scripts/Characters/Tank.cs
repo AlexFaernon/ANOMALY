@@ -55,7 +55,7 @@ public sealed class Tank : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Оглушение";
-        public string Description => $"Оглушает <color=#E3B81B>{TargetCount}</color> цель(ей) на {(AbilityUpgradeLevel == 2 ? "<color=#E3B81B>1 и 2 хода</color> соответственно" : $"<color=#E3B81B>{new[] { 1, 2 }[AbilityUpgradeLevel]} ход(ов)</color>")}, лишая ее/их права хода. Длительность 1 ход";
+        public string Description => $"Оглушает <color=#E3B81B>{TargetCount}</color> цель(и) на {(AbilityUpgradeLevel == 2 ? "<color=#E3B81B>1 и 2 хода</color> соответственно" : $"<color=#E3B81B>{new[] { 1, 2 }[AbilityUpgradeLevel]} ход(а)</color>")}, лишая ее/их права хода";
         public int Cost => new[] { 2, 4, 5 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int TargetCount => new[] { 1, 1, 2 }[AbilityUpgradeLevel];
