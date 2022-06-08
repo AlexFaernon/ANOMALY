@@ -88,7 +88,7 @@ public sealed class Tank : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Контратака";
-        public string Description => $"При получение персонажем урона, он наносит урон в <color=#E3B81B>{Damage}</color> хп атакующему. Длительность <color=#E3B81B>2 хода</color>";
+        public string Description => $"При получение персонажем урона, он наносит урон в <color=#E3B81B>{Damage} ед.</color> атакующему. Длительность <color=#E3B81B>2 хода</color>";
         public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int Cooldown => 3;
         public int TargetCount => 0;
@@ -138,7 +138,7 @@ public sealed class Tank : Character
             public int OverallUpgradeLevel { get; set; }
             public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
             public string Name => "Разрушение";
-            public string Description => $"Наносит {Damage} урона 3-ем целям";
+            public string Description => $"Наносит {Damage} ед. урона 3-ем целям";
             public int Cost => 0;
             public int Cooldown => 0;
             public int TargetCount => 3;
