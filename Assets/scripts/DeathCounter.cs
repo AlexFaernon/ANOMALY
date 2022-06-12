@@ -35,6 +35,7 @@ public class DeathCounter : MonoBehaviour
         
         NodeScript.CurrentNodeNumber++;
         CreateNewTokens();
+        StatusSystem.DispelAll();
         SaveScript.SaveCharacters();
         ShadingWin.SetActive(true);
     }

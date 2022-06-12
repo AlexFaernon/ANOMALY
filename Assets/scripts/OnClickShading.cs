@@ -5,7 +5,6 @@ public class OnClickShading : MonoBehaviour
 {
     public void OnClickWin()
     {
-        StatusSystem.DispelAll();
         SceneManager.LoadScene("Map");
     }
 
