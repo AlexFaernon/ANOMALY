@@ -19,6 +19,7 @@ public interface ICharacter : IUnit
     public int HPSegmentLength { get; set; }
     public int MaxMP { get; set; }
     public int MP { get; set; }
+    public int MPRegeneration { get; set; }
     public bool IsDead { get; set; }
     public bool HP1Upgrade { get; set; }
     public bool HP2Upgrade { get; set; }

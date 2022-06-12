@@ -128,7 +128,7 @@ public sealed class Damager : Character
         public string Name => "Жар битвы";
         public string Description => $"Наносит урон в <color=#E3B81B>{Damage}  ед.</color> здоровья выбранной цели";
         public int Cost => new[] { 4, 5, 6 }[AbilityUpgradeLevel];
-        public int Cooldown  => new[] { 5, 6, 7 }[AbilityUpgradeLevel];
+        public int Cooldown  => new[] { 5, 4, 3 }[AbilityUpgradeLevel];
         public int TargetCount => 1;
         private int Damage => new[] { 4, 6, 10 }[AbilityUpgradeLevel];
         [NonSerialized] private Sprite _icon;

@@ -131,7 +131,7 @@ public sealed class Medic : Character
         public string Name => "Не в мою смену!";
         public string Description => $"В течение <color=#E3B81B>3-ех ходов</color> здоровье цели не может упасть ниже <color=#E3B81B>{new object[] {1,3,"последней секции или ее остатка"}[AbilityUpgradeLevel]}</color>.{(AbilityUpgradeLevel == 2 ? " При наложении на врага в течение <color=#E3B81B>3 ходов убавляет по 1 ед. здоровья</color>" : "")}";
         public int Cost => new[] { 4, 5, 6 }[AbilityUpgradeLevel];
-        public int Cooldown => new[] { 5, 5, 6 }[AbilityUpgradeLevel];
+        public int Cooldown => new[] { 5, 5, 4 }[AbilityUpgradeLevel];
         public int TargetCount => 1;
         [NonSerialized] private Sprite _icon;
 

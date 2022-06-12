@@ -174,10 +174,7 @@ public class HeroUnit : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private void NewTurn()
     {
         character.CanMove = true;
-        if (character.MP < character.MaxMP)
-        {
-            character.MP += 1;
-        }
+        character.MP += character.MPRegeneration;
     }
 
     private void OnDestroy()

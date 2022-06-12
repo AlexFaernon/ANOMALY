@@ -53,6 +53,8 @@ public abstract class Character : ICharacter
         }
     }
 
+    public int MPRegeneration { get; set; } = 1;
+
     public bool IsDead { get; set; }
     public bool HP1Upgrade { get; set; }
     public bool HP2Upgrade { get; set; }

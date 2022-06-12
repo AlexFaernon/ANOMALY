@@ -136,7 +136,7 @@ public sealed class Tank : Character
         public string Name => "Берсерк";
         public string Description => "На <color=#E3B81B>3 хода</color> дает возможность использовать мощную атакующую способность. <color=#E3B81B>Замена способности не тратит ход персонажа</color>";
         public int Cost => new[] { 4, 5, 6 }[AbilityUpgradeLevel];
-        public int Cooldown => new[] { 5, 5, 6 }[AbilityUpgradeLevel];
+        public int Cooldown => new[] { 5, 5, 4 }[AbilityUpgradeLevel];
         public int TargetCount => 0;
         [NonSerialized] private Sprite _icon;
 
