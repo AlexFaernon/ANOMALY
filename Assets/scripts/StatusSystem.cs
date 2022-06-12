@@ -92,7 +92,7 @@ public sealed class Invulnerability : Status
 public sealed class HPLoss : Status
 {
     public override string Name => "";
-    public override string Description => "Цель теряет 1 ед. здоровья каждый ход";
+    public override string Description => "Цель теряет 1 ед. здоровья каждый ход.";
     public override int Duration { get; set; } = 3;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }
@@ -130,7 +130,7 @@ public sealed class HPLoss : Status
 public sealed class Protect : Status
 {
     public override string Name => "Защита";
-    public override string Description => "Этот юнит находится под защитой";
+    public override string Description => "Этот юнит находится под защитой.";
     public override int Duration { get; set; } = 1;
     public readonly IUnit Protector;
     public override IUnit Target { get; set; }
@@ -200,7 +200,7 @@ public sealed class Protect : Status
 public sealed class Stun : Status
 {
     public override string Name => "Оглушение";
-    public override string Description => "Данный юнит не может действовать";
+    public override string Description => "Данный юнит не может действовать.";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }
@@ -242,7 +242,7 @@ public sealed class Stun : Status
 public sealed class Deflect : Status
 {
     public override string Name => "Отражение урона";
-    public override string Description => $"Наносит {damage} ед. урона юнитам, атакующего данного юнита";
+    public override string Description => $"Наносит {damage} ед. урона юнитам, атакующего данного юнита.";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }
@@ -288,7 +288,7 @@ public sealed class Deflect : Status
 public sealed class Berserk : Status
 {
     public override string Name => "Берсерк";
-    public override string Description => "Ультимативная способность заменена на разрушительную атаку";
+    public override string Description => "Ультимативная способность заменена на разрушительную атаку.";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }
@@ -332,7 +332,7 @@ public sealed class Berserk : Status
 public sealed class AmplifyDamage : Status
 {
     public override string Name => "Уязвимость";
-    public override string Description => $"Данный юнит получает на {additionalDamage} ед. урона больше";
+    public override string Description => $"Данный юнит получает на {additionalDamage} ед. урона больше.";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }
@@ -377,7 +377,7 @@ public sealed class AmplifyDamage : Status
 public sealed class DelayedHealing : Status
 {
     public override string Name => "Регенерация";
-    public override string Description => "Восстанавливает 1 ед. здоровья каждый ход";
+    public override string Description => "Восстанавливает 1 ед. здоровья каждый ход.";
     public override int Duration { get; set; } = 3;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }

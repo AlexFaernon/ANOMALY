@@ -9,7 +9,7 @@ public sealed class Tank : Character
     public override string Name => "Теодор Роджерс";
 
     public override string Info =>
-        "Теодор с детства занимался ремеслом. Его завораживали доспехи, их изящество, но в то же время прочность и стойкость. Когда Тео вырос, он стал одержимым идеей сделать идеальный доспех, которому будут нипочем никакие атаки исчадий аномалий. Ради этого он сам записался в \"уничтожителей\", чтобы тестировать свои доспехи и выявлять дефекты, делая новые, более близкие к идеалу.";
+        "Теодор с детства занимался ремеслом. Его завораживали доспехи, их изящество, но в то же время прочность и стойкость. Когда Тео вырос, он стал одержим идеей сделать идеальный доспех, которому будут нипочем никакие атаки исчадий аномалий. Ради этого он сам записался в \"уничтожителей\", чтобы тестировать свои доспехи и выявлять дефекты, делая новые, более близкие к идеалу.";
     public override IAbility BasicAbility { get; set; } = new CastProtect();
     public override IAbility FirstAbility { get; set; } = new CastStun();
     public override IAbility SecondAbility { get; set; } = new CastDeflect();
@@ -21,7 +21,7 @@ public sealed class Tank : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Телохранитель";
-        public string Description => $"В течение хода получает <color=#E3B81B>{DamageReduction*100}%</color> урона вместо цели. В случае использования на самого персонажа только снижает урон на <color=#E3B81B>{100 - DamageReduction*100}%</color>";
+        public string Description => $"В течение хода получает <color=#E3B81B>{DamageReduction*100}%</color> урона вместо цели. В случае использования на самого персонажа только снижает урон на <color=#E3B81B>{100 - DamageReduction*100}%.</color>";
         public int Cost => 0;
         public int Cooldown => 0;
         public int TargetCount => 1;
@@ -57,7 +57,7 @@ public sealed class Tank : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Оглушение";
-        public string Description => $"Оглушает <color=#E3B81B>{TargetCount}</color> цель(и) на {(AbilityUpgradeLevel == 2 ? "<color=#E3B81B>1 и 2 хода</color> соответственно" : $"<color=#E3B81B>{new[] { 1, 2 }[AbilityUpgradeLevel]} ход(а)</color>")}, лишая права хода";
+        public string Description => $"Оглушает <color=#E3B81B>{TargetCount}</color> цель(и) на {(AbilityUpgradeLevel == 2 ? "<color=#E3B81B>1 и 2 хода</color> соответственно," : $"<color=#E3B81B>{new[] { 1, 2 }[AbilityUpgradeLevel]} ход(а),</color>")} лишая права хода.";
         public int Cost => new[] { 2, 4, 5 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int TargetCount => new[] { 1, 1, 2 }[AbilityUpgradeLevel];
@@ -99,7 +99,7 @@ public sealed class Tank : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Контратака";
-        public string Description => $"При получении персонажем урона, он наносит урон в <color=#E3B81B>{Damage} ед.</color> атакующему. Длительность <color=#E3B81B>2 хода</color>";
+        public string Description => $"При получении персонажем урона, он наносит урон в <color=#E3B81B>{Damage} ед.</color> атакующему. Длительность <color=#E3B81B>2 хода.</color>";
         public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int Cooldown => 3;
         public int TargetCount => 0;
@@ -134,7 +134,7 @@ public sealed class Tank : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Берсерк";
-        public string Description => "На <color=#E3B81B>3 хода</color> дает возможность использовать мощную атакующую способность. <color=#E3B81B>Замена способности не тратит ход персонажа</color>";
+        public string Description => "На <color=#E3B81B>3 хода</color> дает возможность использовать мощную атакующую способность. <color=#E3B81B>Замена способности не тратит ход персонажа.</color>";
         public int Cost => new[] { 4, 5, 6 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 5, 5, 4 }[AbilityUpgradeLevel];
         public int TargetCount => 0;
@@ -167,7 +167,7 @@ public sealed class Tank : Character
             public int OverallUpgradeLevel { get; set; }
             public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
             public string Name => "Разрушение";
-            public string Description => $"Наносит {Damage} ед. урона 3-ем целям";
+            public string Description => $"Наносит {Damage} ед. урона 3-ем целям.";
             public int Cost => 0;
             public int Cooldown => 0;
             public int TargetCount => 3;

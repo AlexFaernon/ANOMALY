@@ -21,7 +21,7 @@ public sealed class Medic : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Первая помощь";
-        public string Description => $"Восстанавливает <color=#E3B81B>{HealPower} ед. здоровья</color> <color=#E3B81B>{TargetCount}</color> цели(ям)";
+        public string Description => $"Восстанавливает <color=#E3B81B>{HealPower} ед. здоровья</color> <color=#E3B81B>{TargetCount}</color> цели(ям).";
         public int Cost => 0;
         public int Cooldown => 0;
         public int TargetCount => new[] { 1, 2, 2 }[AbilityUpgradeLevel];
@@ -57,7 +57,7 @@ public sealed class Medic : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Очищение ран";
-        public string Description => "Снимает <color=#E3B81B>все эффекты</color> с целей";
+        public string Description => "Снимает <color=#E3B81B>все эффекты</color> с целей.";
         public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 2, 2, 3 }[AbilityUpgradeLevel];
         public int TargetCount => new[] { 1, 2, 3 }[AbilityUpgradeLevel];
@@ -93,7 +93,7 @@ public sealed class Medic : Character
         public string Name => "Регенерация";
 
         public string Description =>
-            $"{(LifeTake == 0 ? "И" : $"Забирает <color=#E3B81B>{LifeTake} ед. здоровья </color> в момент применения, и")}сцеляет по <color=#E3B81B>{HealPower} ед. здоровья</color> в течение <color=#E3B81B>трех последующих ходов</color>";
+            $"{(LifeTake == 0 ? "И" : $"Забирает <color=#E3B81B>{LifeTake} ед. здоровья </color> в момент применения, и")}сцеляет по <color=#E3B81B>{HealPower} ед. здоровья</color> в течение <color=#E3B81B>3-ех последующих ходов.</color>";
         public int Cost => new[] { 2, 3, 5 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 3, 3, 4 }[AbilityUpgradeLevel];
         public int TargetCount => 1;
@@ -129,7 +129,7 @@ public sealed class Medic : Character
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Не в мою смену!";
-        public string Description => $"В течение <color=#E3B81B>3-ех ходов</color> здоровье цели не может упасть ниже <color=#E3B81B>{new object[] {1,3,"последней секции или ее остатка"}[AbilityUpgradeLevel]}</color>.{(AbilityUpgradeLevel == 2 ? " При наложении на врага в течение <color=#E3B81B>3 ходов убавляет по 1 ед. здоровья</color>" : "")}";
+        public string Description => $"В течение <color=#E3B81B>3-ех ходов</color> здоровье цели не может упасть ниже <color=#E3B81B>{new object[] {1,3,"последней секции или ее остатка"}[AbilityUpgradeLevel]}.</color>{(AbilityUpgradeLevel == 2 ? " При наложении на врага в течение <color=#E3B81B>3 ходов убавляет по 1 ед. здоровья.</color>" : "")}";
         public int Cost => new[] { 4, 5, 6 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 5, 5, 4 }[AbilityUpgradeLevel];
         public int TargetCount => 1;
