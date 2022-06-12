@@ -8,7 +8,7 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Transform squaresParent;
     [SerializeField] private GameObject targetSquare;
     [SerializeField] private GameObject abilityIcon;
-    private readonly List<IUnit> targets = new List<IUnit>();
+    public static readonly List<IUnit> Targets = new List<IUnit>();
     private readonly List<GameObject> targetsSquares = new List<GameObject>();
     private int maxTargetCount;
     public static bool isPicking { get; private set; }
@@ -50,29 +50,29 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
     {
         if (!isPicking) return;
 
-        if (!targets.Contains(unit))
+        if (!Targets.Contains(unit))
         {
-            EventAggregator.ToggleTargetSquare.Publish(targetsSquares[targets.Count]);
-            targets.Add(unit);
+            EventAggregator.ToggleTargetSquare.Publish(targetsSquares[Targets.Count]);
+            Targets.Add(unit);
         }
         else
         {
-            EventAggregator.ToggleTargetSquare.Publish(targetsSquares[targets.Count - 1]);
-            targets.Remove(unit);
+            EventAggregator.ToggleTargetSquare.Publish(targetsSquares[Targets.Count - 1]);
+            Targets.Remove(unit);
         }
         
-        if (targets.Count == maxTargetCount)
+        if (Targets.Count == maxTargetCount)
         {
-            EventAggregator.GetTargets.Publish(targets);
+            EventAggregator.GetTargets.Publish(Targets);
             ClearTargets();
         }
     }
 
     private void GetTargetsNow()
     {
-        if (targets.Count == 0) return;
+        if (Targets.Count == 0) return;
         
-        EventAggregator.GetTargets.Publish(targets);
+        EventAggregator.GetTargets.Publish(Targets);
         ClearTargets();
     }
 
@@ -93,7 +93,7 @@ public class TargetPicker : MonoBehaviour, IPointerDownHandler
         }
         targetsSquares.Clear();
         
-        targets.Clear();
+        Targets.Clear();
         isPicking = false;
         EventAggregator.DeselectTargets.Publish();
         abilityIcon.SetActive(false);

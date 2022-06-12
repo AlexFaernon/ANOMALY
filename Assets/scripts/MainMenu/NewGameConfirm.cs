@@ -8,7 +8,7 @@ public class NewGameConfirm : MonoBehaviour
         NodeScript.CurrentNodeNumber = 0;
         Units.ResetUnits();
         BattleResultsSingleton.ResetResults();
-        GameState.isGame = false;
+        GameState.IsGame = false;
         SceneManager.LoadScene("GlobalMap");
     }
 

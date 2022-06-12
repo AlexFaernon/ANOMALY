@@ -9,7 +9,7 @@ public class CountText : MonoBehaviour
 
     private void Awake()
     {
-        var newCount = BattleResultsSingleton.LevelsCompleted + 1;
+        var newCount = BattleResultsSingleton.LevelsCompleted;
         count.text = newCount.ToString();
     }
 }

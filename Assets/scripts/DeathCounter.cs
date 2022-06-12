@@ -14,7 +14,6 @@ public class DeathCounter : MonoBehaviour
 
     private void Awake()
     {
-        NodeScript.CurrentNodeNumber++;
         random = new Random();
         EventAggregator.CharacterDied.Subscribe(CharacterDied);
         EventAggregator.EnemyDied.Subscribe(EnemyDied);
@@ -25,6 +24,7 @@ public class DeathCounter : MonoBehaviour
         if (!Units.Characters.Values.All(character1 => character1.IsDead)) return;
         
         SceneManager.LoadScene("BattleResult");
+        SaveScript.SaveCharacters();
     }
     
     private void EnemyDied(IEnemy enemy)
@@ -33,8 +33,9 @@ public class DeathCounter : MonoBehaviour
         BattleResultsSingleton.EnemiesKilled++;
         if (Units.Enemies.Count != 0) return;
         
+        NodeScript.CurrentNodeNumber++;
         CreateNewTokens();
-
+        SaveScript.SaveCharacters();
         ShadingWin.SetActive(true);
     }
 

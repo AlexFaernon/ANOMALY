@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class BattleResultsSingleton
 {
-    public static int LevelsCompleted => NodeScript.CurrentNodeNumber - 1;
+    public static int LevelsCompleted => NodeScript.CurrentNodeNumber;
     public static int EnemiesKilled;
     public static int UpgradesMade;
     public static int TotalBasicTokens;

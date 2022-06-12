@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
+[Serializable]
 public class ModifyReceivedDamage
 {
     public int Damage { get; set; }
@@ -8,6 +9,7 @@ public class ModifyReceivedDamage
     public readonly UnityEvent Event = new UnityEvent();
 }
 
+[Serializable]
 public abstract class Character : ICharacter
 {
 
@@ -69,7 +71,10 @@ public abstract class Character : ICharacter
         }
     }
 
-    public ModifyReceivedDamage ModifyReceivedDamage { get; } = new ModifyReceivedDamage();
+    [NonSerialized] private ModifyReceivedDamage _modifyReceivedDamage;
+
+    public ModifyReceivedDamage ModifyReceivedDamage => _modifyReceivedDamage ??= new ModifyReceivedDamage();
+    
     public virtual void TakeDamage(int damage, IUnit source)
     {
         ModifyReceivedDamage.Source = source;

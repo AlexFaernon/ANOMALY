@@ -15,7 +15,7 @@ public class NodeScript : MonoBehaviour
     [SerializeField] private Sprite campSprite;
     [SerializeField] private Sprite completedCampSprite;
     [SerializeField] private Sprite chosenCampSprite;
-    private static int _currentNodeNumber;
+    public static int _currentNodeNumber;
     public static int CurrentNodeNumber
     {
         get => _currentNodeNumber;
@@ -23,6 +23,7 @@ public class NodeScript : MonoBehaviour
         {
             _currentNodeNumber = value;
             EventAggregator.NodeNumberChanged.Publish();
+            SaveScript.SaveLevels();
         }
     }
 

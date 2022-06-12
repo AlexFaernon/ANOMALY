@@ -15,7 +15,7 @@ public class OnClickShading : MonoBehaviour
         StatusSystem.DispelAll();
         Units.ResetUnits();
         BattleResultsSingleton.ResetResults();
-        GameState.isGame = false;
+        GameState.IsGame = false;
         SceneManager.LoadScene("MainMenu");
     }
 }

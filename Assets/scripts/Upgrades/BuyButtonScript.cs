@@ -81,6 +81,7 @@ public class BuyButtonScript : MonoBehaviour
 
         BattleResultsSingleton.UpgradesMade++;
         EventAggregator.AbilityUpgraded.Publish();
+        SaveScript.SaveCharacters();
     }
     
     private void SelectCharacter(ICharacter character1)

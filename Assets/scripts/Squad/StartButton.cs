@@ -12,7 +12,7 @@ public class StartButton : MonoBehaviour
 
     private void OnClick()
     {
-        GameState.isGame = true;
+        GameState.IsGame = true;
         SceneManager.LoadScene("Map");
     }
 }

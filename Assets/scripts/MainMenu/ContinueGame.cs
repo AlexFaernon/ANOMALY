@@ -6,8 +6,9 @@ public class ContinueGame : MonoBehaviour
 {
     private void Awake()
     {
+        LoadScript.Load();
         var button = GetComponent<Button>();
-        button.interactable = GameState.isGame;
+        button.interactable = GameState.IsGame;
         button.onClick.AddListener(() => SceneManager.LoadScene("Map"));
     }
 }

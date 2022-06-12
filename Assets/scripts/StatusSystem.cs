@@ -38,7 +38,7 @@ public abstract class Status
 public sealed class Invulnerability : Status
 {
     public override string Name => "Отсрочка смерти";
-    public override string Description => "Здоровье не может упасть ниже 1";
+    public override string Description => "Здоровье не может упасть ниже 1 ед.";
     public override int Duration { get; set; } = 5;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }
@@ -92,7 +92,7 @@ public sealed class Invulnerability : Status
 public sealed class HPLoss : Status
 {
     public override string Name => "";
-    public override string Description => "Цель теряет 1 здоровья каждый ход";
+    public override string Description => "Цель теряет 1 ед. здоровья каждый ход";
     public override int Duration { get; set; } = 3;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }
@@ -242,7 +242,7 @@ public sealed class Stun : Status
 public sealed class Deflect : Status
 {
     public override string Name => "Отражение урона";
-    public override string Description => "Наносит 2 урона юнитам, атакующего данного юнита";
+    public override string Description => $"Наносит {damage} ед. урона юнитам, атакующего данного юнита";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }
@@ -331,8 +331,8 @@ public sealed class Berserk : Status
 
 public sealed class AmplifyDamage : Status
 {
-    public override string Name => "Хрупкость";
-    public override string Description => "Урон по данному юниту увеличен в 1.5 раза";
+    public override string Name => "Уязвимость";
+    public override string Description => $"Данный юнит получает на {additionalDamage} ед. урона больше";
     public override int Duration { get; set; } = 2;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }
@@ -377,7 +377,7 @@ public sealed class AmplifyDamage : Status
 public sealed class DelayedHealing : Status
 {
     public override string Name => "Регенерация";
-    public override string Description => "Исцеляет на 1 пункт каждый ход";
+    public override string Description => "Восстанавливает 1 ед. здоровья каждый ход";
     public override int Duration { get; set; } = 3;
     public override IUnit Target { get; set; }
     public override Sprite Icon { get; set; }

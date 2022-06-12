@@ -1,26 +1,20 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public sealed class Damager : Character
 {
     public override string Name => "Маркус Кокс";
 
     public override string Info =>
-        "Авантюрист который ищет наживы. Хоть Маркус человек не из высших слоев общества, он всю жизнь славился изворотливым характером, поэтому знал где и когда можно неплохо заработать. Пошел в \"Уничтожителей аномалий\" из-за хорошего дохода (и возможно опасности).";
-    public override IAbility BasicAbility { get; set; }
-    public override IAbility FirstAbility { get; set; }
-    public override IAbility SecondAbility { get; set; }
-    public override IAbility Ultimate { get; set; }
+        "Авантюрист, который ищет наживы. Хоть Маркус человек не из высших слоев общества, он всю жизнь славился изворотливым характером, поэтому знал, где и когда можно неплохо заработать. Пошел в \"Уничтожителей аномалий\" из-за хорошего дохода.";
+    public override IAbility BasicAbility { get; set; } = new AttackClass();
+    public override IAbility FirstAbility { get; set; } = new CastDamageUp();
+    public override IAbility SecondAbility { get; set; } = new LifeStealing();
+    public override IAbility Ultimate { get; set; } = new LotOfDamage();
 
-    public Damager()
-    {
-        var icons = Resources.LoadAll<Sprite>("icons/Dammager");
-        BasicAbility = new AttackClass(icons[0]);
-        FirstAbility = new CastDamageUp(icons[1]);
-        SecondAbility = new LifeStealing(icons[2]);
-        Ultimate = new LotOfDamage(icons[3]);
-    }
-    
+    [Serializable]
     private class AttackClass : IAbility
     {
         public int OverallUpgradeLevel { get; set; } = 0;
@@ -31,11 +25,19 @@ public sealed class Damager : Character
         public int Cooldown => 0;
         public int TargetCount => 1;
         private int Damage => new[] { 1, 2, 3 }[AbilityUpgradeLevel];
-        public Sprite Icon { get; }
-        
-        public AttackClass(Sprite icon)
+        [NonSerialized] private Sprite _icon;
+
+        public Sprite Icon
         {
-            Icon = icon;
+            get
+            {
+                if (_icon == null)
+                {
+                    _icon = Resources.Load<Sprite>("icons/Dammager/дд 1");
+                }
+
+                return _icon;
+            }
         }
 
         public void CastAbility(List<IUnit> units, IUnit source)
@@ -47,6 +49,7 @@ public sealed class Damager : Character
         }
     }
     
+    [Serializable]
     private class CastDamageUp : IAbility
     {
         public int OverallUpgradeLevel { get; set; } = 0;
@@ -59,11 +62,19 @@ public sealed class Damager : Character
         public int Cooldown => new[] { 2, 2, 3 }[AbilityUpgradeLevel];
         public int TargetCount => 1;
         private int AdditionalDamage => new[] { 1, 2, 3 }[AbilityUpgradeLevel];
-        public Sprite Icon { get; }
+        [NonSerialized] private Sprite _icon;
 
-        public CastDamageUp(Sprite icon)
+        public Sprite Icon
         {
-            Icon = icon;
+            get
+            {
+                if (_icon == null)
+                {
+                    _icon = Resources.Load<Sprite>("icons/Dammager/дд 2");
+                }
+
+                return _icon;
+            }
         }
 
         public void CastAbility(List<IUnit> units, IUnit source)
@@ -75,6 +86,7 @@ public sealed class Damager : Character
         }
     }
     
+    [Serializable]
     private class LifeStealing : IAbility
     {
         public int OverallUpgradeLevel { get; set; } = 0;
@@ -84,11 +96,19 @@ public sealed class Damager : Character
         public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int TargetCount => 0;
-        public Sprite Icon { get; }
-        
-        public LifeStealing(Sprite icon)
+        [NonSerialized] private Sprite _icon;
+
+        public Sprite Icon
         {
-            Icon = icon;
+            get
+            {
+                if (_icon == null)
+                {
+                    _icon = Resources.Load<Sprite>("icons/Dammager/дд 3");
+                }
+
+                return _icon;
+            }
         }
 
         public void CastAbility(List<IUnit> units, IUnit source)
@@ -99,7 +119,8 @@ public sealed class Damager : Character
             }
         }
     }
-
+    
+    [Serializable]
     private class LotOfDamage : IAbility
     {
         public int OverallUpgradeLevel { get; set; } = 0;
@@ -110,11 +131,19 @@ public sealed class Damager : Character
         public int Cooldown  => new[] { 5, 6, 7 }[AbilityUpgradeLevel];
         public int TargetCount => 1;
         private int Damage => new[] { 4, 6, 10 }[AbilityUpgradeLevel];
-        public Sprite Icon { get; }
-        
-        public LotOfDamage(Sprite icon)
+        [NonSerialized] private Sprite _icon;
+
+        public Sprite Icon
         {
-            Icon = icon;
+            get
+            {
+                if (_icon == null)
+                {
+                    _icon = Resources.Load<Sprite>("icons/Dammager/дд 4");
+                }
+
+                return _icon;
+            }
         }
 
         public void CastAbility(List<IUnit> units, IUnit source)

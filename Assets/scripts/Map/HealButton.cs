@@ -1,4 +1,3 @@
-//using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +17,7 @@ public class HealButton : MonoBehaviour
                 character.Heal(character.HPSegmentLength, true);
                 campWindow.SetActive(false);
             }
-            //VideoAd.Show();
+            SaveScript.SaveCharacters();
         });
     }
 }

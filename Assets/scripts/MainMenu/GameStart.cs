@@ -12,7 +12,7 @@ public class GameStart : MonoBehaviour
 
     private void OnClick()
     {
-        if (GameState.isGame)
+        if (GameState.IsGame)
         {
             newGameConfirm.SetActive(true);
             return;

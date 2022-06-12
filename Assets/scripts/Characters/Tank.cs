@@ -3,26 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+[Serializable]
 public sealed class Tank : Character
 {
     public override string Name => "Теодор Роджерс";
+
     public override string Info =>
         "Теодор с детства занимался ремеслом. Его завораживали доспехи, их изящество, но в то же время прочность и стойкость. Когда Тео вырос, он стал одержимым идеей сделать идеальный доспех, которому будут нипочем никакие атаки исчадий аномалий. Ради этого он сам записался в \"уничтожителей\", чтобы тестировать свои доспехи и выявлять дефекты, делая новые, более близкие к идеалу.";
-    public override IAbility BasicAbility { get; set; }
-    public override IAbility FirstAbility { get; set; }
-    public override IAbility SecondAbility { get; set; }
-    public override IAbility Ultimate { get; set; }
-    
-    public Tank()
-    {
-        var icons = Resources.LoadAll<Sprite>("icons/Tank");
-        BasicAbility = new CastProtect(icons[0]);
-        FirstAbility = new CastStun(icons[1]);
-        SecondAbility = new CastDeflect(icons[2]);
-        Ultimate = new CastBerserk(icons[3]);
-        
-    }
-    
+    public override IAbility BasicAbility { get; set; } = new CastProtect();
+    public override IAbility FirstAbility { get; set; } = new CastStun();
+    public override IAbility SecondAbility { get; set; } = new CastDeflect();
+    public override IAbility Ultimate { get; set; } = new CastBerserk();
+
+    [Serializable]
     private class CastProtect : IAbility
     {
         public int OverallUpgradeLevel { get; set; } = 0;
@@ -33,11 +26,19 @@ public sealed class Tank : Character
         public int Cooldown => 0;
         public int TargetCount => 1;
         private double DamageReduction => new[] { 1, 0.8, 0.5 }[AbilityUpgradeLevel];
-        public Sprite Icon { get; }
-        
-        public CastProtect(Sprite icon)
+        [NonSerialized] private Sprite _icon;
+
+        public Sprite Icon
         {
-            Icon = icon;
+            get
+            {
+                if (_icon == null)
+                {
+                    _icon = Resources.Load<Sprite>("icons/Tank/танк 1");
+                }
+
+                return _icon;
+            }
         }
 
         public void CastAbility(List<IUnit> units, IUnit source)
@@ -50,20 +51,29 @@ public sealed class Tank : Character
         }
     }
     
+    [Serializable]
     private class CastStun : IAbility
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Оглушение";
-        public string Description => $"Оглушает <color=#E3B81B>{TargetCount}</color> цель(и) на {(AbilityUpgradeLevel == 2 ? "<color=#E3B81B>1 и 2 хода</color> соответственно" : $"<color=#E3B81B>{new[] { 1, 2 }[AbilityUpgradeLevel]} ход(а)</color>")}, лишая ее/их права хода";
+        public string Description => $"Оглушает <color=#E3B81B>{TargetCount}</color> цель(и) на {(AbilityUpgradeLevel == 2 ? "<color=#E3B81B>1 и 2 хода</color> соответственно" : $"<color=#E3B81B>{new[] { 1, 2 }[AbilityUpgradeLevel]} ход(а)</color>")}, лишая права хода";
         public int Cost => new[] { 2, 4, 5 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int TargetCount => new[] { 1, 1, 2 }[AbilityUpgradeLevel];
-        public Sprite Icon { get; }
-        
-        public CastStun(Sprite icon)
+        [NonSerialized] private Sprite _icon;
+
+        public Sprite Icon
         {
-            Icon = icon;
+            get
+            {
+                if (_icon == null)
+                {
+                    _icon = Resources.Load<Sprite>("icons/Tank/танк 2");
+                }
+
+                return _icon;
+            }
         }
 
         public void CastAbility(List<IUnit> units, IUnit source)
@@ -83,21 +93,30 @@ public sealed class Tank : Character
         }
     }
 
+    [Serializable]
     private class CastDeflect : IAbility
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Контратака";
-        public string Description => $"При получение персонажем урона, он наносит урон в <color=#E3B81B>{Damage} ед.</color> атакующему. Длительность <color=#E3B81B>2 хода</color>";
+        public string Description => $"При получении персонажем урона, он наносит урон в <color=#E3B81B>{Damage} ед.</color> атакующему. Длительность <color=#E3B81B>2 хода</color>";
         public int Cost => new[] { 2, 3, 4 }[AbilityUpgradeLevel];
         public int Cooldown => 3;
         public int TargetCount => 0;
         private int Damage => new[] { 1, 2, 4 }[AbilityUpgradeLevel];
-        public Sprite Icon { get; }
-        
-        public CastDeflect(Sprite icon)
+        [NonSerialized] private Sprite _icon;
+
+        public Sprite Icon
         {
-            Icon = icon;
+            get
+            {
+                if (_icon == null)
+                {
+                    _icon = Resources.Load<Sprite>("icons/Tank/танк 3");
+                }
+
+                return _icon;
+            }
         }
 
         public void CastAbility(List<IUnit> units, IUnit source)
@@ -109,20 +128,29 @@ public sealed class Tank : Character
         }
     }
     
+    [Serializable]
     private class CastBerserk : IAbility
     {
         public int OverallUpgradeLevel { get; set; } = 0;
         public int AbilityUpgradeLevel => OverallUpgradeLevel / 2;
         public string Name => "Берсерк";
-        public string Description => "На <color=#E3B81B>3 хода</color> заменяет способность на одну мощную атакующую способность. <color=#E3B81B>Замена способности не тратит ход персонажа</color>";
+        public string Description => "На <color=#E3B81B>3 хода</color> дает возможность использовать мощную атакующую способность. <color=#E3B81B>Замена способности не тратит ход персонажа</color>";
         public int Cost => new[] { 4, 5, 6 }[AbilityUpgradeLevel];
         public int Cooldown => new[] { 5, 5, 6 }[AbilityUpgradeLevel];
         public int TargetCount => 0;
-        public Sprite Icon { get; }
-        
-        public CastBerserk(Sprite icon)
+        [NonSerialized] private Sprite _icon;
+
+        public Sprite Icon
         {
-            Icon = icon;
+            get
+            {
+                if (_icon == null)
+                {
+                    _icon = Resources.Load<Sprite>("icons/Tank/танк 4");
+                }
+
+                return _icon;
+            }
         }
 
         public void CastAbility(List<IUnit> units, IUnit source)
@@ -133,6 +161,7 @@ public sealed class Tank : Character
             }
         }
 
+        [Serializable]
         private class BerserkAbility : IAbility
         {
             public int OverallUpgradeLevel { get; set; }

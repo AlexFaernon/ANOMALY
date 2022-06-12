@@ -19,5 +19,6 @@ public static class Units
                 { CharacterClass.Tank, new Tank() }
             };
         Enemies = new List<IEnemy>();
+        SaveScript.SaveCharacters();
     }
 }
